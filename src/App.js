@@ -1,7 +1,7 @@
 import './App.css';
 
 import React from 'react';
-import { Router } from './pages/router.jsx';
+import { Router } from './routes/router.jsx';
 
 function App() {
   return (
