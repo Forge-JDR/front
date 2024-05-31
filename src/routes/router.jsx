@@ -10,16 +10,16 @@ export const Router = () => {
   const router = createBrowserRouter([
     {
       path: "/",
-      element: <Home />,
+      element: <Home />
     },
     {
       path: "connexion",
-      element: <Login />,
+      element: <Login />
     },
     {
       path: "inscription",
-      element: <Signup />,
-    },
+      element: <Signup />
+    }
   ]);
 
   return <RouterProvider router={router} />;
