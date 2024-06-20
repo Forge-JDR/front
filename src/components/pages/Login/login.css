@@ -1,0 +1,11 @@
+@import '/src/utils/global.css';
+
+body{
+    background: linear-gradient(70deg, var(--main-blue-color), var(--main-purple-color));
+}
+
+html{
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}

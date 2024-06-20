@@ -13,11 +13,11 @@ export const Router = () => {
       element: <Home />
     },
     {
-      path: "connexion",
+      path: "login",
       element: <Login />
     },
     {
-      path: "inscription",
+      path: "signup",
       element: <Signup />
     }
   ]);
