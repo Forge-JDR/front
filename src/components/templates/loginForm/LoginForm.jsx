@@ -2,23 +2,20 @@ import "./loginForm.css";
 import SubmitButton from "../../UI/molecules/submitButton/submitButton";
 import Form from "../../UI/organisms/Form";
 import { ReactSVG } from "react-svg";
+import { useTranslation } from 'react-i18next';
+import Input from "../../UI/atoms/input/Input";
 
 import forgeLogo from "../../../assets/logo_complet.svg";
 
 const LoginForm = () => {
+  const { t } = useTranslation();
   return (
     <>
       <div className="form-register-container">
         <p className="form-title">Login</p>
         <Form id="login-form" className="form-register">
-          <label>
-            Name:
-            <input type="text" name="pseudo" />
-          </label>
-          <label>
-            Name:
-            <input type="password" name="pwd" />
-          </label>
+          <Input type="text" id="pseudo" name="pseudo" label={t('login.username')} />
+          <Input type="password" id="pwd" name="pwd" label={t('login.password')} />
           <SubmitButton onClick="submit">LOGIN</SubmitButton>
         </Form>
         <div className="logo-container">

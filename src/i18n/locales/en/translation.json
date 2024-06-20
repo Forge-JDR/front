@@ -1,5 +1,9 @@
 {
     "home": {
         "welcome": "Welcome to the home page"
+    },
+    "login": {
+        "username": "Username",
+        "password": "Password"
     }
 }
