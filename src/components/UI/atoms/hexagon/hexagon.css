@@ -1,0 +1,38 @@
+
+.hexagon {
+  position: relative;
+  margin: 1em auto;
+  width: 10em;
+  height: 16.5em;
+  border-radius: 1em/.5em;
+  background: var(--main-blue-color);
+  transition: opacity .5s;
+  display:inline-block;
+}
+
+.hexagon:before,
+.hexagon:after {
+  position: absolute;
+  width: inherit;
+  height: inherit;
+  border-radius: inherit;
+  background: inherit;
+  content: '';
+}
+
+.hexagon:before {
+    transform: translate(-5em) rotate(60deg);
+}
+
+.hexagon:after {
+    transform: translate(-5em) rotate(-60deg);
+}
+
+/* @keyframes spin {
+  0% {
+    --rotate: 0deg;
+  }
+  100% {
+    --rotate: 360deg;
+  }
+} */
