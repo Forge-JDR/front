@@ -1,0 +1,29 @@
+/* label {
+    position: absolute; 
+    top: 0;
+    left: 0;
+    padding: 10px 0;
+    font-size: 16px;
+    color: #d42525;
+    pointer-events: none;
+    transition: .5s;
+} */
+
+.form-register-container label {
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding: 10px 0;
+    font-size: 16px;
+    color: #bebebe;
+    pointer-events: none;
+    transition: .5s;
+}
+
+.form-register-container input:focus~label,
+.form-register-container input:valid~label {
+    top: -20px;
+    left: 0;
+    color: #03e9f4;
+    font-size: 12px;
+}
