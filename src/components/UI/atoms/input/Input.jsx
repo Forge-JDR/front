@@ -1,7 +1,14 @@
 import "./input.css";
 
-const Input = ({ type = "text", required = false, name = "", ...rest }) => {
-  return <input type={type} name={name} required={required} {...rest} />;
+const Input = (props, ...rest) => {
+  return (
+    <input
+      type={props.type}
+      name={props.name}
+      required={props.required}
+      {...rest}
+    />
+  );
 };
 
 export default Input;

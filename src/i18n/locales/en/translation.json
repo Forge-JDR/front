@@ -1,5 +1,13 @@
 {
     "home": {
         "welcome": "Welcome to the home page"
+    },
+    "login": {
+        "title": "Login",
+        "username": "Username",
+        "password": "Password",
+        "submit": "Login",
+        "anyAccount": "Don't have an account ?",
+        "signUp": "Sign up"
     }
 }
