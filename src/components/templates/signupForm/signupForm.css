@@ -42,18 +42,18 @@ body {
 }
 
 /* Styles pour le formulaire */
-#login-form {
+#signup-form {
     position: relative;
     flex-direction: column;
     width: 100%;
 }
-#login-form input {
+#signup-form input {
     margin-top: 15px;
     padding: 10px;
     font-size: 16px;
 }
 
-#login-form button {
+#signup-form button {
     margin-top: 15px;
     font-size: 16px;
 }

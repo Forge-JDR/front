@@ -19,7 +19,7 @@ const LoginForm = () => {
           />
           <FieldForm
             type="password"
-            label={t("login.password")}
+            label={t("login.password") + " *"}
             name="password"
             required={true}
           />

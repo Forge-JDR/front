@@ -9,5 +9,15 @@
         "submit": "Connexion",
         "anyAccount": "Vous n'avez pas de compte ?",
         "signUp": "S'inscrire"
+    },
+    "signup":{
+        "title": "Inscription",
+        "username": "Nom d'utilisateur",
+        "password": "Mot de passe",
+        "confirmPassword":"Confirmer le mot de passe",
+        "email":"E-mail",
+        "submit": "Inscription",
+        "anyAccount": "Vous avez déjà un compte ?",
+        "login": "Se connecter"
     }
 }

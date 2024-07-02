@@ -10,38 +10,38 @@ const SignupForm = () => {
   return (
     <>
       <div className="form-register-container">
-        <p className="form-title">Signup</p>
-        <Form id="login-form" className="form-register">
+        <p className="form-title">{t("signup.title")}</p>
+        <Form id="signup-form" className="form-register">
           <FieldForm
-            label={t("login.username") + " *"}
+            label={t("signup.username") + " *"}
             name="pseudo"
             required={true}
           />
           <FieldForm
             type="email"
-            label={t("login.email") + " *"}
+            label={t("signup.email") + " *"}
             name="email"
             required={true}
           />
           <FieldForm
             type="password"
-            label={t("login.password")}
+            label={t("signup.password") + " *"}
             name="password"
             required={true}
           />
           <FieldForm
             type="password"
-            label={t("login.confirmPassword")}
+            label={t("signup.confirmPassword") + " *"}
             name="confirmPassword"
             required={true}
           />
-          <SubmitButton onClick="submit">{t("login.submit")}</SubmitButton>
+          <SubmitButton onClick="submit">{t("signup.submit")}</SubmitButton>
         </Form>
         <div className="logo-container">
           <img src={forgeLogo} alt="Logo" />
         </div>
         <p className="form-register-link">
-          {t("login.anyAccount")} <a href="/signup">{t("login.login")}</a>
+          {t("signup.anyAccount")} <a href="/login">{t("signup.login")}</a>
         </p>
       </div>
     </>
