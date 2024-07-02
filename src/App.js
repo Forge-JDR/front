@@ -1,14 +1,12 @@
 import './App.css';
-
 import React from 'react';
 import { Router } from './routes/router.jsx';
+import refreshTokenInterceptor from "./config/refreshTokenInterceptor.js";
+import { store } from "./store/store.js";
 
 function App() {
-  return (
-      <div className="App">
-        <Router id="root"></Router> 
-      </div>
-  );
+  refreshTokenInterceptor(store);
+  return <Router></Router>;
 }
 
 export default App;

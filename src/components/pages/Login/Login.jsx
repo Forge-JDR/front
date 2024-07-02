@@ -1,30 +1,56 @@
-import React from "react";
+import React, { useState } from "react";
+import { useDispatch } from "react-redux";
 import "./login.css";
-import LoginForm from "../../templates/loginForm/LoginForm";
-import Hexagon from "../../UI/atoms/hexagon/hexagon";
-import HexagonBackground from "../../UI/molecules/hexagonsBackground/hexagonsBackground";
+import SubmitButton from "../../UI/molecules/submitButton/submitButton";
+import Form from "../../UI/organisms/Form";
+import { ReactSVG } from "react-svg";
+import { useTranslation } from 'react-i18next';
+import Input from "../../UI/atoms/input/Input";
+import { login } from "../../../store/store";
+import { Navigation } from "../../../routes/navigation";
+import { Navigate } from "react-router-dom";
 
-const Login = () => {
+import forgeLogo from "../../../assets/logo_complet.svg";
+
+const Login = ({ ...props }) => {
+  const { t } = useTranslation();
+  
+  const dispatch = useDispatch();
+
+  const [Email, setEmail] = useState("");
+  const [Password, setPassword] = useState("");
+
   return (
     <>
-      <LoginForm></LoginForm>
-
-      {/* <HexagonBackground></HexagonBackground> */}
+      <div className="form-register-container">
+        <p className="form-title">{t('login.title')}</p>
+        <Form id="login-form" className="form-register">
+          <Input type="text" id="email" name="email" label={t('login.email')} 
+            value={Email}
+            onChange={(e) => setEmail(e.target.value)} />
+          <Input type="password" id="pwd" name="pwd" label={t('login.password')} value={Password}
+            onChange={(e) => setPassword(e.target.value)}/>
+          <SubmitButton  onClick={() => {
+                    dispatch(
+                      login({
+                        username: Email,
+                        password: Password,
+                      })
+                    )
+                    if (localStorage.getItem("user")) {
+                      console.log("User is logged in");
+                      return <Navigate to='/' replace />;
+                    }
+                  }}>{t('login.submit')}</SubmitButton>
+        </Form>
+        <div className="logo-container">
+          <img src={forgeLogo} alt="Logo" />
+        </div>
+        <p className="form-register-link">
+          {t('login.anyAccount')} <a>{t('login.signUp')}</a>
+        </p>
+      </div>
     </>
-    // <div>
-    //   <h1>Page de connexion</h1>
-    //   <form>
-    //     <div>
-    //       <label htmlFor="username">Nom d'utilisateur :</label>
-    //       <input type="text" id="username" name="username" />
-    //     </div>
-    //     <div>
-    //       <label htmlFor="password">Mot de passe :</label>
-    //       <input type="password" id="password" name="password" />
-    //     </div>
-    //     <button type="submit">Se connecter</button>
-    //   </form>
-    // </div>
   );
 };
 

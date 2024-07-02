@@ -2,15 +2,20 @@ import React from "react";
 
 import Home from "../components/pages/Home/Home";
 import Login from "../components/pages/Login/Login";
-import Signup from "../components/pages/Signup/Signup";
+import SignUp from "../components/pages/SignUp/SignUp";
 
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { RequireAuth } from "./requireAuth";
 
 export const Router = () => {
   const router = createBrowserRouter([
     {
       path: "/",
-      element: <Home />
+      element: (
+        <RequireAuth>
+          <Home />
+        </RequireAuth>
+      ),
     },
     {
       path: "login",
@@ -18,7 +23,7 @@ export const Router = () => {
     },
     {
       path: "signup",
-      element: <Signup />
+      element: <SignUp />
     }
   ]);
 
