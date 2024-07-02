@@ -1,30 +1,41 @@
 import React from "react";
 import "./login.css";
-import LoginForm from "../../templates/loginForm/LoginForm";
 import Hexagon from "../../UI/atoms/hexagon/hexagon";
 import HexagonBackground from "../../UI/molecules/hexagonsBackground/hexagonsBackground";
+import SubmitButton from "../../UI/molecules/submitButton/submitButton";
+import Form from "../../UI/organisms/Form";
+import FieldForm from "../../UI/molecules/FieldForm/FieldForm";
+import { useTranslation } from "react-i18next";
+import forgeLogo from "../../../assets/logo_complet.svg";
 
 const Login = () => {
+  const { t } = useTranslation();
   return (
     <>
-      <LoginForm></LoginForm>
-
-      {/* <HexagonBackground></HexagonBackground> */}
+      <div className="form-register-container">
+        <p className="form-title">Login</p>
+        <Form id="login-form" className="form-register">
+          <FieldForm
+            label={t("login.username") + " *"}
+            name="pseudo"
+            required={true}
+          />
+          <FieldForm
+            type="password"
+            label={t("login.password")}
+            name="password"
+            required={true}
+          />
+          <SubmitButton onClick="submit">{t("login.submit")}</SubmitButton>
+        </Form>
+        <div className="logo-container">
+          <img src={forgeLogo} alt="Logo" />
+        </div>
+        <p className="form-register-link">
+          {t("login.anyAccount")} <a href="/signup">{t("login.signUp")}</a>
+        </p>
+      </div>
     </>
-    // <div>
-    //   <h1>Page de connexion</h1>
-    //   <form>
-    //     <div>
-    //       <label htmlFor="username">Nom d'utilisateur :</label>
-    //       <input type="text" id="username" name="username" />
-    //     </div>
-    //     <div>
-    //       <label htmlFor="password">Mot de passe :</label>
-    //       <input type="password" id="password" name="password" />
-    //     </div>
-    //     <button type="submit">Se connecter</button>
-    //   </form>
-    // </div>
   );
 };
 
