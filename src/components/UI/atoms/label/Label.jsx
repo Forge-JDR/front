@@ -1,5 +1,7 @@
-const Label = () => {
-  return <label></label>;
+import "./label.css";
+
+const Label = ({ children, ...rest }) => {
+  return <label {...rest}>{children}</label>;
 };
 
 export default Label;

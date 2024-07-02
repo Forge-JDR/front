@@ -1,0 +1,11 @@
+ input {
+     width: 100%;
+     padding: 10px 0;
+     font-size: 16px;
+     color: #bebebe;
+     margin-bottom: 30px;
+     border: none;
+     border-bottom: 1px solid #bebebe;
+     outline: none;
+     background: transparent;
+ }
