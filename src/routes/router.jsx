@@ -2,7 +2,7 @@ import React from "react";
 
 import Home from "../components/pages/Home/Home";
 import Login from "../components/pages/Login/Login";
-import SignUp from "../components/pages/SignUp/SignUp";
+import SignUp from "../components/pages/SignUpold/SignUpold";
 
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { RequireAuth } from "./requireAuth";
