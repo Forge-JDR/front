@@ -5,10 +5,9 @@ import { reloadToken, deleteToken } from '../store/slices/auth.slice';
 const setup = (store) => {
     axiosInstance.interceptors.request.use(
         (config) => {
-            const token = window.localStorage.getItem("access_token");
+            const token = window.localStorage.getItem("token");
             if (token) {
                 config.headers["Authorization"] = 'Bearer ' + token;
-
             }
             return config;
         },
@@ -26,14 +25,14 @@ const setup = (store) => {
 
             const originalConfig = err.config;
             const refreshToken = window.localStorage.getItem("refresh_token");
-            if (originalConfig.url !== "/auth/refresh" && err.response && refreshToken) {
+            if (originalConfig.url !== "/token/refresh" && err.response && refreshToken) {
 
                 // Access Token was expired
                 if (err.response.status === 401 && !originalConfig._retry) {
                     originalConfig._retry = true;
 
 
-                    await axiosInstance.post('/auth/refresh', {
+                    await axiosInstance.post('/token/refresh', {
                         "refresh_token": refreshToken,
                         "mode": "json"
                     }).then((response) => {

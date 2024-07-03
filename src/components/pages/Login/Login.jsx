@@ -21,7 +21,7 @@ const Login = ({ ...props }) => {
   const [Password, setPassword] = useState("");
 
   return (
-    <>
+    < >
       <div className="form-register-container">
         <p className="form-title">{t('login.title')}</p>
         <Form id="login-form" className="form-register">
@@ -37,7 +37,7 @@ const Login = ({ ...props }) => {
                         password: Password,
                       })
                     )
-                    if (localStorage.getItem("user")) {
+                    if (localStorage.getItem("token")) {
                       console.log("User is logged in");
                       return <Navigate to='/' replace />;
                     }

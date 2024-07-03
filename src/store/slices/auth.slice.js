@@ -62,14 +62,14 @@ const authSlice = createSlice({
     reducers: {
         reloadToken: (state, action) => {
             state.token = action.payload.token;
-            state.refreshToken = action.payload.refreshToken;
+            state.refreshToken = action.payload.refresh_token;
             state.isLoggedIn = true;
-            localStorage.setItem("access_token", action.payload.token);
-            localStorage.setItem("refresh_token", action.payload.refreshToken);
+            localStorage.setItem("token", action.payload.token);
+            localStorage.setItem("refresh_token", action.payload.refresh_token);
             return state;
         },
         deleteToken: (state, action ) => {
-            localStorage.removeItem("access_token");
+            localStorage.removeItem("token");
             localStorage.removeItem("refresh_token");
             state.isLoggedIn = false;
             state.token = null;

@@ -10,7 +10,8 @@ const login = (username, password) => {
         })
         .then((response) => {
             if (response.data.token) {
-                window.localStorage.setItem("user", JSON.stringify(response.data));
+                window.localStorage.setItem("token", response.data.token);
+                window.localStorage.setItem("refresh_token", response.data.token);
             }
 
             return response.data;

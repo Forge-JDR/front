@@ -1,12 +1,11 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
+import api from '../../config/api'
 
 export const fetchWikis = createAsyncThunk(
     'wiki/getAll',
     async () => {
-        return await fetch(process.env.REACT_APP_URL_BACK + "/wikis")
-            .then(wiki => 
-                wiki.json()
-            )
+        return await api.get(process.env.REACT_APP_URL_BACK + "/wikis")
+            .then(response => response.data)
             .catch(err => console.log("erreur dans la récupèration des wikis : ", err))
     }
 )
@@ -15,7 +14,7 @@ export const addWiki = createAsyncThunk(
     'wiki/addOne',
     async ({ Name, Content }) => {
 
-        return await fetch(process.env.REACT_APP_URL_BACK + "/wikis", {
+        return await api.post(process.env.REACT_APP_URL_BACK + "/wikis", {
             method: 'POST',
             body: JSON.stringify({
                 Name: Name,
