@@ -9,5 +9,15 @@
         "submit": "Login",
         "anyAccount": "Don't have an account ?",
         "signUp": "Sign up"
+    },
+    "signup":{
+        "title": "Subscribe",
+        "username": "Username",
+        "password": "Password",
+        "confirmPassword":"Confirm your password",
+        "email":"E-mail",
+        "submit": "Sign up",
+        "anyAccount": "You already have an account ?",
+        "login": "Login"
     }
 }
