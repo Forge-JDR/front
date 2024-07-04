@@ -7,6 +7,7 @@ import SignUp from "../components/pages/SignUp/SignUp";
 import Discover from "../components/pages/Discover/Discover";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { RequireAuth } from "./requireAuth";
+import Wiki from "../components/pages/Wiki/Wiki";
 
 
 export const Router = () => {
@@ -30,6 +31,10 @@ export const Router = () => {
     {
       path: "discover",
       element: <Discover />
+    }, 
+    {
+      path : "wiki/:id",
+      element: <Wiki />
     }
   ]);
 

@@ -22,9 +22,11 @@ const setup = (store) => {
             return res;
         },
         async (err) => {
-
+            console.log("Refresh");
+            console.log(err);
             const originalConfig = err.config;
             const refreshToken = window.localStorage.getItem("refresh_token");
+            console.log(refreshToken);
             if (originalConfig.url !== "/token/refresh" && err.response && refreshToken) {
 
                 // Access Token was expired
@@ -38,7 +40,7 @@ const setup = (store) => {
                     }).then((response) => {
 
                             dispatch(reloadToken({
-                                token: response.data.data.access_token,
+                                token: response.data.data.token,
                                 refreshToken: response.data.data.refresh_token
                             }));
 

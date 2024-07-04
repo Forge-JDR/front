@@ -10,6 +10,16 @@ export const fetchWikis = createAsyncThunk(
     }
 )
 
+export const fetchWiki = createAsyncThunk(
+    'wiki/getOne',
+    async (id) => {
+        return await api.get(process.env.REACT_APP_URL_BACK + "/wikis/" + id)
+            .then(response => response.data)
+            .catch(err => 
+                console.log("erreur dans la récupèration du wiki : ", err))
+    }
+)
+
 export const addWiki = createAsyncThunk(
     'wiki/addOne',
     async ({ Name, Content }) => {
@@ -51,6 +61,7 @@ const WikiServices = createSlice({
     name: 'wikis',
     initialState: {
         wikisList: [],
+        wikiInfo: {},
         status: 'idle'
     },
     reducers: {
@@ -63,6 +74,10 @@ const WikiServices = createSlice({
             .addCase(fetchWikis.fulfilled, (state, action) => {
                 state.wikisList.push(action.payload)
                 state.status = 'idle'
+            })
+            .addCase(fetchWiki.fulfilled, (state, action) => {
+                state.wikiInfo = action.payload
+                state.status = action.meta.requestStatus
             })
             .addCase(addWiki.fulfilled, (state, action) => {
                 fetchWikis()
