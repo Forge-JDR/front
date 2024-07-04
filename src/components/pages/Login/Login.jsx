@@ -1,20 +1,11 @@
 import React from "react";
 import "./login.css";
-import Hexagon from "../../UI/atoms/hexagon/hexagon";
-import HexagonBackground from "../../UI/molecules/hexagonsBackground/hexagonsBackground";
 import SubmitButton from "../../UI/molecules/submitButton/submitButton";
-import Form from "../../UI/organisms/Form";
-import FieldForm from "../../UI/molecules/FieldForm/FieldForm";
-import { useTranslation } from "react-i18next";
-import forgeLogo from "../../../assets/logo_complet.svg";
-import SubmitButton from "../../UI/molecules/submitButton/submitButton";
-import Form from "../../UI/organisms/Form";
 import FieldForm from "../../UI/molecules/FieldForm/FieldForm";
 import { useTranslation } from "react-i18next";
 import forgeLogo from "../../../assets/logo_complet.svg";
 
 const Login = () => {
-  const { t } = useTranslation();
   const { t } = useTranslation();
   return (
     <>
