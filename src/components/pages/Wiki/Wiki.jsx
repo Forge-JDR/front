@@ -28,7 +28,8 @@ const Wiki = ({ ...props }) => {
         Status: {wikiPram.Status}<br></br> 
         Owner : {wikiPram.user.pseudo}<br></br>
         Content : {wikiPram.Content}<br></br>
-        CreateAt : {wikiPram.createdAt}<br></br><br></br>
+        CreateAt : {wikiPram.createdAt}<br></br>
+        { wikiPram.imageFile ?  <img src={wikiPram.imageFile.fichierImage} alt="image" width={150} height={150}/> : "Pas d'image" }<br></br>
         Jobs : {wikiPram.Jobs.map(job => { 
             return <div key={job.id}>Nom du job :{job.name} 
                 <br></br> Content : {job.Content} 
