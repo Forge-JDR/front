@@ -30,8 +30,7 @@ const register = (email, password) => {
 };
 
 const logout = () => {
-    localStorage.removeItem("user");
-    localStorage.removeItem("access_token");
+    localStorage.removeItem("token");
     localStorage.removeItem("refresh_token");
 };
 

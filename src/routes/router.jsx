@@ -8,6 +8,7 @@ import Discover from "../components/pages/Discover/Discover";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { RequireAuth } from "./requireAuth";
 import Wiki from "../components/pages/Wiki/Wiki";
+import Disconnect from "../components/pages/Disconnect/Disconnect";
 
 
 export const Router = () => {
@@ -23,6 +24,10 @@ export const Router = () => {
     {
       path: "login",
       element: <Login />
+    },
+    {
+      path : "disconnect",
+      element: <Disconnect />
     },
     {
       path: "signup",
