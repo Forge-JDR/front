@@ -1,20 +1,18 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import "./login.css";
 import SubmitButton from "../../UI/molecules/submitButton/submitButton";
 import Form from "../../UI/organisms/Form";
-import { ReactSVG } from "react-svg";
 import { useTranslation } from 'react-i18next';
 import Input from "../../UI/atoms/input/Input";
 import { login } from "../../../store/store";
-import { Navigation } from "../../../routes/navigation";
-import { Navigate } from "react-router-dom";
 
 import forgeLogo from "../../../assets/logo_complet.svg";
+import {Route, useNavigate} from 'react-router-dom';
 
 const Login = ({ ...props }) => {
   const { t } = useTranslation();
-  
+  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const [Email, setEmail] = useState("");
@@ -37,10 +35,12 @@ const Login = ({ ...props }) => {
                         password: Password,
                       })
                     )
-                    if (localStorage.getItem("token")) {
-                      console.log("User is logged in");
-                      return <Navigate to='/' replace />;
-                    }
+                    .then(() => {
+                      if (localStorage.getItem("token")) {
+                        navigate('/discover');
+                      }
+                    });
+
                   }}>{t('login.submit')}</SubmitButton>
         </Form>
         <div className="logo-container">

@@ -1,9 +1,10 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { setMessage } from "./message.slice";
+import { Navigate } from "react-router-dom";
 
 import AuthService from "../../services/auth.service";
 
-const token = localStorage.getItem("access_token");
+const token = localStorage.getItem("token");
 const refreshToken = localStorage.getItem("refresh_token");
 
 export const login = createAsyncThunk(

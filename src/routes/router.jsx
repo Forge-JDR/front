@@ -27,7 +27,11 @@ export const Router = () => {
     },
     {
       path : "disconnect",
-      element: <Disconnect />
+      element: (
+        <RequireAuth>
+          <Disconnect />
+        </RequireAuth>
+          )
     },
     {
       path: "signup",
