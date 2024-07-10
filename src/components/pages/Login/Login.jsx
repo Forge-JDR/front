@@ -6,9 +6,8 @@ import Form from "../../UI/organisms/Form";
 import { useTranslation } from 'react-i18next';
 import Input from "../../UI/atoms/input/Input";
 import { login } from "../../../store/store";
-
 import forgeLogo from "../../../assets/logo_complet.svg";
-import {Route, useNavigate} from 'react-router-dom';
+import { useNavigate} from 'react-router-dom';
 
 const Login = ({ ...props }) => {
   const { t } = useTranslation();
@@ -40,7 +39,6 @@ const Login = ({ ...props }) => {
                         navigate('/discover');
                       }
                     });
-
                   }}>{t('login.submit')}</SubmitButton>
         </Form>
         <div className="logo-container">

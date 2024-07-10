@@ -9,6 +9,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { RequireAuth } from "./requireAuth";
 import Wiki from "../components/pages/Wiki/Wiki";
 import Disconnect from "../components/pages/Disconnect/Disconnect";
+import ErrorBoundary from "../components/ErrorBoundaries/ErrorBoundaries";
 
 
 export const Router = () => {
@@ -43,7 +44,10 @@ export const Router = () => {
     }, 
     {
       path : "wiki/:id",
-      element: <Wiki />
+      element: (
+      <ErrorBoundary>
+      <Wiki />
+      </ErrorBoundary>)
     }
   ]);
 

@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { useSelector,useDispatch } from "react-redux";
 import { store, fetchWiki } from "../../../store/store";
 import { useParams} from "react-router-dom";
+import ErrorComponent from "../../ErrorBoundaries/ErrorComponent";
 
 const Wiki = ({ ...props }) => {
     const { id } = useParams();
@@ -11,9 +12,6 @@ const Wiki = ({ ...props }) => {
 
 
   useEffect(() => {
-    if (id !== wiki.id) {
-        dispatch(fetchWiki(id))
-    }
     if (wikiStatus === 'idle') {
       dispatch(fetchWiki(id))
     }
@@ -22,7 +20,8 @@ const Wiki = ({ ...props }) => {
   const WikiElements = (wikiPram) => {
 
     if (wikiStatus === "idle") return <p>On load</p>    
-    return <div id={wikiPram._id} key={wikiPram.id}>
+    try {
+        return <div id={wikiPram._id} key={wikiPram.id}>
         Wiki n°{wikiPram.id}<br></br>
         Nom : {wikiPram.Name} <br></br>
         Status: {wikiPram.Status}<br></br> 
@@ -56,12 +55,18 @@ const Wiki = ({ ...props }) => {
             </div>
         })} <br></br>
         </div>
+    } catch (error) {
+        return <ErrorComponent />
+    }
+    
     
   }
 
   return (
     <div onLoad={() => store.dispatch(fetchWiki(id))}>
-          {WikiElements(wiki)} 
+          {
+            WikiElements(wiki)
+          }
         </div> 
   );
 };
