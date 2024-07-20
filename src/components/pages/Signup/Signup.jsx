@@ -3,6 +3,7 @@ import SubmitButton from "../../UI/molecules/submitButton/submitButton";
 import FieldForm from "../../UI/molecules/FieldForm/FieldForm";
 import { useTranslation } from "react-i18next";
 import forgeLogo from "../../../assets/logo_complet.svg";
+import Form from "../../UI/organisms/Form";
 
 const Signup = () => {
   const { t } = useTranslation();
