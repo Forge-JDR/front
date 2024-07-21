@@ -1,6 +1,22 @@
 {
+    "navbar":{
+        "sheet":"Personnages",
+        "game":"Création",
+        "discover":"Catalogue"
+    },    
     "home": {
-        "welcome": "Bienvenue sur la page d'accueil"
+        "welcome": "Bienvenue sur la page d'accueil",
+        "createAccount": "Créer ton compte !",
+        "pitch": "La plateforme pour tes parties de JDR customisé",
+        "step1":"Crée ton compte et découvres de nombreux univers uniques",
+        "step2":"Crée ton propre JDR avec ton univer et tes règles",
+        "step3":"Partage ton JDR avec tes amis et d'autres passionnés",
+        "step4":"Crée simplement tes fiches personnages",
+        "step5":"Joue facilement avec tes amis",
+        "fonc1":"Crée ton propre JDR, avec ton thème, tes règles et tes idées",
+        "fonc2":"Créer simplement et rapidement tes fiches personnages",
+        "fonc3":"Partage ton univers facilement et découvre de multiples JDR uniques",
+        "fonc4":"Joue simplement avec tes amis an ayant tes fiches toujours a disposition"
     },
     "login": {
         "title": "Connexion",
