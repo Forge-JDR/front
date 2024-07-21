@@ -1,14 +1,12 @@
-import React from 'react';
-import { useTranslation } from 'react-i18next';
+import React from "react";
+
+import "./home.css";
+
+import AnonymeHome from "../../templates/home/anonymeHome/AnonymeHome";
+import ConnectedHome from "../../templates/home/connectedHome/ConnectedHome";
 
 const Home = () => {
-  const { t } = useTranslation();
-
-  return (
-    <div>
-      <h1>{t('home.welcome')}</h1>
-    </div>
-  );
+  return <AnonymeHome></AnonymeHome>;
 };
 
 export default Home;

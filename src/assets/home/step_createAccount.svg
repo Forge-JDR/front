@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 24.2.1, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Calque_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 1000 1000" style="enable-background:new 0 0 1000 1000;" xml:space="preserve">
+<style type="text/css">
+	.st0{fill:url(#SVGID_1_);}
+	.st1{fill:none;stroke:#FFFFFF;stroke-width:10;stroke-linecap:round;stroke-miterlimit:10;}
+	.st2{fill:none;stroke:#FFFFFF;stroke-width:10;stroke-miterlimit:10;}
+</style>
+<linearGradient id="SVGID_1_" gradientUnits="userSpaceOnUse" x1="267.9175" y1="818.6062" x2="729.9175" y2="188.6062">
+	<stop  offset="0" style="stop-color:#2596BE"/>
+	<stop  offset="1" style="stop-color:#15576E"/>
+</linearGradient>
+<path class="st0" d="M884.5,663.2V336.8c0-35.8-19.1-68.9-50.1-86.8L551.7,86.8c-31-17.9-69.2-17.9-100.2,0L168.7,250
+	c-31,17.9-50.1,51-50.1,86.8v326.5c0,35.8,19.1,68.9,50.1,86.8l282.7,163.2c31,17.9,69.2,17.9,100.2,0L834.4,750
+	C865.4,732.1,884.5,699,884.5,663.2z"/>
+<g>
+	<circle class="st1" cx="512" cy="437.9" r="142.2"/>
+	<path class="st1" d="M512,580.1c-203,2.3-185.5,223.2-185.5,223.2"/>
+	<path class="st1" d="M700.2,803.4c0,0,2.1-223.2-188.2-223.2"/>
+</g>
+<image style="overflow:visible;" width="1138" height="209" xlink:href="F6507386.jpg"  transform="matrix(1 0 0 1 -577 -209)">
+</image>
+<circle class="st2" cx="673.4" cy="272" r="65"/>
+<line class="st1" x1="629.9" y1="272" x2="716.4" y2="272"/>
+<line class="st1" x1="673.4" y1="233" x2="673.4" y2="314"/>
+</svg>

@@ -1,0 +1,104 @@
+/* Reset some default styles for a cleaner look */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+}
+
+.navbar {
+    width: 100%;
+    height: 70px;
+    display: flex;
+    /* align-items: center; */
+    justify-content: space-between;
+    /* background-color: #333; */
+    /* Background color of the navbar */
+    background: linear-gradient(70deg, var(--main-blue-color), var(--main-purple-color));
+    position: fixed;
+    /* Fixes the navbar at the top */
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    /* Ensures the navbar stays on top */
+    padding: 0 20px;
+    /* box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); */
+    /* Optional shadow for a slight 3D effect */
+}
+
+/* .navbar:after {
+    content: "";
+    display: block;
+    width: 90%;
+    height: 1px;
+    background-color: white;
+    position: absolute;
+    bottom: 0;
+    left: 5%;
+} */
+
+.navbar ul {
+    display: flex;
+    align-items: center;
+    list-style-type: none;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+}
+
+.navbar a {
+    color: white;
+    text-decoration: none;
+    font-size: 1rem;
+    /* Relative font size for links */
+}
+
+.navbar li {
+    margin: 0 20px;
+}
+
+/* logo image position */
+li.logo.home-link{
+    height: 90%;
+}
+
+.logo-container-navbar{
+    margin-top: 0px;
+    position:relative;
+    width: 80px;
+    height: 100%;
+}
+
+img.logo.image.link{
+    height: 100%;
+}
+
+
+/* user icone position */
+ li.icone.login-link {
+    height: 100%;
+    right: 0px;
+    position: absolute;
+    
+}
+
+.icone-container{
+        margin-top: 0px;
+        margin-right: 5px;
+        position: relative;
+        width: 80px;
+        height: 100%;
+} 
+
+img.icone_user {
+    height: 100%;
+}
+
+/*
+img.icone_user {
+    background-color: rgb(0, 255, 76);
+    height: 100%;
+} */
