@@ -1,0 +1,107 @@
+.connected-home.background {
+    height: 100vh;
+    background: linear-gradient(70deg, var(--main-blue-color), var(--main-purple-color));
+}
+
+.background-hexa.image {
+    height: 100vh;
+    background-image: url('../../../../assets/hexa_background_transparent.svg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+}
+
+.main-contaner.personnal-home {
+    margin-top: 60px;
+    width: 90%;
+    height: 90%;
+}
+
+.my-content {
+    height: 70%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex: 1;
+    /* background-color: blueviolet; */
+    border-bottom: 1px solid #ffffff;
+}
+
+
+.left,
+.right {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.left {
+    /* background-color: blueviolet; */
+    padding: 20px;
+    width: 40%;
+    height: 100%;
+    /* Bordure temporaire pour diagnostic */
+}
+
+.right {
+    /* background-color: brown; */
+    width: 60%;
+    height: 100%;
+    right: 0px;
+    position: relative;
+    padding: 10px;
+    /* Ajouté pour z-index */
+    /* Bordure temporaire pour diagnostic */
+}
+
+.my-caracters {
+    /* background-color: rgb(165, 42, 118); */
+    height: 50%;
+    width: 100%;
+    padding: 10px;
+}
+
+.my-games {
+    /* background-color: rgb(163, 165, 42); */
+    height: 50%;
+    width: 100%;
+    padding: 10px;
+    position: relative;
+}
+
+.box-content{
+    background-color: #00000020;
+    height: 100%;
+        width: 100%;
+        box-shadow: inset 10px 10px 10px rgb(0, 0, 0, 0.2);
+    padding: 10px;
+            
+}
+
+.comming-soon {
+    position: absolute;
+    top: 10;
+    left: 10;
+    width: 98%;
+    height: 92%;
+    background-color: rgba(0, 0, 0, 0.6);
+    /* Semi-transparent background */
+    color: white;
+    font-size: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1;
+    /* Ensure it is above other content */
+}
+
+.discover.list {
+    /* background-color: rgb(67, 165, 42); */
+    height: 30%;
+}

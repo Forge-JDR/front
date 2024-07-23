@@ -1,7 +1,6 @@
 @import '/src/utils/global.css';
 
 body{
-  background: linear-gradient(70deg, var(--main-blue-color), var(--main-purple-color));
     height: 100vh;
     display: flex;
     align-items: center;
@@ -13,6 +12,16 @@ html{
   height: 100%;
   margin: 0;
   padding: 0;
+}
+
+.main-container.signup {
+  background: linear-gradient(70deg, var(--main-blue-color), var(--main-purple-color));
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+
 }
 
 

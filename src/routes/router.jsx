@@ -3,6 +3,7 @@ import React from "react";
 import Home from "../components/pages/Home/Home";
 import Login from "../components/pages/Login/Login";
 import Signup from "../components/pages/Signup/Signup";
+import Creation from "../components/pages/Creation/Creation";
 
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
@@ -10,16 +11,20 @@ export const Router = () => {
   const router = createBrowserRouter([
     {
       path: "/",
-      element: <Home />
+      element: <Home />,
     },
     {
       path: "login",
-      element: <Login />
+      element: <Login />,
     },
     {
       path: "signup",
-      element: <Signup />
-    }
+      element: <Signup />,
+    },
+    {
+      path: "creation",
+      element: <Creation />,
+    },
   ]);
 
   return <RouterProvider router={router} />;

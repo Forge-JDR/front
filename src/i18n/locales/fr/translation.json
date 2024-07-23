@@ -1,7 +1,7 @@
 {
     "navbar":{
         "sheet":"Personnages",
-        "game":"Création",
+        "creation":"Création",
         "discover":"Catalogue"
     },    
     "home": {
