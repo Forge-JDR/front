@@ -88,12 +88,14 @@
     position: absolute;
     top: 10;
     left: 10;
-    width: 98%;
-    height: 92%;
+    width: calc(100% - 20px);
+    height: calc(100% - 20px);;
     background-color: rgba(0, 0, 0, 0.6);
     /* Semi-transparent background */
     color: white;
     font-size: 50px;
+    font-family: 'MedievalSharp',
+        cursive;;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -104,4 +106,8 @@
 .discover.list {
     /* background-color: rgb(67, 165, 42); */
     height: 30%;
+}
+
+.active-link {
+    font-weight: bold;
 }

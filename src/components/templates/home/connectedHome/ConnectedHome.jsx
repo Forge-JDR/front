@@ -22,7 +22,7 @@ const ConnectedHome = () => {
                 <div className="box-content">
                   <CardCreate
                     width="100%"
-                    height="20%"
+                    height="30%"
                     title="Nouveau JDR"
                   ></CardCreate>
                 </div>
