@@ -1,13 +1,15 @@
-import "./input.css";
-
-const Input = (props, ...rest) => {
+const Input = (props) => {
   return (
-    <input
-      type={props.type}
-      name={props.name}
-      required={props.required}
-      {...rest}
-    />
+    <label>
+      {props.label} :
+      <input
+        id={props.id}
+        type={props.type}
+        name={props.name}
+        value={props.value}
+        onChange={props.onChange}
+      />
+    </label>
   );
 };
 

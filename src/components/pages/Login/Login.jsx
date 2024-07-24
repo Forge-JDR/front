@@ -1,32 +1,59 @@
-import React from "react";
-import { useTranslation } from "react-i18next";
-
+import React, { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 import "./login.css";
-import forgeLogo from "../../../assets/logo/logo_complet.svg";
-
 import SubmitButton from "../../UI/molecules/submitButton/submitButton";
-import FieldForm from "../../UI/molecules/FieldForm/FieldForm";
 import Form from "../../UI/organisms/Form";
+import { useTranslation } from "react-i18next";
+import Input from "../../UI/atoms/input/Input";
+import { login } from "../../../store/store";
+import forgeLogo from "../../../assets/logo_complet.svg";
+import { useNavigate } from "react-router-dom";
 
-const Login = () => {
+const Login = ({ ...props }) => {
   const { t } = useTranslation();
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const [Email, setEmail] = useState("");
+  const [Password, setPassword] = useState("");
+
   return (
-    <div className="main-container login">
+    <>
       <div className="form-register-container">
-        <p className="form-title">Login</p>
+        <p className="form-title">{t("login.title")}</p>
         <Form id="login-form" className="form-register">
-          <FieldForm
-            label={t("login.username") + " *"}
-            name="pseudo"
-            required={true}
+          <Input
+            type="text"
+            id="email"
+            name="email"
+            label={t("login.email")}
+            value={Email}
+            onChange={(e) => setEmail(e.target.value)}
           />
-          <FieldForm
+          <Input
             type="password"
-            label={t("login.password") + " *"}
-            name="password"
-            required={true}
+            id="pwd"
+            name="pwd"
+            label={t("login.password")}
+            value={Password}
+            onChange={(e) => setPassword(e.target.value)}
           />
-          <SubmitButton onClick="submit">{t("login.submit")}</SubmitButton>
+          <SubmitButton
+            onClick={() => {
+              dispatch(
+                login({
+                  username: Email,
+                  password: Password,
+                })
+              ).then(() => {
+                if (localStorage.getItem("token")) {
+                  navigate("/discover");
+                }
+              });
+            }}
+          >
+            {t("login.submit")}
+          </SubmitButton>
         </Form>
         <div className="logo-container">
           <img src={forgeLogo} alt="Logo" />
@@ -35,7 +62,7 @@ const Login = () => {
           {t("login.anyAccount")} <a href="/signup">{t("login.signUp")}</a>
         </p>
       </div>
-    </div>
+    </>
   );
 };
 
