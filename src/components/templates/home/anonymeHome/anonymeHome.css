@@ -1,0 +1,243 @@
+/* Reset some default styles for a cleaner look */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html,
+body {
+    width: 100%;
+    height: 100%;
+    font-family: Arial, sans-serif;
+    background-color: #f3f2f2;
+}
+
+/* Ensure the main container takes the full height and width */
+#root,
+.App {
+    width: 100%;
+    height: 100%;
+}
+
+
+
+.main-presentation {
+    background: linear-gradient(70deg, var(--main-blue-color), var(--main-purple-color));
+    width: 100%;
+    height: calc(100vh - 70px);
+    /* Full screen height minus navbar height */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* background-color: #f5f5f5; */
+    margin-top: 20px;
+    /* Offset for the fixed navbar */
+}
+
+.home.background{
+    background: linear-gradient(70deg, var(--main-blue-color), var(--main-purple-color));
+}
+
+.step-presentation {
+    width: 100%;
+    height: 400px;
+}
+
+.fonctionalities-presentation {
+    width: 100%;
+    height: 1600px;
+    background-color: #d5d5d5;
+}
+
+.footer {
+    width: 100%;
+    height: 200px;
+}
+
+/* discover app container */
+
+/* div#discover-app{
+    width: 100%;
+    background-color: blue;
+    display: flex;
+    height: 150px;
+} */
+
+.main-vue {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 100%;
+    height: 100%;
+}
+
+.presentation {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    flex: 1;
+}
+
+.content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex: 1;
+}
+
+.left-side,
+.right-side {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.left-side{
+    width: 40%;
+    height: 100%;
+}
+
+.right-side{
+    width: 60%;
+    height: 100%
+}
+
+.left-side .pitch,
+.left-side .logo,
+.right-side .image {
+    margin: 10px 0;
+}
+
+.bottom {
+    display: flex;
+    justify-content: center;
+    height: 150px;
+    /* Adjust height as needed */
+}
+
+.button-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.cta-button {
+    padding: 15px 30px;
+    font-size: 20px;
+    background: linear-gradient(70deg, #752ACB, #3A1565);
+    border: none;
+    border-radius: 18px;
+    cursor: pointer;
+}
+.cta-button a{
+   color: white;
+   text-decoration: none;
+}
+
+img.logo{
+    height: 300px;
+    width: 100%;
+}
+
+.pitch{
+    width: 70%;
+    text-align: center;
+}
+
+.pitch p{
+    color: white;
+    font-family: 'MedievalSharp', cursive;
+    font-size: 3rem;
+}
+
+.right-side img{
+    width: 800px;
+    height: 100%;
+    box-shadow: 0 10px 10px rgba(0, 0, 0, 0.5);
+}
+
+/* cointener & content steps */
+
+.step-presentation {
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 20px 0;
+    background-color: #f3f2f2;
+}
+
+.step-card {
+    text-align: center;
+    max-width: 200px;
+}
+
+.step-card p {
+    margin-top: 10px;
+    color: #000;
+    font-family: 'Arial', sans-serif;
+    font-size: 18px;
+}
+
+/* Fonctionnalities presentation */
+
+.fonctionalities-presentation {
+    width: 100%;
+    height: 1600px;
+    background-color: #d5d5d5;
+}
+
+.fonctionality-card {
+    position: relative;
+    width: 100%;
+    height: 400px;
+    overflow: hidden;
+}
+
+.fonc-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.overlay {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0));
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-size: 24px;
+    text-align: center;
+    padding: 0 20px;
+}
+
+.fonc1, .fonc3{
+    text-align: left;
+}
+
+.fonc2,
+.fonc4 {
+    text-align: right;
+}
+
+
+.fonctionality-card p{
+    font-family: 'MedievalSharp', cursive;
+}
+
+/* Footer */
+
+.footer{
+text-align: center;
+padding: 30px;
+}
+
+.footer img{
+    height: 100px;
+}

@@ -1,6 +1,22 @@
 {
+    "navbar":{
+        "sheet":"Character",
+        "game":"Creation",
+        "discover":"Marketplace"
+    },  
     "home": {
-        "welcome": "Welcome to the home page"
+        "welcome": "Welcome to the home page",
+        "createAccount": "Create your account !",
+        "pitch": "The platform for your customized RPG games",
+        "step1": "Create your account and discover many unique universes",
+        "step2": "Create your own RPG with your universe and your rules",
+        "step3": "Share your RPG with your friends and other enthusiasts",
+        "step4": "Simply create your character sheets",
+        "step5": "Play easily with your friends",
+        "fonc1": "Create your own RPG with your theme, your rules, and your ideas",
+        "fonc2": "Create your character sheets easily and quickly",
+        "fonc3": "Share your universe easily and discover multiple unique RPGs",
+        "fonc4": "Play easily with your friends by having your sheets always available"
     },
     "login": {
         "title": "Login",
@@ -10,5 +26,15 @@
         "submit": "Login",
         "anyAccount": "Don't have an account ?",
         "signUp": "Sign up"
+    },
+    "signup":{
+        "title": "Subscribe",
+        "username": "Username",
+        "password": "Password",
+        "confirmPassword":"Confirm your password",
+        "email":"E-mail",
+        "submit": "Sign up",
+        "anyAccount": "You already have an account ?",
+        "login": "Login"
     }
 }

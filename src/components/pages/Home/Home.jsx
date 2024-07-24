@@ -1,16 +1,18 @@
-import React from 'react';
-import { useTranslation } from 'react-i18next';
-import WikiEditor from '../../UI/organisms/wikiEditor/WikiEditor';
+import React from "react";
+
+import "./home.css";
+
+import AnonymeHome from "../../templates/home/anonymeHome/AnonymeHome";
+import ConnectedHome from "../../templates/home/connectedHome/ConnectedHome";
 
 const Home = () => {
-  const { t } = useTranslation();
+  const isConnected = true;
 
-  return (
-    <div>
-      <h1>{t('home.welcome')}</h1>
-      <WikiEditor/>
-    </div>
-  );
+  if (isConnected) {
+    return <ConnectedHome></ConnectedHome>;
+  } else {
+    return <AnonymeHome></AnonymeHome>;
+  }
 };
 
 export default Home;
