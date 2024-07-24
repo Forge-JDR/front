@@ -6,7 +6,13 @@ import AnonymeHome from "../../templates/home/anonymeHome/AnonymeHome";
 import ConnectedHome from "../../templates/home/connectedHome/ConnectedHome";
 
 const Home = () => {
-  return <AnonymeHome></AnonymeHome>;
+  const isConnected = true;
+
+  if (isConnected) {
+    return <ConnectedHome></ConnectedHome>;
+  } else {
+    return <AnonymeHome></AnonymeHome>;
+  }
 };
 
 export default Home;

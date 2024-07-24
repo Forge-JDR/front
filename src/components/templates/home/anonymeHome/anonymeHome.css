@@ -23,6 +23,7 @@ body {
 
 
 .main-presentation {
+    background: linear-gradient(70deg, var(--main-blue-color), var(--main-purple-color));
     width: 100%;
     height: calc(100vh - 70px);
     /* Full screen height minus navbar height */
@@ -30,9 +31,12 @@ body {
     align-items: center;
     justify-content: center;
     /* background-color: #f5f5f5; */
-    background: linear-gradient(70deg, var(--main-blue-color), var(--main-purple-color));
-    margin-top: 70px;
+    margin-top: 20px;
     /* Offset for the fixed navbar */
+}
+
+.home.background{
+    background: linear-gradient(70deg, var(--main-blue-color), var(--main-purple-color));
 }
 
 .step-presentation {

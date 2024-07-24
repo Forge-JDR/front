@@ -11,7 +11,7 @@ import Form from "../../UI/organisms/Form";
 const Signup = () => {
   const { t } = useTranslation();
   return (
-    <>
+    <div className="main-container signup">
       <div className="form-register-container">
         <p className="form-title">{t("signup.title")}</p>
         <Form id="signup-form" className="form-register">
@@ -47,7 +47,7 @@ const Signup = () => {
           {t("signup.anyAccount")} <a href="/login">{t("signup.login")}</a>
         </p>
       </div>
-    </>
+    </div>
   );
 };
 
