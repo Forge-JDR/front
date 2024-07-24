@@ -21,6 +21,7 @@
     "login": {
         "title": "Connexion",
         "username": "Nom d'utilisateur",
+        "email": "Adresse e-mail",
         "password": "Mot de passe",
         "submit": "Connexion",
         "anyAccount": "Vous n'avez pas de compte ?",
