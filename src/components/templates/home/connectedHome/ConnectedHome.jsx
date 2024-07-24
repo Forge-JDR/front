@@ -55,7 +55,7 @@ const ConnectedHome = () => {
       </div>
       <div className="footer">
         <img className="logo-text" src={forgeLogoTxt} alt="logo_text" />
-        <p>Copyright 2023</p>
+        <p>Copyright 2024</p>
       </div>
     </>
   );
