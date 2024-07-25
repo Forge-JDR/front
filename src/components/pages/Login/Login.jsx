@@ -64,7 +64,7 @@ const Login = ({ ...props }) => {
           </a>
         </div>
         <p className="form-register-link">
-          {t("login.anyAccount")} <a href="/signup">{t("login.signUp")}</a>
+          {t("login.anyAccount")} <a href="/signup">{t("login.signup")}</a>
         </p>
       </div>
     </div>

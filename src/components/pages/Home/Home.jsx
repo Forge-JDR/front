@@ -6,7 +6,6 @@ import AnonymeHome from "../../templates/home/anonymeHome/AnonymeHome";
 import ConnectedHome from "../../templates/home/connectedHome/ConnectedHome";
 
 const Home = () => {
-  const isConnected = true;
   const token = localStorage.getItem("token");
 
   if (token) {

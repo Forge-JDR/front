@@ -24,7 +24,7 @@
         "password": "Password",
         "submit": "Login",
         "anyAccount": "Don't have an account ?",
-        "signUp": "Sign up"
+        "signup": "Sign up"
     },
     "signup":{
         "title": "Subscribe",
