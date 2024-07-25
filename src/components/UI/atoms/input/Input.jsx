@@ -1,15 +1,15 @@
-const Input = (props) => {
+import "./input.css";
+
+const Input = ({ id, name, value, onChange, required, type }) => {
   return (
-    <label>
-      {props.label} :
-      <input
-        id={props.id}
-        type={props.type}
-        name={props.name}
-        value={props.value}
-        onChange={props.onChange}
-      />
-    </label>
+    <input
+      id={id}
+      name={name}
+      value={value}
+      onChange={onChange}
+      required={required}
+      type={type}
+    />
   );
 };
 
