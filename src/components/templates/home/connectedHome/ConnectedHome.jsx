@@ -26,11 +26,21 @@ const ConnectedHome = () => {
                     height="30%"
                     title="Nouveau JDR"
                   ></CardCreate>
+                  <CardCreate
+                    width="100%"
+                    height="30%"
+                    title="Nouveau JDR"
+                  ></CardCreate>
                 </div>
               </div>
               <div className="right content">
                 <div className="my-caracters">
-                  <div className="box-content">
+                  <div className="box-content inline-content">
+                    <CardCreate
+                      width="20%"
+                      height="100%"
+                      title="Nouveau Personnage"
+                    ></CardCreate>
                     <CardCreate
                       width="20%"
                       height="100%"
@@ -40,7 +50,7 @@ const ConnectedHome = () => {
                 </div>
                 <div className="my-games">
                   <div className="comming-soon">Comming soon !</div>
-                  <div className="box-content">
+                  <div className="box-content inline-content">
                     <CardCreate
                       width="20%"
                       height="100%"

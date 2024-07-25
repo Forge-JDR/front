@@ -111,3 +111,9 @@
 .active-link {
     font-weight: bold;
 }
+
+.inline-content{
+    justify-content:left !important;
+    display: flex;
+    flex-direction: row;
+}

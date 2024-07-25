@@ -4,10 +4,9 @@ import "./creation.css";
 
 import forgeLogoTxt from "../../../assets/logo/logo_texte.svg";
 
-import AnonymeHome from "../../templates/home/anonymeHome/AnonymeHome";
-import ConnectedHome from "../../templates/home/connectedHome/ConnectedHome";
 import ConnectedNavbar from "../../templates/connectedNavBar/ConnectedNavbar";
 import WikiEditor from "../../UI/organisms/wikiEditor/WikiEditor";
+import CardCreate from "../../UI/molecules/CardCreate/CardCreate";
 
 const Creation = () => {
   return (
@@ -15,6 +14,34 @@ const Creation = () => {
       <div className="background creation">
         <div className="background-hexa image">
           <ConnectedNavbar></ConnectedNavbar>
+          <div className="main-contaner personnal-rpg">
+            <div className="title-personnal-page">
+              <p>Mes Jeux de rôles</p>
+            </div>
+            <div className="card-container rpg creation inline-content">
+              <div className="personnal-rpg-card new rpg">
+                <CardCreate
+                  width="100%"
+                  height="100%"
+                  title="Créer un nouveau JDR"
+                ></CardCreate>
+              </div>
+              <div className="personnal-rpg-card">
+                <CardCreate
+                  width="100%"
+                  height="100%"
+                  title="Créer un nouveau JDR"
+                ></CardCreate>
+              </div>
+              <div className="personnal-rpg-card">
+                <CardCreate
+                  width="100%"
+                  height="100%"
+                  title="Créer un nouveau JDR"
+                ></CardCreate>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
       <div className="footer">

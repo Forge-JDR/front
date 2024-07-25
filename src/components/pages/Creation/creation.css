@@ -14,3 +14,45 @@ body {
 .wiki-editor{
     margin-top: 70px;
 }
+
+.personnal-rpg{
+    margin-top: 60px;
+        width: 90%;
+        height: 80%;
+    /* background-color: rgba(255, 255, 255, 0.322); */
+    padding: 20px;
+    position: relative;
+}
+
+.title-personnal-page{
+    margin: 10px;
+}
+
+.title-personnal-page p{
+    color: var(--main-purple-color);
+    font-family: 'MedievalSharp',cursive;
+    font-size: 40px;
+}
+
+.card-container.rpg{
+    /* background-color: blue; */
+    position: relative;
+    width: 100%;
+    height: 90%;
+}
+
+.inline-content {
+    justify-content: center;
+    display: flex;
+    flex-direction: row;
+}
+
+.personnal-rpg-card{
+    /* background-color: red; */
+    width: 30%;
+    margin: 10px;    
+}
+
+.new.rpg{
+    cursor: pointer;
+}
