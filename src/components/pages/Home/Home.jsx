@@ -7,8 +7,9 @@ import ConnectedHome from "../../templates/home/connectedHome/ConnectedHome";
 
 const Home = () => {
   const isConnected = true;
+  const token = localStorage.getItem("token");
 
-  if (isConnected) {
+  if (token) {
     return <ConnectedHome></ConnectedHome>;
   } else {
     return <AnonymeHome></AnonymeHome>;

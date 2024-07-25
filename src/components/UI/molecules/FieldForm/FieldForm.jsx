@@ -3,16 +3,27 @@ import Label from "../../atoms/label/Label";
 import "./fieldForm.css";
 
 const FieldForm = ({
-  label,
+  props,
+  id,
   name,
-  type = "text",
-  required = false,
+  label,
+  required,
+  value,
+  onChange,
+  type,
   ...rest
 }) => {
   return (
     <div className="field-form">
-      <Input type={type} name={name} required={required} {...rest} />
-      <Label htmlFor={name}>{label}</Label>
+      <Input
+        id={id}
+        name={name}
+        value={value}
+        onChange={onChange}
+        required={required}
+        type={type}
+      />
+      <Label>{label}</Label>
     </div>
   );
 };

@@ -1,10 +1,9 @@
 import Button from "../../atoms/button/button";
 import "./submitButton.css";
-import { Navigate } from "react-router-dom";
 
-const SubmitButton = ({ onClick, to, children, ...rest }) => {
+const SubmitButton = ({ onClick, children, ...rest }) => {
   return (
-    <Button onClick={onClick} to={to} {...rest}>
+    <Button onClick={onClick} {...rest}>
       {children}
     </Button>
   );

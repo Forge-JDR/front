@@ -4,27 +4,29 @@ import Home from "../components/pages/Home/Home";
 import Login from "../components/pages/Login/Login";
 import Signup from "../components/pages/Signup/Signup";
 import Creation from "../components/pages/Creation/Creation";
+import Caracters from "../components/pages/Caracters/Caracters";
 
 import Discover from "../components/pages/Discover/Discover";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { RequireAuth } from "./requireAuth";
 import Wiki from "../components/pages/Wiki/Wiki";
 import Disconnect from "../components/pages/Disconnect/Disconnect";
 import ErrorBoundary from "../components/ErrorBoundaries/ErrorBoundaries";
 
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+
 export const Router = () => {
   const router = createBrowserRouter([
     {
       path: "/",
-      element: (
-        <RequireAuth>
-          <Home />
-        </RequireAuth>
-      ),
+      element: <Home />,
     },
     {
       path: "login",
       element: <Login />,
+    },
+    {
+      path: "signup",
+      element: <Signup />,
     },
     {
       path: "disconnect",
@@ -35,12 +37,29 @@ export const Router = () => {
       ),
     },
     {
-      path: "signup",
-      element: <SignUp />,
+      path: "creation",
+      element: (
+        <RequireAuth>
+          <Creation />
+        </RequireAuth>
+      ),
     },
     {
+      path: "caracters",
+      element: (
+        <RequireAuth>
+          <Caracters />
+        </RequireAuth>
+      ),
+    },
+    ,
+    {
       path: "discover",
-      element: <Discover />,
+      element: (
+        <RequireAuth>
+          <Discover />
+        </RequireAuth>
+      ),
     },
     {
       path: "wiki/:id",
@@ -49,10 +68,6 @@ export const Router = () => {
           <Wiki />
         </ErrorBoundary>
       ),
-    },
-    {
-      path: "creation",
-      element: <Creation />,
     },
   ]);
 

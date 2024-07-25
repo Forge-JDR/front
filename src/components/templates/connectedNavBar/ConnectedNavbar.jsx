@@ -8,9 +8,9 @@ const ConnectedNavbar = () => {
   const { t } = useTranslation();
 
   const links = [
-    { name: t("navbar.sheet"), url: "/" },
+    { name: t("navbar.sheet"), url: "/caracters" },
     { name: t("navbar.creation"), url: "/creation" },
-    { name: t("navbar.discover"), url: "/login" },
+    { name: t("navbar.discover"), url: "/discover" },
   ];
 
   return (
