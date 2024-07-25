@@ -3,9 +3,10 @@ import { useTranslation } from "react-i18next";
 
 import "./connectedHome.css";
 
+import forgeLogoTxt from "../../../../assets/logo/logo_texte.svg";
+
 import NavBar from "../../../UI/organisms/navBar/NavBar";
 import ConnectedNavbar from "../../connectedNavBar/ConnectedNavbar";
-import forgeLogoTxt from "../../../../assets/logo/logo_texte.svg";
 import CardCreate from "../../../UI/molecules/CardCreate/CardCreate";
 
 const ConnectedHome = () => {

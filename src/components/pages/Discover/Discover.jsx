@@ -3,6 +3,12 @@ import { useSelector, useDispatch } from "react-redux";
 import { store, fetchWikis } from "../../../store/store";
 import { Link } from "react-router-dom";
 
+import forgeLogoTxt from "../../../assets/logo/logo_texte.svg";
+
+import AnonymeHome from "../../templates/home/anonymeHome/AnonymeHome";
+import ConnectedHome from "../../templates/home/connectedHome/ConnectedHome";
+import ConnectedNavbar from "../../templates/connectedNavBar/ConnectedNavbar";
+
 const Discover = ({ ...props }) => {
   const dispatch = useDispatch();
   const wiki = useSelector((state) => state.wikis.wikisList);
@@ -28,7 +34,20 @@ const Discover = ({ ...props }) => {
   };
 
   return (
-    <div onLoad={() => store.dispatch(fetchWikis())}>{WikisElements(wiki)}</div>
+    <>
+      <div className="background creation">
+        <div className="background-hexa image">
+          <ConnectedNavbar></ConnectedNavbar>
+          <div onLoad={() => store.dispatch(fetchWikis())}>
+            {WikisElements(wiki)}
+          </div>
+        </div>
+      </div>
+      <div className="footer">
+        <img className="logo-text" src={forgeLogoTxt} alt="logo_text" />
+        <p>Copyright 2024</p>
+      </div>
+    </>
   );
 };
 
