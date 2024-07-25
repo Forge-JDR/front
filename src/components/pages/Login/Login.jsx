@@ -1,7 +1,5 @@
+import React from "react";
 import { useTranslation } from "react-i18next";
-import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
 
 import "./login.css";
 import SubmitButton from "../../UI/molecules/submitButton/submitButton";
@@ -12,58 +10,28 @@ import { login } from "../../../store/store";
 import forgeLogo from "../../../assets/logo_complet.svg";
 import { useNavigate } from "react-router-dom";
 
-import { login } from "../../../store/store";
-
-const Login = ({ ...props }) => {
+const Login = () => {
   const { t } = useTranslation();
-
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
-
-  const [Email, setEmail] = useState("");
-  const [Password, setPassword] = useState("");
-
-  const loginSubmit = () => {
-    dispatch(
-      login({
-        username: Email,
-        password: Password,
-      })
-    ).then(() => {
-      if (localStorage.getItem("token")) {
-        navigate("/discover");
-      }
-    });
-  };
-
   return (
     <>
       <div className="form-register-container">
         <p className="form-title">{t("login.title")}</p>
         <Form id="login-form" className="form-register">
           <FieldForm
-            id="email"
-            name="pseudo"
             label={t("login.username") + " *"}
+            name="pseudo"
             required={true}
-            value={Email}
-            onChange={(e) => setEmail(e.target.value)}
           />
           <FieldForm
-            id="password"
-            name="password"
-            label={t("login.password") + " *"}
             type="password"
+            label={t("login.password") + " *"}
+            name="password"
             required={true}
-            value={Password}
-            onChange={(e) => setPassword(e.target.value)}
           />
-          <SubmitButton onClick={loginSubmit}>{t("login.submit")}</SubmitButton>
+          <SubmitButton onClick="submit">{t("login.submit")}</SubmitButton>
         </Form>
         <div className="logo-container">
-          <a href="/">
-            <img src={forgeLogo} alt="Logo" />
-          </a>
+          <img src={forgeLogo} alt="Logo" />
         </div>
         <p className="form-register-link">
           {t("login.anyAccount")} <a href="/signup">{t("login.signUp")}</a>

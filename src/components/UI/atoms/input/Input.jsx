@@ -1,14 +1,12 @@
 import "./input.css";
 
-const Input = ({ id, name, value, onChange, required, type }) => {
+const Input = (props, ...rest) => {
   return (
     <input
-      id={id}
-      name={name}
-      value={value}
-      onChange={onChange}
-      required={required}
-      type={type}
+      type={props.type}
+      name={props.name}
+      required={props.required}
+      {...rest}
     />
   );
 };
