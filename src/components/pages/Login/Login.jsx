@@ -4,11 +4,13 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 import "./login.css";
-import forgeLogo from "../../../assets/logo/logo_complet.svg";
-
 import SubmitButton from "../../UI/molecules/submitButton/submitButton";
-import FieldForm from "../../UI/molecules/FieldForm/FieldForm";
 import Form from "../../UI/organisms/Form";
+import { useTranslation } from "react-i18next";
+import Input from "../../UI/atoms/input/Input";
+import { login } from "../../../store/store";
+import forgeLogo from "../../../assets/logo_complet.svg";
+import { useNavigate } from "react-router-dom";
 
 import { login } from "../../../store/store";
 
@@ -35,9 +37,9 @@ const Login = ({ ...props }) => {
   };
 
   return (
-    <div className="main-container login">
+    <>
       <div className="form-register-container">
-        <p className="form-title">Login</p>
+        <p className="form-title">{t("login.title")}</p>
         <Form id="login-form" className="form-register">
           <FieldForm
             id="email"
@@ -67,7 +69,7 @@ const Login = ({ ...props }) => {
           {t("login.anyAccount")} <a href="/signup">{t("login.signUp")}</a>
         </p>
       </div>
-    </div>
+    </>
   );
 };
 
