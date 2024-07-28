@@ -29,7 +29,7 @@ const Login = ({ ...props }) => {
       })
     ).then(() => {
       if (localStorage.getItem("token")) {
-        navigate("/discover");
+        navigate("/home");
       }
     });
   };
