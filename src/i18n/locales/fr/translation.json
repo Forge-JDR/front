@@ -1,4 +1,7 @@
 {
+    "commun":{
+        "commingSoon": "Prochainement !"
+    },
     "navbar":{
         "sheet":"Personnages",
         "creation":"Création",
@@ -42,5 +45,10 @@
         "cancel": "Annulé",
         "create": "Crée mon JDR",
         "new": "Nouveay JDR"
+    },
+    "connectedHome":{
+        "newRPG": "Nouveau JDR",
+        "newCharactere": "Nouveau Personnage",
+        "newGame": "Nouvelle Partie"
     }
 }
