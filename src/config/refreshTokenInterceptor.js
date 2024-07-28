@@ -27,16 +27,15 @@ const setup = (store) => {
             const originalConfig = err.config;
             const refreshToken = window.localStorage.getItem("refresh_token");
             console.log(refreshToken);
-            if (originalConfig.url !== "/token/refresh" && err.response && refreshToken) {
+            if (originalConfig.url !== "api/token/refresh" && err.response && refreshToken) {
 
                 // Access Token was expired
                 if (err.response.status === 401 && !originalConfig._retry) {
                     originalConfig._retry = true;
 
 
-                    await axiosInstance.post('/token/refresh', {
-                        "refresh_token": refreshToken,
-                        "mode": "json"
+                    await axiosInstance.post('api/token/refresh', {
+                        "refresh_token": refreshToken
                     }).then((response) => {
 
                             dispatch(reloadToken({
