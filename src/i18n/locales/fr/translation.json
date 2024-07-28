@@ -35,5 +35,12 @@
         "submit": "Inscription",
         "anyAccount": "Vous avez déjà un compte ?",
         "login": "Se connecter"
+    },
+    "newRpgForm":{
+        "rpgName": "Nom de mon JDR",
+        "style": "Style",
+        "cancel": "Annulé",
+        "create": "Crée mon JDR",
+        "new": "Nouveay JDR"
     }
 }

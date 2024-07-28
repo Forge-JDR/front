@@ -35,5 +35,12 @@
         "submit": "Sign up",
         "anyAccount": "You already have an account ?",
         "login": "Login"
+    },
+    "newRpgForm":{
+        "rpgName": "Name of my RPG",
+        "style": "Style",
+        "cancel": "Cancel",
+        "create": "Create my RPG",
+        "new": "New RPG"
     }
 }
