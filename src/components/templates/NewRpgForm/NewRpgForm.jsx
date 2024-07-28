@@ -12,6 +12,7 @@ import iconeUplaod from "../../../assets/upload_icone.svg";
 const NewRpgForm = ({ closeForm, ...rest }) => {
   const [rpgName, setRpgName] = useState("");
   const [style, setStyle] = useState("");
+  const { t } = useTranslation();
 
   return (
     <div className="background-form" onClick={closeForm}>
