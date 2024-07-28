@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useTranslation } from "react-i18next";
 
 import "./newRpgForm.css";
 
@@ -11,12 +12,13 @@ import iconeUplaod from "../../../assets/upload_icone.svg";
 const NewRpgForm = ({ closeForm, ...rest }) => {
   const [rpgName, setRpgName] = useState("");
   const [style, setStyle] = useState("");
+  const { t } = useTranslation();
 
   return (
     <div className="background-form" onClick={closeForm}>
       <div className="form newRpg" onClick={(e) => e.stopPropagation()}>
         <div className="title-form new-rpg">
-          <p>Nouveau JDR</p>
+          <p>{t("login.new")}</p>
         </div>
         <div className="main-container info-new-rpg">
           <div className="img-container left">
@@ -29,7 +31,7 @@ const NewRpgForm = ({ closeForm, ...rest }) => {
             <FieldForm
               id="rpgName"
               name="rpgName"
-              label="Nom de mon jdr"
+              label={t("login.rpgName")}
               required={true}
               value={rpgName}
               onChange={(e) => setRpgName(e.target.value)}
@@ -37,7 +39,7 @@ const NewRpgForm = ({ closeForm, ...rest }) => {
             <FieldForm
               id="style"
               name="style"
-              label="Style"
+              label={t("login.style")}
               required={true}
               value={style}
               onChange={(e) => setStyle(e.target.value)}
@@ -47,7 +49,7 @@ const NewRpgForm = ({ closeForm, ...rest }) => {
 
         <div className="btn bottom">
           <CancelButton className="cancel" onClick={closeForm}>
-            Annuler
+          {t("login.cancel")}
           </CancelButton>
           <SubmitButton
             className="confirm"
@@ -55,7 +57,7 @@ const NewRpgForm = ({ closeForm, ...rest }) => {
               console.log("Form submitted");
             }}
           >
-            Créer mon JDR
+            {t("login.create")}
           </SubmitButton>
         </div>
       </div>

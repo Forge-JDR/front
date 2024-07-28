@@ -1,4 +1,7 @@
 {
+    "commun":{
+        "commingSoon": "Prochainement !"
+    },
     "navbar":{
         "sheet":"Personnages",
         "creation":"Création",
@@ -35,5 +38,17 @@
         "submit": "Inscription",
         "anyAccount": "Vous avez déjà un compte ?",
         "login": "Se connecter"
+    },
+    "newRpgForm":{
+        "rpgName": "Nom de mon JDR",
+        "style": "Style",
+        "cancel": "Annulé",
+        "create": "Crée mon JDR",
+        "new": "Nouveay JDR"
+    },
+    "connectedHome":{
+        "newRPG": "Nouveau JDR",
+        "newCharactere": "Nouveau Personnage",
+        "newGame": "Nouvelle Partie"
     }
 }

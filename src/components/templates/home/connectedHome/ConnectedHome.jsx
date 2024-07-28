@@ -24,12 +24,12 @@ const ConnectedHome = () => {
                   <CardCreate
                     width="100%"
                     height="30%"
-                    title="Nouveau JDR"
+                    title={t("connectedHome.newRPG")}
                   ></CardCreate>
                   <CardCreate
                     width="100%"
                     height="30%"
-                    title="Nouveau JDR"
+                    title={t("connectedHome.newRPG")}
                   ></CardCreate>
                 </div>
               </div>
@@ -39,22 +39,22 @@ const ConnectedHome = () => {
                     <CardCreate
                       width="20%"
                       height="100%"
-                      title="Nouveau Personnage"
+                      title={t("connectedHome.newCharactere")}
                     ></CardCreate>
                     <CardCreate
                       width="20%"
                       height="100%"
-                      title="Nouveau Personnage"
+                      title={t("connectedHome.newCharactere")}
                     ></CardCreate>
                   </div>
                 </div>
                 <div className="my-games">
-                  <div className="comming-soon">Comming soon !</div>
+                  <div className="comming-soon">{t("commun.commingSoon")}</div>
                   <div className="box-content inline-content">
                     <CardCreate
                       width="20%"
                       height="100%"
-                      title="Nouvelle partie"
+                      title={t("connectedHome.newGame")}
                     ></CardCreate>
                   </div>
                 </div>

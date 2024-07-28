@@ -1,4 +1,7 @@
 {
+    "commun":{
+        "commingSoon": "Comming soon !"
+    },
     "navbar":{
         "sheet":"Character",
         "game":"Creation",
@@ -35,5 +38,17 @@
         "submit": "Sign up",
         "anyAccount": "You already have an account ?",
         "login": "Login"
+    },
+    "newRpgForm":{
+        "rpgName": "Name of my RPG",
+        "style": "Style",
+        "cancel": "Cancel",
+        "create": "Create my RPG",
+        "new": "New RPG"
+    },
+    "connectedHome":{
+        "newRPG": "New RPG",
+        "newCharactere": "New Charactere",
+        "newGame": "New Game"
     }
 }
