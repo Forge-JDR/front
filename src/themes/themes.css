@@ -1,0 +1,28 @@
+/* themes.css */
+
+:root {
+    --background-color: white;
+    --text-color: rgb(32, 32, 32);
+}
+
+body.dark-theme {
+    --background-color: rgb(32, 32, 32);;
+    --text-color: white;
+}
+
+body {
+    background-color: var(--background-color);
+    color: var(--text-color);
+}
+
+/* Ajoutez d'autres styles selon vos besoins */
+
+.background.dark-theme {
+    --background-color: rgb(32, 32, 32);;
+    --text-color: white;
+}
+
+.background {
+    background-color: var(--background-color);
+    color: var(--text-color);
+}

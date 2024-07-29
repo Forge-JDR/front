@@ -165,3 +165,12 @@ img.icone_user {
 .change-langage-btn.active {
     font-weight: bold;
 }
+
+.theme-switch-container{
+    display: flex;
+        align-items: center;
+        justify-content: center;
+        position: absolute;
+        right: 160px;
+        padding: 5px;
+}

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { logout } from "../../../../store/store";
@@ -10,9 +10,12 @@ import "./navbar.css";
 import forgeLogo from "../../../../assets/logo/logo_complet.svg";
 import iconeUser from "../../../../assets/icone_user.svg";
 
+import ThemeSwitch from "../../molecules/ThemeSwitch/ThemeSwitch";
+
 const NavBar = ({ links }) => {
   const { t, i18n } = useTranslation();
   const token = localStorage.getItem("token");
+  const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -33,8 +36,16 @@ const NavBar = ({ links }) => {
       })
       .catch((error) => {
         console.error("Logout failed:", error);
-        // Optionally handle the error here
       });
+  };
+
+  useEffect(() => {
+    document.body.className = theme === "dark" ? "dark-theme" : "";
+    localStorage.setItem("theme", theme);
+  }, [theme]);
+
+  const toggleTheme = () => {
+    setTheme(theme === "dark" ? "light" : "dark");
   };
 
   const changeLanguage = (lng) => {
@@ -61,6 +72,9 @@ const NavBar = ({ links }) => {
             </Link>
           </li>
         ))}
+        <div className="theme-switch-container">
+          <ThemeSwitch onClick={toggleTheme} theme={theme} />
+        </div>
         <div className="change-langage-container">
           <li className="change-langage">
             <div
