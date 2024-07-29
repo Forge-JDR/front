@@ -15,7 +15,16 @@ const login = (username, password) => {
             }
 
             return response.data;
-        });
+        })
+        .catch((e) => {
+        if (e.response) {
+          console.error("Response error:", e.response.data);
+        } else if (e.request) {
+          console.error("Request error:", e.request);
+        } else {
+          console.error("Error", e.message);
+        }
+      });
 };
 
 const register = (email, password) => {

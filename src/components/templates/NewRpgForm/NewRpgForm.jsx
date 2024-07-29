@@ -18,7 +18,7 @@ const NewRpgForm = ({ closeForm, ...rest }) => {
     <div className="background-form" onClick={closeForm}>
       <div className="form newRpg" onClick={(e) => e.stopPropagation()}>
         <div className="title-form new-rpg">
-          <p>{t("login.new")}</p>
+          <p>{t("newRpgForm.new")}</p>
         </div>
         <div className="main-container info-new-rpg">
           <div className="img-container left">
@@ -31,7 +31,7 @@ const NewRpgForm = ({ closeForm, ...rest }) => {
             <FieldForm
               id="rpgName"
               name="rpgName"
-              label={t("login.rpgName")}
+              label={t("newRpgForm.rpgName")}
               required={true}
               value={rpgName}
               onChange={(e) => setRpgName(e.target.value)}
@@ -39,7 +39,7 @@ const NewRpgForm = ({ closeForm, ...rest }) => {
             <FieldForm
               id="style"
               name="style"
-              label={t("login.style")}
+              label={t("newRpgForm.style")}
               required={true}
               value={style}
               onChange={(e) => setStyle(e.target.value)}
@@ -49,15 +49,15 @@ const NewRpgForm = ({ closeForm, ...rest }) => {
 
         <div className="btn bottom">
           <CancelButton className="cancel" onClick={closeForm}>
-          {t("login.cancel")}
+            {t("newRpgForm.cancel")}
           </CancelButton>
           <SubmitButton
             className="confirm"
             onClick={() => {
-              console.log("Form submitted");
+              console.log("newRpgForm submitted");
             }}
           >
-            {t("login.create")}
+            {t("newRpgForm.create")}
           </SubmitButton>
         </div>
       </div>
