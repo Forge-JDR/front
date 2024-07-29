@@ -52,6 +52,19 @@
         "create": "Create my RPG",
         "new": "New RPG"
     },
+    "newCaracterForm":{
+        "rpgName": "Name of my Caracter",
+        "rpg": "RPG associated",
+        "cancel": "Cancel",
+        "create": "Create my Caracter",
+        "new": "New caracter"
+    },
+    "creation":{
+        "title":"My role play games"
+    },
+    "caracter":{
+        "title":"My caracters"
+    },
     "connectedHome":{
         "newRPG": "New RPG",
         "newCharactere": "New Charactere",

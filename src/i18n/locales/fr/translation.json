@@ -52,6 +52,19 @@
         "create": "Créer mon JDR",
         "new": "Nouveau JDR"
     },
+    "newCaracterForm":{
+        "caracterName": "Nom de mon personnage",
+        "rpg": "JDR associé",
+        "cancel": "Annuler",
+        "create": "Créer mon personnage",
+        "new": "Nouveau personnage"
+    },
+     "creation":{
+        "title":"Mes jeux de rôles"
+    },
+     "caracter":{
+        "title":"Mes personnages"
+    },
     "connectedHome":{
         "newRPG": "Nouveau JDR",
         "newCharactere": "Nouveau Personnage",
