@@ -19,7 +19,9 @@
         "fonc1":"Crée ton propre JDR, avec ton thème, tes règles et tes idées",
         "fonc2":"Créer simplement et rapidement tes fiches personnages",
         "fonc3":"Partage ton univers facilement et découvre de multiples JDR uniques",
-        "fonc4":"Joue simplement avec tes amis an ayant tes fiches toujours a disposition"
+        "fonc4":"Joue simplement avec tes amis an ayant tes fiches toujours a disposition",
+        "login": "Se connecter",
+        "logout": "Se déconnecter"
     },
     "login": {
         "title": "Connexion",
@@ -27,7 +29,9 @@
         "password": "Mot de passe",
         "submit": "Connexion",
         "anyAccount": "Vous n'avez pas de compte ?",
-        "signup": "S'inscrire"
+        "signup": "S'inscrire",
+        "loading": "Chargement...",
+        "error": "Connexion impossible"
     },
     "signup":{
         "title": "Inscription",
@@ -37,14 +41,29 @@
         "email":"E-mail",
         "submit": "Inscription",
         "anyAccount": "Vous avez déjà un compte ?",
-        "login": "Se connecter"
+        "login": "Se connecter",
+        "loading": "Chargement...",
+        "error": "Inscription impossible"
     },
     "newRpgForm":{
         "rpgName": "Nom de mon JDR",
         "style": "Style",
-        "cancel": "Annulé",
-        "create": "Crée mon JDR",
-        "new": "Nouveay JDR"
+        "cancel": "Annuler",
+        "create": "Créer mon JDR",
+        "new": "Nouveau JDR"
+    },
+    "newCaracterForm":{
+        "caracterName": "Nom de mon personnage",
+        "rpg": "JDR associé",
+        "cancel": "Annuler",
+        "create": "Créer mon personnage",
+        "new": "Nouveau personnage"
+    },
+     "creation":{
+        "title":"Mes jeux de rôles"
+    },
+     "caracter":{
+        "title":"Mes personnages"
     },
     "connectedHome":{
         "newRPG": "Nouveau JDR",

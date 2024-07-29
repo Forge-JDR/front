@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useTranslation } from "react-i18next";
 
 import "./creation.css";
 
@@ -13,6 +14,7 @@ import CardRpg from "../../UI/organisms/CardRpg/CardRpg";
 import imageTest from "../../../assets/home/fonc3.jpg";
 
 const Creation = () => {
+  const { t } = useTranslation();
   const [isDisplayFormNew, setIsDisplayFormNew] = useState(false);
 
   const displayForm = () => {
@@ -34,7 +36,7 @@ const Creation = () => {
           {isDisplayFormNew && <NewRpgForm closeForm={displayForm} />}
           <div className="main-contaner personnal-rpg">
             <div className="title-personnal-page">
-              <p>Mes Jeux de rôles</p>
+              <p>{t("creation.title")}</p>
             </div>
             <div className="card-container rpg creation inline-content">
               {rpgList.map((rpg, index) => (

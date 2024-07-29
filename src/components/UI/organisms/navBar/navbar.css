@@ -95,6 +95,7 @@ img.logo.image.link{
 
 img.icone_user {
     height: 100%;
+    cursor: pointer;
 }
 
 /*
@@ -102,3 +103,74 @@ img.icone_user {
     background-color: rgb(0, 255, 76);
     height: 100%;
 } */
+
+.sub-menu {
+    width: 150% !important;
+    position: absolute;
+    background-color: white;
+    border: 1px solid #ccc;
+    list-style: none;
+    padding: 10px;
+    margin: 0;
+    top: 70px;
+    /* Ajustez cette valeur en fonction de votre layout */
+    right: 0;
+}
+
+.sub-menu li {
+    margin: 0;
+    padding: 4px;
+    cursor: pointer;
+    width: 100%;
+}
+
+.sub-menu li a {
+    text-decoration: none;
+    color: black;
+    display: block;
+    padding: 5px 10px;
+}
+
+.sub-menu li a:hover {
+    background-color: #f0f0f0;
+    cursor: pointer;
+}
+
+.change-langage-container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    right: 120px;
+}
+
+.change-langage{
+    height: 100%;
+}
+
+.change-langage-btn{
+    cursor: pointer;
+    color: #FFFFFF;
+}
+
+.change-langage-container {
+    display: flex;
+    gap: 10px;
+}
+
+.change-langage-btn {
+    cursor: pointer;
+}
+
+.change-langage-btn.active {
+    font-weight: bold;
+}
+
+.theme-switch-container{
+    display: flex;
+        align-items: center;
+        justify-content: center;
+        position: absolute;
+        right: 160px;
+        padding: 5px;
+}

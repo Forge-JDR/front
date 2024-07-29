@@ -1,5 +1,5 @@
 import { useTranslation } from "react-i18next";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
@@ -20,18 +20,39 @@ const Login = ({ ...props }) => {
 
   const [Email, setEmail] = useState("");
   const [Password, setPassword] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(t(""));
 
   const loginSubmit = () => {
+    setIsLoading(true);
+    setError("");
+
     dispatch(
       login({
         username: Email,
         password: Password,
       })
-    ).then(() => {
-      if (localStorage.getItem("token")) {
-        navigate("/home");
-      }
-    });
+    )
+      .then(() => {
+        if (localStorage.getItem("token")) {
+          navigate("/");
+        }
+      })
+      .catch((e) => {
+        console.log(t("login.error"));
+        setError(t("login.error"));
+        if (e.response) {
+          console.error("Response error:", e.response.data);
+        } else if (e.request) {
+          console.error("Request error:", e.request);
+        } else {
+          console.error("Error", e.message);
+        }
+      })
+      .finally(() => {
+        setIsLoading(false);
+        setError(t("login.error"));
+      });
   };
 
   return (
@@ -56,8 +77,12 @@ const Login = ({ ...props }) => {
             value={Password}
             onChange={(e) => setPassword(e.target.value)}
           />
-          <SubmitButton onClick={loginSubmit}>{t("login.submit")}</SubmitButton>
+          {error && <p className="error-message">{error}</p>}
+          <SubmitButton onClick={loginSubmit} disabled={isLoading}>
+            {isLoading ? t("login.loading") : t("login.submit")}
+          </SubmitButton>
         </Form>
+
         <div className="logo-container">
           <a href="/">
             <img src={forgeLogo} alt="Logo" />

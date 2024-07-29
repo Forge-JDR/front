@@ -19,7 +19,9 @@
         "fonc1": "Create your own RPG with your theme, your rules, and your ideas",
         "fonc2": "Create your character sheets easily and quickly",
         "fonc3": "Share your universe easily and discover multiple unique RPGs",
-        "fonc4": "Play easily with your friends by having your sheets always available"
+        "fonc4": "Play easily with your friends by having your sheets always available",
+        "login": "Login",
+        "logout": "Logout"
     },
     "login": {
         "title": "Login",
@@ -27,7 +29,9 @@
         "password": "Password",
         "submit": "Login",
         "anyAccount": "Don't have an account ?",
-        "signup": "Sign up"
+        "signup": "Sign up",
+        "loading": "Loading...",
+        "error": "Impossible to login"
     },
     "signup":{
         "title": "Subscribe",
@@ -37,7 +41,9 @@
         "email":"E-mail",
         "submit": "Sign up",
         "anyAccount": "You already have an account ?",
-        "login": "Login"
+        "login": "Login",
+        "loading": "Loading...",
+        "error": "Impossible to signup"
     },
     "newRpgForm":{
         "rpgName": "Name of my RPG",
@@ -45,6 +51,19 @@
         "cancel": "Cancel",
         "create": "Create my RPG",
         "new": "New RPG"
+    },
+    "newCaracterForm":{
+        "rpgName": "Name of my Caracter",
+        "rpg": "RPG associated",
+        "cancel": "Cancel",
+        "create": "Create my Caracter",
+        "new": "New caracter"
+    },
+    "creation":{
+        "title":"My role play games"
+    },
+    "caracter":{
+        "title":"My caracters"
     },
     "connectedHome":{
         "newRPG": "New RPG",
