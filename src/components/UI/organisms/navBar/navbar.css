@@ -135,3 +135,33 @@ img.icone_user {
     background-color: #f0f0f0;
     cursor: pointer;
 }
+
+.change-langage-container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    right: 120px;
+}
+
+.change-langage{
+    height: 100%;
+}
+
+.change-langage-btn{
+    cursor: pointer;
+    color: #FFFFFF;
+}
+
+.change-langage-container {
+    display: flex;
+    gap: 10px;
+}
+
+.change-langage-btn {
+    cursor: pointer;
+}
+
+.change-langage-btn.active {
+    font-weight: bold;
+}

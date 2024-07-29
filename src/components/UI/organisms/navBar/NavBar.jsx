@@ -11,7 +11,7 @@ import forgeLogo from "../../../../assets/logo/logo_complet.svg";
 import iconeUser from "../../../../assets/icone_user.svg";
 
 const NavBar = ({ links }) => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const token = localStorage.getItem("token");
 
   const navigate = useNavigate();
@@ -37,6 +37,10 @@ const NavBar = ({ links }) => {
       });
   };
 
+  const changeLanguage = (lng) => {
+    i18n.changeLanguage(lng);
+  };
+
   return (
     <nav className="navbar">
       <ul>
@@ -57,6 +61,26 @@ const NavBar = ({ links }) => {
             </Link>
           </li>
         ))}
+        <div className="change-langage-container">
+          <li className="change-langage">
+            <div
+              className={`change-langage-btn ${
+                i18n.language === "en" ? "active" : ""
+              }`}
+              onClick={() => changeLanguage("en")}
+            >
+              EN
+            </div>
+            <div
+              className={`change-langage-btn ${
+                i18n.language === "fr" ? "active" : ""
+              }`}
+              onClick={() => changeLanguage("fr")}
+            >
+              FR
+            </div>
+          </li>
+        </div>
         <li className="icone login-link">
           <div className="icone-container" onClick={handleUserIconClick}>
             <img className="icone_user" src={iconeUser} alt="utilisateur" />
