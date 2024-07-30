@@ -52,6 +52,14 @@ You don't have to ever use `eject`. The curated feature set is suitable for smal
 You can also launch the app with Docker using the following command:
 
 `docker-compose up`
+Build image : 
+docker build -t rg.fr-par.scw.cloud/registryforgejdr/frontforgejdr:0.1 -f ./docker/react/Dockerfile --build-arg REACT_APP_URL_BACK="https://backforgejdryr5nsvrg-container-back-forge-jdr.functions.fnc.fr-par.scw.cloud/api" .
+
+Run front : 
+docker run -d -p 3000:3000 -e REACT_APP_URL_BACK="https://backforgejdryr5nsvrg-container-back-forge-jdr.functions.fnc.fr-par.scw.cloud/api" rg.fr-par.scw.cloud/registryforgejdr/frontforgejdr:0.1
+
+Déployer le front sur Scaleway : 
+scw container container create name=container-front-forge-jdr registry-image=rg.fr-par.scw.cloud/registryforgejdr/frontforgejdr:0.1 min-scale=1 max-scale=1 memory-limit=128 cpu-limit=70 timeout=300s namespace-id=940522cc-2a4a-4ead-86a0-a37225e447c3 max-concurrency=1 protocol=unknown_protocol sandbox=v1 privacy=public port=3000 environment-variables.REACT_APP_URL_BACK="https://backforgejdryr5nsvrg-container-back-forge-jdr.functions.fnc.fr-par.scw.cloud/api"
 
 ## Learn More
 
@@ -82,3 +90,6 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+
+
