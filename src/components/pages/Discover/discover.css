@@ -1,0 +1,68 @@
+.background.creations {
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+html,
+body {
+    width: 100%;
+    height: 100%;
+    font-family: Arial, sans-serif;
+    background-color: #f3f2f2;
+}
+
+.wiki-editor {
+    margin-top: 70px;
+}
+
+.personnal-rpg {
+    margin-top: 90px;
+    width: 90%;
+    padding: 20px;
+    position: relative;
+    flex: 1;
+}
+
+.title-personnal-page {
+    margin: 10px;
+}
+
+.title-personnal-page p {
+    color: var(--main-purple-color);
+    font-family: 'MedievalSharp', cursive;
+    font-size: 40px;
+}
+
+.card-container.rpg {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+}
+
+.inline-content {
+    justify-content: center;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.personnal-rpg-card {
+    flex: 1 1 calc(20% - 40px);
+    /* Five cards per row with gap adjustment */
+    margin: 10px;
+    max-width: calc(20% - 40px);
+    height: 40vh;
+    /* Setting the height to 40% of the viewport height */
+}
+
+.new.rpg {
+    cursor: pointer;
+}
+
+.footer {
+    text-align: center;
+    padding: 20px;
+    background-color: #f3f2f2;
+}

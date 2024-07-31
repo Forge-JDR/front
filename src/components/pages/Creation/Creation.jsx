@@ -1,49 +1,69 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { useDispatch, useSelector } from "react-redux";
+import { store, fetchWikis } from "../../../store/store";
 
 import "./creation.css";
 
 import forgeLogoTxt from "../../../assets/logo/logo_texte.svg";
+import defaultWikiImage from "../../../assets/wiki_default.png";
 
 import ConnectedNavbar from "../../templates/connectedNavBar/ConnectedNavbar";
-import WikiEditor from "../../UI/organisms/wikiEditor/WikiEditor";
 import CardCreate from "../../UI/molecules/CardCreate/CardCreate";
 import NewRpgForm from "../../templates/NewRpgForm/NewRpgForm";
 import CardRpg from "../../UI/organisms/CardRpg/CardRpg";
 
-import imageTest from "../../../assets/home/fonc3.jpg";
-
 const Creation = () => {
+  const userConnected = "admin";
   const { t } = useTranslation();
+  const dispatch = useDispatch();
+  const wikis = useSelector((state) => state.wikis.wikisList);
+
+  useEffect(() => {
+    dispatch(fetchWikis());
+  }, [dispatch]);
+
   const [isDisplayFormNew, setIsDisplayFormNew] = useState(false);
+  const [userWikis, setUserWikis] = useState([]);
 
   const displayForm = () => {
     setIsDisplayFormNew(!isDisplayFormNew);
   };
 
-  const rpgList = [
-    {
-      srcImg: imageTest,
-      nameRpg: "Oniris",
-    },
-  ];
+  useEffect(() => {
+    console.log(wikis);
+    console.log("userwiki: " + userWikis);
+  }, [wikis]);
 
   return (
     <>
       <div className="background creation">
         <div className="background-hexa image">
-          <ConnectedNavbar></ConnectedNavbar>
+          <ConnectedNavbar />
           {isDisplayFormNew && <NewRpgForm closeForm={displayForm} />}
           <div className="main-contaner personnal-rpg">
             <div className="title-personnal-page">
               <p>{t("creation.title")}</p>
             </div>
             <div className="card-container rpg creation inline-content">
-              {rpgList.map((rpg, index) => (
-                <div key={index} className="personnal-rpg-card rpg">
-                  <CardRpg srcImg={rpg.srcImg} nameRpg={rpg.nameRpg} />
-                </div>
-              ))}
+              {Array.isArray(wikis) &&
+                wikis.length > 0 &&
+                wikis[0].map(
+                  (rpg, index) =>
+                    rpg.user?.pseudo === userConnected && (
+                      <div key={index} className="personnal-rpg-card rpg">
+                        <CardRpg
+                          id={rpg.id}
+                          srcImg={
+                            rpg.imageFile
+                              ? rpg.imageFile.path
+                              : defaultWikiImage
+                          }
+                          nameRpg={rpg.Name}
+                        />
+                      </div>
+                    )
+                )}
               <div className="personnal-rpg-card new rpg">
                 <CardCreate
                   width="100%"
@@ -61,9 +81,6 @@ const Creation = () => {
         <img className="logo-text" src={forgeLogoTxt} alt="logo_text" />
         <p>Copyright 2024</p>
       </div>
-      {/* <div className="wiki-editor">
-        <WikiEditor />
-      </div> */}
     </>
   );
 };

@@ -2,17 +2,21 @@ import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { store, fetchWikis } from "../../../store/store";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+
+import "./discover.css";
 
 import forgeLogoTxt from "../../../assets/logo/logo_texte.svg";
+import defaultWikiImage from "../../../assets/wiki_default.png";
 
-import AnonymeHome from "../../templates/home/anonymeHome/AnonymeHome";
-import ConnectedHome from "../../templates/home/connectedHome/ConnectedHome";
 import ConnectedNavbar from "../../templates/connectedNavBar/ConnectedNavbar";
+import CardRpgDiscover from "../../UI/organisms/CardRpgDiscover/CardRpgDiscover";
 
 const Discover = ({ ...props }) => {
   const dispatch = useDispatch();
   const wiki = useSelector((state) => state.wikis.wikisList);
   const wikiStatus = useSelector((state) => state.wikis.status);
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (wikiStatus === "idle") {
@@ -20,15 +24,31 @@ const Discover = ({ ...props }) => {
     }
   }, [wikiStatus, dispatch]);
 
+  useEffect(() => {
+    console.log(wiki);
+  });
+
   const WikisElements = (wikiPram) => {
     if (!wikiPram[0]) return <p>On load</p>;
 
     return wikiPram[0].map((wiki) => {
       return (
-        <div id={wiki._id} key={wiki.id}>
-          {wiki.Name} : {wiki.Status}, Owner : {wiki.user.pseudo},{" "}
-          <Link to={"/wiki/" + wiki.id}>Voir plus</Link>
-        </div>
+        wiki.Status === "published" && (
+          <div
+            className="personnal-rpg-card rpg"
+            key={wiki.id}
+            onClick={() => {
+              navigate(`/wiki/${wiki.id}`);
+            }}
+          >
+            <CardRpgDiscover
+              id={wiki.id}
+              srcImg={wiki.imageFile ? wiki.imageFile.path : defaultWikiImage}
+              nameRpg={wiki.Name}
+              owner={wiki.user?.pseudo}
+            />
+          </div>
+        )
       );
     });
   };
@@ -37,9 +57,13 @@ const Discover = ({ ...props }) => {
     <>
       <div className="background creation">
         <div className="background-hexa image">
-          <ConnectedNavbar></ConnectedNavbar>
-          <div onLoad={() => store.dispatch(fetchWikis())}>
-            {WikisElements(wiki)}
+          <ConnectedNavbar />
+          <div className="main-contaner personnal-rpg">
+            <div onLoad={() => store.dispatch(fetchWikis())}>
+              <div className="card-container rpg creation inline-content">
+                {WikisElements(wiki)}
+              </div>
+            </div>
           </div>
         </div>
       </div>

@@ -1,12 +1,11 @@
-import React, { useRef, useState } from 'react';
-import Quill from 'quill';
-import Editor from '../../atoms/editor/Editor';
-import '../../atoms/editor/editor.css';
+import React, { useRef, useState } from "react";
+import Quill from "quill";
+import Editor from "../../atoms/editor/Editor";
+import "../../atoms/editor/editor.css";
 
+const Delta = Quill.import("delta");
 
-const Delta = Quill.import('delta');
-
-const WikiEditor = () => {
+const WikiEditor = ({ children }) => {
   const [range, setRange] = useState();
   const [lastChange, setLastChange] = useState();
   const [readOnly, setReadOnly] = useState(false);
@@ -14,24 +13,25 @@ const WikiEditor = () => {
   const quillRef = useRef();
 
   return (
-    <div style={{backgroundColor: "white"}}>
+    <div style={{ backgroundColor: "white" }}>
       <Editor
         ref={quillRef}
         readOnly={readOnly}
         defaultValue={new Delta()
-          .insert('Hello')
-          .insert('\n', { header: 1 })
-          .insert('Some ')
-          .insert('initial', { bold: true })
-          .insert(' ')
-          .insert('content', { underline: true })
-          .insert('\n')}
+          .insert("Hello")
+          .insert("\n", { header: 1 })
+          .insert("Some ")
+          .insert("initial", { bold: true })
+          .insert(" ")
+          .insert("content", { underline: true })
+          .insert("\n")}
         onSelectionChange={setRange}
         onTextChange={setLastChange}
       />
+      {children}
       <div className="controls">
         <label>
-          Read Only:{' '}
+          Read Only:{" "}
           <input
             type="checkbox"
             value={readOnly}
@@ -42,9 +42,17 @@ const WikiEditor = () => {
           className="controls-right"
           type="button"
           onClick={() => {
-            console.log('getSelection:', quillRef.current.getSelection, quillRef.current.getSelection())
-            console.log('getLength:', quillRef.current.getLength, quillRef.current.getLength())
-            console.log('editor:', quillRef.current)
+            console.log(
+              "getSelection:",
+              quillRef.current.getSelection,
+              quillRef.current.getSelection()
+            );
+            console.log(
+              "getLength:",
+              quillRef.current.getLength,
+              quillRef.current.getLength()
+            );
+            console.log("editor:", quillRef.current);
             alert(quillRef.current?.getLength());
           }}
         >
@@ -53,11 +61,11 @@ const WikiEditor = () => {
       </div>
       <div className="state">
         <div className="state-title">Current Range:</div>
-        {range ? JSON.stringify(range) : 'Empty'}
+        {range ? JSON.stringify(range) : "Empty"}
       </div>
       <div className="state">
         <div className="state-title">Last Change:</div>
-        {lastChange ? JSON.stringify(lastChange.ops) : 'Empty'}
+        {lastChange ? JSON.stringify(lastChange.ops) : "Empty"}
       </div>
     </div>
   );
