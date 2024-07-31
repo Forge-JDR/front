@@ -3,12 +3,12 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { deleteWiki } from "../../../../store/slices/Wikis.slice";
 
-import "./cardRpg.css";
+import "./cardRpgDiscover.css";
 
 import SubmitButton from "../../molecules/submitButton/submitButton";
 import CancelButton from "../../molecules/cancelButton/cancelButton";
 
-const CardRpg = ({ id, srcImg, nameRpg, ...rest }) => {
+const CardRpgDiscover = ({ id, srcImg, nameRpg, owner, ...rest }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -26,23 +26,13 @@ const CardRpg = ({ id, srcImg, nameRpg, ...rest }) => {
           <div className="name-rpg title">
             <p className="title-card-rpg">{nameRpg}</p>
           </div>
-        </div>
-        <div className="action-button">
-          <SubmitButton className="button delete" onClick={handleDelete}>
-            Supprimer
-          </SubmitButton>
-          <SubmitButton
-            className="button update"
-            onClick={() => {
-              navigate(`/wiki/edit/${id}`);
-            }}
-          >
-            Modifier
-          </SubmitButton>
+          <div className="name-rpg owner">
+            <p className="owner-card-rpg">{owner}</p>
+          </div>
         </div>
       </div>
     </>
   );
 };
 
-export default CardRpg;
+export default CardRpgDiscover;
