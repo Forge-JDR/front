@@ -5,6 +5,7 @@ import Login from "../components/pages/Login/Login";
 import Signup from "../components/pages/Signup/Signup";
 import Creation from "../components/pages/Creation/Creation";
 import Caracters from "../components/pages/Caracters/Caracters";
+import WikiEdition from "../components/pages/WikiEdition/WikiEdition";
 
 import Discover from "../components/pages/Discover/Discover";
 import { RequireAuth } from "./requireAuth";
@@ -66,6 +67,14 @@ export const Router = () => {
       element: (
         <ErrorBoundary>
           <Wiki />
+        </ErrorBoundary>
+      ),
+    },
+    {
+      path: "wiki/edit/:id",
+      element: (
+        <ErrorBoundary>
+          <WikiEdition />
         </ErrorBoundary>
       ),
     },

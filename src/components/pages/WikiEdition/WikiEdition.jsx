@@ -4,7 +4,17 @@ import { store, fetchWiki } from "../../../store/store";
 import { useParams } from "react-router-dom";
 import ErrorComponent from "../../ErrorBoundaries/ErrorComponent";
 
-const Wiki = ({ ...props }) => {
+import WikiEditor from "../../UI/organisms/wikiEditor/WikiEditor";
+
+import forgeLogoTxt from "../../../assets/logo/logo_texte.svg";
+import defaultWikiImage from "../../../assets/wiki_default.png";
+
+import ConnectedNavbar from "../../templates/connectedNavBar/ConnectedNavbar";
+import CardCreate from "../../UI/molecules/CardCreate/CardCreate";
+import NewRpgForm from "../../templates/NewRpgForm/NewRpgForm";
+import CardRpg from "../../UI/organisms/CardRpg/CardRpg";
+
+const WikiEdition = ({ ...props }) => {
   const { id } = useParams();
   const dispatch = useDispatch();
   const wiki = useSelector((state) => state.wikis.wikiInfo);
@@ -92,11 +102,27 @@ const Wiki = ({ ...props }) => {
     }
   };
 
-  const WikiEditorElement = (wikiPram) => {};
-
   return (
-    <div onLoad={() => store.dispatch(fetchWiki(id))}>{WikiElements(wiki)}</div>
+    <>
+      <div className="background creation">
+        <div className="background-hexa image">
+          <ConnectedNavbar></ConnectedNavbar>
+
+          <div className="main-contaner personnal-caracter">
+            <WikiEditor>
+              <div onLoad={() => store.dispatch(fetchWiki(id))}>
+                {WikiElements(wiki)}
+              </div>
+            </WikiEditor>
+          </div>
+        </div>
+      </div>
+      <div className="footer">
+        <img className="logo-text" src={forgeLogoTxt} alt="logo_text" />
+        <p>Copyright 2024</p>
+      </div>
+    </>
   );
 };
 
-export default Wiki;
+export default WikiEdition;
