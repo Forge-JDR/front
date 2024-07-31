@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
@@ -12,6 +12,7 @@ import defaultWikiImage from "../../../../assets/wiki_default.png";
 import NavBar from "../../../UI/organisms/navBar/NavBar";
 import ConnectedNavbar from "../../connectedNavBar/ConnectedNavbar";
 import CardCreate from "../../../UI/molecules/CardCreate/CardCreate";
+import NewCaracterForm from "../../NewCaracterForm/NewCaracterForm";
 
 import CardRpgDiscover from "../../../UI/organisms/CardRpgDiscover/CardRpgDiscover";
 
@@ -21,6 +22,12 @@ const ConnectedHome = () => {
   const wiki = useSelector((state) => state.wikis.wikisList);
   const wikiStatus = useSelector((state) => state.wikis.status);
   const navigate = useNavigate();
+
+  const [isDisplayFormNew, setIsDisplayFormNew] = useState(false);
+
+  const displayForm = () => {
+    setIsDisplayFormNew(!isDisplayFormNew);
+  };
 
   useEffect(() => {
     if (wikiStatus === "idle") {
@@ -95,6 +102,7 @@ const ConnectedHome = () => {
       <div className="connected-home background">
         <div className="background-hexa image">
           <ConnectedNavbar />
+          {isDisplayFormNew && <NewCaracterForm closeForm={displayForm} />}
           <div className="main-contaner personnal-home">
             <div className="my-content">
               <div className="left rpg-creation">
@@ -107,6 +115,7 @@ const ConnectedHome = () => {
                       width="20%"
                       height="100%"
                       title={t("connectedHome.newCharactere")}
+                      onClick={displayForm}
                     ></CardCreate>
                   </div>
                 </div>
