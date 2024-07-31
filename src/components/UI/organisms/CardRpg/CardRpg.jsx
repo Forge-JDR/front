@@ -1,11 +1,21 @@
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { deleteWiki } from "../../../../store/slices/Wikis.slice";
 
 import "./cardRpg.css";
 
 import SubmitButton from "../../molecules/submitButton/submitButton";
 import CancelButton from "../../molecules/cancelButton/cancelButton";
 
-const CardRpg = ({ srcImg, nameRpg, ...rest }) => {
+const CardRpg = ({ id, srcImg, nameRpg, ...rest }) => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const handleDelete = () => {
+    dispatch(deleteWiki(id));
+  };
+
   return (
     <>
       <div className="card rpg personal-space">
@@ -18,18 +28,13 @@ const CardRpg = ({ srcImg, nameRpg, ...rest }) => {
           </div>
         </div>
         <div className="action-button">
-          <SubmitButton
-            className="button delete"
-            onClick={() => {
-              console.log("Supprimer");
-            }}
-          >
+          <SubmitButton className="button delete" onClick={handleDelete}>
             Supprimer
           </SubmitButton>
           <SubmitButton
             className="button update"
             onClick={() => {
-              console.log("Modifier");
+              navigate(`/wiki/${id}`);
             }}
           >
             Modifier

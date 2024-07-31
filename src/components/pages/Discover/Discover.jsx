@@ -26,7 +26,7 @@ const Discover = ({ ...props }) => {
     return wikiPram[0].map((wiki) => {
       return (
         <div id={wiki._id} key={wiki.id}>
-          {wiki.Name} : {wiki.Status}, Owner : {wiki.user.pseudo},{" "}
+          {wiki.Name} : {wiki.Status}, Owner : {wiki?.user?.pseudo}
           <Link to={"/wiki/" + wiki.id}>Voir plus</Link>
         </div>
       );

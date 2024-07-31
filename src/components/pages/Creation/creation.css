@@ -1,6 +1,8 @@
-.background.creations{
+.background.creations {
     width: 100%;
-    height: 100vh;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
 }
 
 html,
@@ -11,48 +13,56 @@ body {
     background-color: #f3f2f2;
 }
 
-.wiki-editor{
+.wiki-editor {
     margin-top: 70px;
 }
 
-.personnal-rpg{
-    margin-top: 60px;
-        width: 90%;
-        height: 80%;
-    /* background-color: rgba(255, 255, 255, 0.322); */
+.personnal-rpg {
+    margin-top: 90px;
+    width: 90%;
     padding: 20px;
     position: relative;
+    flex: 1;
 }
 
-.title-personnal-page{
+.title-personnal-page {
     margin: 10px;
 }
 
-.title-personnal-page p{
+.title-personnal-page p {
     color: var(--main-purple-color);
-    font-family: 'MedievalSharp',cursive;
+    font-family: 'MedievalSharp', cursive;
     font-size: 40px;
 }
 
-.card-container.rpg{
-    /* background-color: blue; */
-    position: relative;
-    width: 100%;
-    height: 90%;
+.card-container.rpg {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
 }
 
 .inline-content {
     justify-content: center;
     display: flex;
-    flex-direction: row;
+    flex-wrap: wrap;
 }
 
-.personnal-rpg-card{
-    /* background-color: red; */
-    width: 30%;
-    margin: 10px;    
+.personnal-rpg-card {
+    flex: 1 1 calc(25% - 50px);
+    /* Four cards per row with gap adjustment */
+    margin: 10px;
+    max-width: calc(25% - 50px);
+    max-height: calc(50vh - 150px);
+    /* Ensuring a maximum width */
 }
 
-.new.rpg{
+.new.rpg {
     cursor: pointer;
+}
+
+.footer {
+    text-align: center;
+    padding: 20px;
+    background-color: #f3f2f2;
 }

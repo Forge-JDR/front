@@ -23,18 +23,17 @@ export const fetchWiki = createAsyncThunk(
 export const addWiki = createAsyncThunk(
     'wiki/addOne',
     async ({ Name, Content }) => {
-
-        return await api.post(process.env.REACT_APP_URL_BACK + "/wikis", {
-            method: 'POST',
-            body: JSON.stringify({
-                Name: Name,
-                Content: Content
-            })
-        })
-        .then(wiki => 
-            wiki.json()
-         )
-        .catch(err => console.log("erreur dans l'ajout du wiki : ", err))
+        const bdy = { 
+            name: Name,
+            content: Content
+        };
+        try {
+            const response = await api.post(process.env.REACT_APP_URL_BACK + "/wikis", bdy);
+            return response.data;
+        } catch (err) {
+            console.log("erreur dans l'ajout du wiki : ", err);
+            throw err;
+        }
     }
 )
 
@@ -56,6 +55,19 @@ export const updateWiki = createAsyncThunk(
             .catch(err => console.log("erreur dans la modification du wiki : ", err))
     }
 )
+
+export const deleteWiki = createAsyncThunk(
+  'wiki/delete',
+  async (id) => {
+    try {
+      await api.delete(`${process.env.REACT_APP_URL_BACK}/wikis/${id}`);
+      return id;
+    } catch (err) {
+      console.log("Erreur dans la suppression du wiki : ", err);
+      throw err;
+    }
+  }
+);
 
 const WikiServices = createSlice({
     name: 'wikis',
@@ -87,6 +99,10 @@ const WikiServices = createSlice({
                 fetchWikis()
                 state.status = action.meta.requestStatus
             })
+            .addCase(deleteWiki.fulfilled, (state, action) => {
+             state.wikisList = state.wikisList.filter(wiki => wiki.id !== action.payload);
+            });
+            
     }
 })
 
