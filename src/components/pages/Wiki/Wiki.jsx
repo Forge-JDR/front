@@ -4,6 +4,12 @@ import { store, fetchWiki } from "../../../store/store";
 import { useParams } from "react-router-dom";
 import ErrorComponent from "../../ErrorBoundaries/ErrorComponent";
 
+import ConnectedNavbar from "../../templates/connectedNavBar/ConnectedNavbar";
+
+import forgeLogoTxt from "../../../assets/logo/logo_texte.svg";
+
+import "./wiki.css";
+
 const Wiki = ({ ...props }) => {
   const { id } = useParams();
   const dispatch = useDispatch();
@@ -95,7 +101,23 @@ const Wiki = ({ ...props }) => {
   const WikiEditorElement = (wikiPram) => {};
 
   return (
-    <div onLoad={() => store.dispatch(fetchWiki(id))}>{WikiElements(wiki)}</div>
+    <>
+      <div className="background creation">
+        <div className="background-hexa image">
+          <ConnectedNavbar></ConnectedNavbar>
+
+          <div className="main-contaner personnal-caracter">
+            <div onLoad={() => store.dispatch(fetchWiki(id))}>
+              {WikiElements(wiki)}
+            </div>
+          </div>
+        </div>
+      </div>
+      <div className="footer">
+        <img className="logo-text" src={forgeLogoTxt} alt="logo_text" />
+        <p>Copyright 2024</p>
+      </div>
+    </>
   );
 };
 
