@@ -3,9 +3,10 @@ import { useTranslation } from "react-i18next";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
-import SubmitButton from "../../UI/molecules/submitButton/submitButton";
+import Button from "../../UI/atoms/button/button";
+// import SubmitButton from "../../UI/molecules/submitButton/submitButton";
 import FieldForm from "../../UI/molecules/FieldForm/FieldForm";
-import CancelButton from "../../UI/molecules/cancelButton/cancelButton";
+// import CancelButton from "../../UI/molecules/cancelButton/cancelButton";
 
 import { addWiki } from "../../../store/store";
 
@@ -71,12 +72,12 @@ const NewRpgForm = ({ closeForm, ...rest }) => {
         </div>
 
         <div className="btn bottom">
-          <CancelButton className="cancel" onClick={closeForm}>
+          <Button className="cancel" onClick={closeForm}>
             {t("newRpgForm.cancel")}
-          </CancelButton>
-          <SubmitButton className="confirm" onClick={addNewRpg}>
+          </Button>
+          <Button className="confirm" onClick={addNewRpg}>
             {t("newRpgForm.create")}
-          </SubmitButton>
+          </Button>
         </div>
       </div>
     </div>

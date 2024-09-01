@@ -31,7 +31,7 @@
     justify-content: center;
 }
 
-.button {
+/* .button {
     width: 150px;
     display: flex;
     text-align: center;
@@ -52,7 +52,7 @@
 
 .button.update:hover {
     background: linear-gradient(70deg, #013975, var(--main-blue-color));
-}
+} */
 
 .title-card-caracter {
     color: black;

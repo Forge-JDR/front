@@ -2,8 +2,9 @@ import React, { useState } from "react";
 
 import "./cardCaracter.css";
 
-import SubmitButton from "../../molecules/submitButton/submitButton";
-import CancelButton from "../../molecules/cancelButton/cancelButton";
+import Button from "../../atoms/button/button";
+// import SubmitButton from "../../molecules/submitButton/submitButton";
+// import CancelButton from "../../molecules/cancelButton/cancelButton";
 
 const CardCaracter = ({ srcImg, nameCaracter, rpgName, ...rest }) => {
   return (
@@ -21,22 +22,22 @@ const CardCaracter = ({ srcImg, nameCaracter, rpgName, ...rest }) => {
           </div>
         </div>
         <div className="action-button">
-          <SubmitButton
+          <Button
             className="button delete"
             onClick={() => {
               console.log("Supprimer");
             }}
           >
             Supprimer
-          </SubmitButton>
-          <SubmitButton
+          </Button>
+          <Button
             className="button update"
             onClick={() => {
               console.log("Modifier");
             }}
           >
             Modifier
-          </SubmitButton>
+          </Button>
         </div>
       </div>
     </>

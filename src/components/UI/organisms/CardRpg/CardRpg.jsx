@@ -5,8 +5,9 @@ import { deleteWiki } from "../../../../store/slices/Wikis.slice";
 
 import "./cardRpg.css";
 
-import SubmitButton from "../../molecules/submitButton/submitButton";
-import CancelButton from "../../molecules/cancelButton/cancelButton";
+import Button from "../../atoms/button/button";
+// import SubmitButton from "../../molecules/submitButton/submitButton";
+// import CancelButton from "../../molecules/cancelButton/cancelButton";
 
 const CardRpg = ({ id, srcImg, nameRpg, ...rest }) => {
   const dispatch = useDispatch();
@@ -28,17 +29,17 @@ const CardRpg = ({ id, srcImg, nameRpg, ...rest }) => {
           </div>
         </div>
         <div className="action-button">
-          <SubmitButton className="button delete" onClick={handleDelete}>
+          <Button className="delete" onClick={handleDelete}>
             Supprimer
-          </SubmitButton>
-          <SubmitButton
-            className="button update"
+          </Button>
+          <Button
+            className="edit"
             onClick={() => {
               navigate(`/wiki/edit/${id}`);
             }}
           >
             Modifier
-          </SubmitButton>
+          </Button>
         </div>
       </div>
     </>

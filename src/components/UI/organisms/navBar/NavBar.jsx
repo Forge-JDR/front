@@ -7,8 +7,9 @@ import { useNavigate } from "react-router-dom";
 
 import "./navbar.css";
 
-import forgeLogo from "../../../../assets/logo/logo_complet.svg";
+import forgeLogo from "../../../../assets/logo/logo_dé.svg";
 import iconeUser from "../../../../assets/icone_user.svg";
+import menuIcon from "../../../../assets/menu-icon.png";
 
 import ThemeSwitch from "../../molecules/ThemeSwitch/ThemeSwitch";
 
@@ -22,6 +23,7 @@ const NavBar = ({ links }) => {
 
   const location = useLocation();
   const [showSubMenu, setShowSubMenu] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false); // État pour le menu burger
 
   const handleUserIconClick = () => {
     setShowSubMenu(!showSubMenu);
@@ -52,9 +54,13 @@ const NavBar = ({ links }) => {
     i18n.changeLanguage(lng);
   };
 
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
+
   return (
     <nav className="navbar">
-      <ul>
+      <ul className={`nav-links ${isMenuOpen ? "open" : ""}`}>
         <li className="logo home-link">
           <Link to="/">
             <div className="logo-container-navbar">
@@ -120,6 +126,9 @@ const NavBar = ({ links }) => {
           )}
         </li>
       </ul>
+      <div className={`burger-menu ${isMenuOpen ? "open" : ""}`}>
+        <img src={menuIcon} alt="Menu" />
+      </div>
     </nav>
   );
 };
