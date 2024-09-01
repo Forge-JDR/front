@@ -10,6 +10,7 @@ import "./navbar.css";
 import forgeLogo from "../../../../assets/logo/logo_dé.svg";
 import iconeUser from "../../../../assets/icone_user.svg";
 import menuIcon from "../../../../assets/menu-icon.png";
+import closeIcon from "../../../../assets/close-icon.png";
 
 import ThemeSwitch from "../../molecules/ThemeSwitch/ThemeSwitch";
 
@@ -44,6 +45,7 @@ const NavBar = ({ links }) => {
   useEffect(() => {
     document.body.className = theme === "dark" ? "dark-theme" : "";
     localStorage.setItem("theme", theme);
+    console.log(links);
   }, [theme]);
 
   const toggleTheme = () => {
@@ -59,78 +61,230 @@ const NavBar = ({ links }) => {
   };
 
   return (
-    <nav className="navbar">
-      <ul className={`nav-links ${isMenuOpen ? "open" : ""}`}>
-        <li className="logo home-link">
-          <Link to="/">
-            <div className="logo-container-navbar">
-              <img className="logo image link" src={forgeLogo} alt="Logo" />
-            </div>
-          </Link>
-        </li>
-        {links.map((link, index) => (
-          <li key={index}>
-            <Link
-              to={link.url}
-              className={location.pathname === link.url ? "active-link" : ""}
-            >
-              {link.name}
+    <>
+      <nav className="navbar">
+        <ul className={`nav-links ${isMenuOpen ? "open" : ""}`}>
+          <li className="logo home-link">
+            <Link to="/">
+              <div className="logo-container-navbar">
+                <img className="logo image link" src={forgeLogo} alt="Logo" />
+              </div>
             </Link>
           </li>
-        ))}
-        <div className="theme-switch-container">
-          <ThemeSwitch onClick={toggleTheme} theme={theme} />
-        </div>
-        <div className="change-langage-container">
-          <li className="change-langage">
-            <div
-              className={`change-langage-btn ${
-                i18n.language === "en" ? "active" : ""
-              }`}
-              onClick={() => changeLanguage("en")}
-            >
-              EN
-            </div>
-            <div
-              className={`change-langage-btn ${
-                i18n.language === "fr" ? "active" : ""
-              }`}
-              onClick={() => changeLanguage("fr")}
-            >
-              FR
-            </div>
-          </li>
-        </div>
-        <li className="icone login-link">
-          <div className="icone-container" onClick={handleUserIconClick}>
-            <img className="icone_user" src={iconeUser} alt="utilisateur" />
+          {links.map((link, index) => (
+            <li key={index}>
+              <Link
+                to={link.url}
+                className={location.pathname === link.url ? "active-link" : ""}
+              >
+                {link.name}
+              </Link>
+            </li>
+          ))}
+          <div className="theme-switch-container">
+            <ThemeSwitch onClick={toggleTheme} theme={theme} />
           </div>
-          {showSubMenu && (
-            <>
-              {token ? (
-                <ul className="sub-menu">
+          <div className="change-langage-container">
+            <li className="change-langage">
+              <div
+                className={`change-langage-btn ${
+                  i18n.language === "en" ? "active" : ""
+                }`}
+                onClick={() => changeLanguage("en")}
+              >
+                EN
+              </div>
+              <div
+                className={`change-langage-btn ${
+                  i18n.language === "fr" ? "active" : ""
+                }`}
+                onClick={() => changeLanguage("fr")}
+              >
+                FR
+              </div>
+            </li>
+          </div>
+          <li className="icone login-link">
+            <div className="icone-container" onClick={handleUserIconClick}>
+              <img className="icone_user" src={iconeUser} alt="utilisateur" />
+            </div>
+            {showSubMenu && (
+              <>
+                {token ? (
+                  <ul className="sub-menu">
+                    <li>
+                      <div onClick={handleLogout}>{t("home.logout")}</div>
+                    </li>
+                  </ul>
+                ) : (
+                  <ul className="sub-menu">
+                    <li>
+                      <Link to="/login" onClick={() => setShowSubMenu(false)}>
+                        {t("home.login")}
+                      </Link>
+                    </li>
+                  </ul>
+                )}
+              </>
+            )}
+          </li>
+        </ul>
+        <div className={`burger-menu ${isMenuOpen ? "open" : ""}`}>
+          <img src={menuIcon} alt="Menu" />
+        </div>{" "}
+      </nav>
+      <div
+        className={`burger-menu ${isMenuOpen ? "open" : ""}`}
+        onClick={toggleMenu}
+      >
+        <img src={menuIcon} alt="Menu" />{" "}
+      </div>
+      {isMenuOpen && (
+        <div className="menu-lateral">
+          <img
+            src={closeIcon}
+            alt="close"
+            className="close-icon"
+            onClick={toggleMenu}
+          />
+          <div className="nav-links container">
+            <li className="logo home-link">
+              <Link to="/">
+                <div className="logo-container-navbar">
+                  <img className="logo image link" src={forgeLogo} alt="Logo" />
+                </div>
+              </Link>
+            </li>
+
+            {links.map((link, index) => (
+              <li key={index}>
+                <Link
+                  to={link.url}
+                  className={
+                    location.pathname === link.url ? "active-link" : ""
+                  }
+                >
+                  {link.name}
+                </Link>
+              </li>
+            ))}
+            <div className="separator alf"></div>
+            <li className="new-menu">
+              <a href="#link1">Nous contacter</a>
+            </li>
+            <li className="new-menu">
+              <a href="#link1">CGU</a>
+            </li>
+            <div className="connexion-box">
+              <div className="separator all"></div>
+              <li className="new-menu">
+                {token ? (
                   <li>
-                    <div onClick={handleLogout}>{t("home.logout")}</div>
+                    <Link onClick={handleLogout}>{t("home.logout")}</Link>
                   </li>
-                </ul>
-              ) : (
-                <ul className="sub-menu">
+                ) : (
                   <li>
                     <Link to="/login" onClick={() => setShowSubMenu(false)}>
                       {t("home.login")}
                     </Link>
                   </li>
-                </ul>
-              )}
-            </>
-          )}
-        </li>
-      </ul>
-      <div className={`burger-menu ${isMenuOpen ? "open" : ""}`}>
-        <img src={menuIcon} alt="Menu" />
-      </div>
-    </nav>
+                )}
+              </li>
+            </div>
+          </div>
+        </div>
+        //         <>
+        //           {token ? (
+        //             <ul className="sub-menu">
+        //               <li>
+        //                 <div onClick={handleLogout}>{t("home.logout")}</div>
+        //               </li>
+        //             </ul>
+        //           ) : (
+        //             <ul className="sub-menu">
+        //               <li>
+        //                 <Link to="/login" onClick={() => setShowSubMenu(false)}>
+        //                   {t("home.login")}
+        //                 </Link>
+        //               </li>
+        //             </ul>
+        //           )}
+        //         </>
+      )}
+    </>
   );
+  // <nav className="navbar">
+  //   <ul className={`nav-links ${isMenuOpen ? "open" : ""}`}>
+  //     <li className="logo home-link">
+  //       <Link to="/">
+  //         <div className="logo-container-navbar">
+  //           <img className="logo image link" src={forgeLogo} alt="Logo" />
+  //         </div>
+  //       </Link>
+  //     </li>
+  //     {links.map((link, index) => (
+  //       <li key={index}>
+  //         <Link
+  //           to={link.url}
+  //           className={location.pathname === link.url ? "active-link" : ""}
+  //         >
+  //           {link.name}
+  //         </Link>
+  //       </li>
+  //     ))}
+  //     <div className="theme-switch-container">
+  //       <ThemeSwitch onClick={toggleTheme} theme={theme} />
+  //     </div>
+  //     <div className="change-langage-container">
+  //       <li className="change-langage">
+  //         <div
+  //           className={`change-langage-btn ${
+  //             i18n.language === "en" ? "active" : ""
+  //           }`}
+  //           onClick={() => changeLanguage("en")}
+  //         >
+  //           EN
+  //         </div>
+  //         <div
+  //           className={`change-langage-btn ${
+  //             i18n.language === "fr" ? "active" : ""
+  //           }`}
+  //           onClick={() => changeLanguage("fr")}
+  //         >
+  //           FR
+  //         </div>
+  //       </li>
+  //     </div>
+  //     <li className="icone login-link">
+  //       <div className="icone-container" onClick={handleUserIconClick}>
+  //         <img className="icone_user" src={iconeUser} alt="utilisateur" />
+  //       </div>
+  //       {showSubMenu && (
+  //         <>
+  //           {token ? (
+  //             <ul className="sub-menu">
+  //               <li>
+  //                 <div onClick={handleLogout}>{t("home.logout")}</div>
+  //               </li>
+  //             </ul>
+  //           ) : (
+  //             <ul className="sub-menu">
+  //               <li>
+  //                 <Link to="/login" onClick={() => setShowSubMenu(false)}>
+  //                   {t("home.login")}
+  //                 </Link>
+  //               </li>
+  //             </ul>
+  //           )}
+  //         </>
+  //       )}
+  //     </li>
+  //   </ul>
+  //   <div className={`burger-menu ${isMenuOpen ? "open" : ""}`}>
+  //     <img src={menuIcon} alt="Menu" />
+  //   </div>
+  // </nav>
+  // );
 };
 
 export default NavBar;

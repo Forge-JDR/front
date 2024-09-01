@@ -137,24 +137,29 @@ img.icone_user {
     padding: 5px;
 }
 
+/* -- Menu burger et paneau lateral -- */
+
 /* Burger menu styles */
 .burger-menu {
     display: none;
     cursor: pointer;
     position: absolute;
-    right: 20px;
     top: 20px;
 }
 
 .burger-menu img {
-    width: 30px;
-    height: 30px;
+    width: 40px;
+    height: 40px;
 }
+
+
 
 /* Responsive styles */
 @media (max-width: 768px) {
     .navbar  {
         background-color: #f0f0f000;
+        display: none;
+        height: 0px;
     }
 
     .navbar ul {
@@ -180,7 +185,7 @@ img.icone_user {
     }
 
         .burger-menu.open {
-            /* display: none; */
+            display: none;
         }
 
     .theme-switch-container,
@@ -200,4 +205,92 @@ img.icone_user {
             text-decoration: none;
             font-size: 1rem;
         }
+}
+
+.menu-lateral {
+    /* width: 40vw; */
+    width: 60vw;
+    height: 90vh;
+    background-color: #ffffff95;
+    backdrop-filter: blur(5px);
+    top: 0;
+    left:0;
+    position: fixed;
+    z-index: 1000;
+}
+
+.menu-lateral .close-icon {
+    width: 30px;
+    height: 30px;
+    position: absolute;
+    top: 20px;
+    left: 10px
+}
+
+.nav-links.container{
+    /* background-color: brown; */
+    width: 80%;
+    margin: auto;
+    padding: 10px;
+    margin-top: 80px;
+}
+
+.nav-links.container a{
+    color: rgb(0, 0, 0);
+    text-decoration: none;
+    font-size: 1rem;
+    text-decoration: none;
+}
+
+.nav-links.container .logo.home-link img{
+    margin: auto;
+    height: 100px;
+}
+
+.menu-lateral .logo-container-navbar {
+    margin: auto;
+    margin-bottom: 30px;
+}
+
+
+
+.nav-links.container li {
+    list-style-type: none;
+    justify-content: space-between;
+    margin-top: 10px;
+}
+
+.menu-lateral .separator{
+    /* background-color: aqua; */
+    height: 40px;
+    margin: auto;
+    border-bottom: 1px solid rgb(0, 0, 0);
+    margin-bottom: 20px;
+}
+
+.menu-lateral .separator.alf{
+    /* background-color: aqua; */
+    height: 40px;
+    width: 80%;
+    margin: auto;
+    border-bottom: 1px solid rgb(0, 0, 0);
+    margin-bottom: 30px;
+}
+
+.menu-lateral .separator.all{
+    /* background-color: aqua; */
+    height: 40px;
+    width: 100%;
+    margin: auto;
+    border-bottom: 1px solid rgb(0, 0, 0);
+    margin-bottom: 30px;
+}
+
+.menu-lateral .connexion-box{
+    bottom: 10px;
+    position: absolute;
+    width: 90%;
+    margin: auto;
+    left: 5%;
+    text-align: center;
 }
