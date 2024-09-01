@@ -1,6 +1,7 @@
 import React from "react";
 
 import "./cardCreate.css";
+import plusIcon from "../../../../assets/plus-icon.png";
 
 const CardCreate = ({ width, height, title, onClick, ...rest }) => {
   return (
@@ -15,7 +16,7 @@ const CardCreate = ({ width, height, title, onClick, ...rest }) => {
             <p>{title}</p>
           </div>
           <div className="plus">
-            <p>+</p>
+            <img src={plusIcon} alt="add" />
           </div>
         </div>
       </div>
