@@ -3,8 +3,6 @@ import React, { useState } from "react";
 import "./cardCaracter.css";
 
 import Button from "../../atoms/button/button";
-// import SubmitButton from "../../molecules/submitButton/submitButton";
-// import CancelButton from "../../molecules/cancelButton/cancelButton";
 
 const CardCaracter = ({ srcImg, nameCaracter, rpgName, ...rest }) => {
   return (
