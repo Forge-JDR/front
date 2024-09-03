@@ -10,11 +10,16 @@ import Form from "../../UI/organisms/Form";
 
 import { register } from "../../../store/store";
 import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 const Signup = () => {
   const { t } = useTranslation();
 
+  const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(t(""));
 
   const [Pseudo, setPseudo] = useState("");
   const [Email, setEmail] = useState("");
@@ -22,12 +27,37 @@ const Signup = () => {
   const [ConfirmedPassword, setConfirmedPassword] = useState("");
 
   const registerSubmit = () => {
+    setIsLoading(true);
+    setError("");
+
     dispatch(
       register({
         email: Email,
+        username: Pseudo,
+        pseudo: Pseudo,
         password: Password,
       })
-    );
+    )
+      .then(() => {
+        if (localStorage.getItem("token")) {
+          navigate("/");
+        }
+      })
+      .catch((e) => {
+        console.log(t("login.error"));
+        setError(t("login.error"));
+        if (e.response) {
+          console.error("Response error:", e.response.data);
+        } else if (e.request) {
+          console.error("Request error:", e.request);
+        } else {
+          console.error("Error", e.message);
+        }
+      })
+      .finally(() => {
+        setIsLoading(false);
+        setError(t("login.error"));
+      });
   };
 
   return (
@@ -66,8 +96,9 @@ const Signup = () => {
             value={ConfirmedPassword}
             onChange={(e) => setConfirmedPassword(e.target.value)}
           />
-          <SubmitButton onClick={registerSubmit}>
-            {t("signup.submit")}
+          {error && <p className="error-message">{error}</p>}
+          <SubmitButton onClick={registerSubmit} disabled={isLoading}>
+            {isLoading ? t("login.loading") : t("signup.submit")}
           </SubmitButton>
         </Form>
         <div className="logo-container">
