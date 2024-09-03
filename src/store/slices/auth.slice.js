@@ -33,7 +33,6 @@ export const register = createAsyncThunk(
         try {
             await AuthService.register(email, password, username, pseudo);
         } catch (error) {
-            
             const message =
                 (error.response &&
                     error.response.data &&
@@ -95,6 +94,9 @@ const authSlice = createSlice({
             })
             .addCase(register.fulfilled, (state, action) => {
                 console.log("register done !");
+                state.isLoggedIn = true;
+                state.token = action.payload.token; // Assurez-vous que le payload contient bien le token
+                state.refreshToken = action.payload.refresh_token;
             });
     },
 });

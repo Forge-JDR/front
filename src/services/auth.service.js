@@ -37,7 +37,12 @@ const register = (email, password, pseudo, username) => {
             username
         })
         .then((response) => {
-            return response.data;
+            const data = response.data;
+            if (data.token) {
+                window.localStorage.setItem("token", data.token);
+                // Vous pouvez également stocker d'autres informations utilisateur si nécessaire
+            }
+            return data;
         });
 };
 

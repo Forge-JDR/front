@@ -1,10 +1,12 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import api from '../../config/api'
 
+const API_URL = process.env.REACT_APP_URL_BACK + "/api";
+
 export const fetchWikis = createAsyncThunk(
     'wiki/getAll',
     async () => {
-        return await api.get(process.env.REACT_APP_URL_BACK + "/wikis")
+        return await api.get(API_URL + "/wikis")
             .then(response => response.data)
             .catch(err => console.log("erreur dans la récupèration des wikis : ", err))
     }
@@ -13,7 +15,7 @@ export const fetchWikis = createAsyncThunk(
 export const fetchWiki = createAsyncThunk(
     'wiki/getOne',
     async (id) => {
-        return await api.get(process.env.REACT_APP_URL_BACK + "/wikis/" + id)
+        return await api.get(API_URL + "/wikis/" + id)
             .then(response => response.data)
             .catch(err => 
                 console.log("erreur dans la récupèration du wiki : ", err))
@@ -28,7 +30,7 @@ export const addWiki = createAsyncThunk(
             content: Content
         };
         try {
-            const response = await api.post(process.env.REACT_APP_URL_BACK + "/wikis", bdy);
+            const response = await api.post(API_URL + "/wikis", bdy);
             return response.data;
         } catch (err) {
             console.log("erreur dans l'ajout du wiki : ", err);
@@ -40,7 +42,7 @@ export const addWiki = createAsyncThunk(
 export const updateWiki = createAsyncThunk(
     'wiki/update',
     async ({ id, Name, Content }) => {
-        return await fetch(process.env.REACT_APP_URL_BACK + "/wikis" + id, {
+        return await fetch(API_URL + "/wikis" + id, {
             method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json'
@@ -60,7 +62,7 @@ export const deleteWiki = createAsyncThunk(
   'wiki/delete',
   async (id) => {
     try {
-      await api.delete(`${process.env.REACT_APP_URL_BACK}/wikis/${id}`);
+      await api.delete(`${API_URL}/wikis/${id}`);
       return id;
     } catch (err) {
       console.log("Erreur dans la suppression du wiki : ", err);

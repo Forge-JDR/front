@@ -7,8 +7,10 @@ import forgeLogo from "../../../assets/logo/logo_complet.svg";
 import SubmitButton from "../../UI/molecules/submitButton/submitButton";
 import FieldForm from "../../UI/molecules/FieldForm/FieldForm";
 import Form from "../../UI/organisms/Form";
+import { setMessage } from "../../../store/slices/message.slice";
 
 import { register } from "../../../store/store";
+import { login } from "../../../store/store";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
@@ -26,38 +28,50 @@ const Signup = () => {
   const [Password, setPassword] = useState("");
   const [ConfirmedPassword, setConfirmedPassword] = useState("");
 
-  const registerSubmit = () => {
+  const registerSubmit = async () => {
     setIsLoading(true);
     setError("");
 
-    dispatch(
-      register({
-        email: Email,
-        username: Pseudo,
-        pseudo: Pseudo,
-        password: Password,
-      })
-    )
-      .then(() => {
-        if (localStorage.getItem("token")) {
-          navigate("/");
-        }
-      })
-      .catch((e) => {
-        console.log(t("login.error"));
-        setError(t("login.error"));
-        if (e.response) {
-          console.error("Response error:", e.response.data);
-        } else if (e.request) {
-          console.error("Request error:", e.request);
-        } else {
-          console.error("Error", e.message);
-        }
-      })
-      .finally(() => {
-        setIsLoading(false);
-        setError(t("login.error"));
-      });
+    try {
+      try {
+        // Étape 1: Lancer l'inscription
+        await dispatch(
+          register({
+            email: Email,
+            username: Pseudo,
+            pseudo: Pseudo,
+            password: Password,
+          })
+        ).unwrap(); // Unwrap pour gérer l'erreur directement
+      } catch (error) {
+        console.log("erreur inscription : " + error);
+      }
+
+      let loginResult;
+      try {
+        // Étape 2: Lancer la connexion si l'inscription est réussie
+        loginResult = await dispatch(
+          login({
+            username: Pseudo,
+            password: Password,
+          })
+        ).unwrap();
+        console.log(loginResult);
+      } catch (error) {
+        console.log("erreur a la connexion : " + error);
+      }
+
+      // Étape 3: Rediriger vers la page d'accueil si la connexion est réussie
+      if (loginResult.token) {
+        console.log("navigatoin accueil");
+        navigate("/");
+      }
+    } catch (error) {
+      setError("Inscription ou connexion échouée.");
+      dispatch(setMessage(error.message));
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
