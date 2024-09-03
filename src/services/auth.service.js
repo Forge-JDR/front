@@ -1,12 +1,11 @@
 import api from '../config/api';
 
-const API_URL = process.env.REACT_APP_URL_BACK + "/login_check";
-const API_URL_REGISTER = process.env.APP_URL + "/register";
-// const API_URL_REGISTER = "http://localhost:8741/register";
+const API_URL_LOGIN = process.env.REACT_APP_URL_BACK + "/api/login_check";
+const API_URL_REGISTER = process.env.REACT_APP_URL_BACK + "/register";
 
 const login = (username, password) => {
     return api
-        .post(API_URL, {
+        .post(API_URL_LOGIN, {
             username,
             password,
         })
@@ -31,7 +30,7 @@ const login = (username, password) => {
 
 const register = (email, password, pseudo, username) => {
     return api
-        .post(API_URL_REGISTER, {
+        .post(API_URL_REGISTER , {
             email,
             password,
             pseudo, 
