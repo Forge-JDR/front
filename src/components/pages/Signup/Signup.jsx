@@ -4,7 +4,8 @@ import { useTranslation } from "react-i18next";
 import "./signup.css";
 import forgeLogo from "../../../assets/logo/logo_complet.svg";
 
-import SubmitButton from "../../UI/molecules/submitButton/submitButton";
+import Button from "../../UI/atoms/button/button";
+// import SubmitButton from "../../UI/molecules/submitButton/submitButton";
 import FieldForm from "../../UI/molecules/FieldForm/FieldForm";
 import Form from "../../UI/organisms/Form";
 
@@ -66,9 +67,7 @@ const Signup = () => {
             value={ConfirmedPassword}
             onChange={(e) => setConfirmedPassword(e.target.value)}
           />
-          <SubmitButton onClick={registerSubmit}>
-            {t("signup.submit")}
-          </SubmitButton>
+          <Button onClick={registerSubmit}>{t("signup.submit")}</Button>
         </Form>
         <div className="logo-container">
           <a href="/">

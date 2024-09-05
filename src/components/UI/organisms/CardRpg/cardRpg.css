@@ -30,14 +30,14 @@
     justify-content: center ;
 }
 
-.button{
+/* .button{
     width: 150px;
     display: flex;
     text-align: center;
     justify-content: center;
-}
+} */
 
-.button.delete {
+/* .button.delete {
     background: linear-gradient(70deg, #a21d1d, #3d0303);
 }
 
@@ -51,7 +51,7 @@
 
 .button.update:hover {
     background: linear-gradient(70deg, #013975, var(--main-blue-color));
-}
+} */
 
 .title-card-rpg{
 color: black;

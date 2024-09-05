@@ -1,44 +1,17 @@
-/* Reset some default styles for a cleaner look */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-body {
-    font-family: Arial, sans-serif;
-}
-
 .navbar {
     width: 100%;
     height: 70px;
     display: flex;
-    /* align-items: center; */
     justify-content: space-between;
-    /* background-color: #333; */
-    /* Background color of the navbar */
-    background: linear-gradient(70deg, var(--main-blue-color), var(--main-purple-color));
+    background: linear-gradient(70deg, rgba(37, 150, 190, 0.7), rgba(117, 42, 203, 0.7));
     position: fixed;
-    /* Fixes the navbar at the top */
     top: 0;
     left: 0;
     z-index: 1000;
-    /* Ensures the navbar stays on top */
     padding: 0 20px;
-    /* box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); */
-    /* Optional shadow for a slight 3D effect */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(5px);
 }
-
-/* .navbar:after {
-    content: "";
-    display: block;
-    width: 90%;
-    height: 1px;
-    background-color: white;
-    position: absolute;
-    bottom: 0;
-    left: 5%;
-} */
 
 .navbar ul {
     display: flex;
@@ -53,7 +26,6 @@ body {
     color: white;
     text-decoration: none;
     font-size: 1rem;
-    /* Relative font size for links */
 }
 
 .navbar li {
@@ -61,49 +33,42 @@ body {
 }
 
 /* logo image position */
-li.logo.home-link{
+li.logo.home-link {
     height: 90%;
 }
 
-.logo-container-navbar{
+.logo-container-navbar {
     margin-top: 0px;
-    position:relative;
+    position: relative;
     width: 80px;
     height: 100%;
 }
 
-img.logo.image.link{
+img.logo.image.link {
     height: 100%;
 }
 
-
-/* user icone position */
- li.icone.login-link {
-    height: 100%;
+/* user icon position */
+li.icone.login-link {
+    height: 90%;
     right: 0px;
     position: absolute;
-    
 }
 
-.icone-container{
-        margin-top: 0px;
-        margin-right: 5px;
-        position: relative;
-        width: 80px;
-        height: 100%;
-} 
+.icone-container {
+    margin-top: 0px;
+    margin-right: 5px;
+    position: relative;
+    width: 80px;
+    height: 100%;
+}
 
 img.icone_user {
     height: 100%;
     cursor: pointer;
 }
 
-/*
-img.icone_user {
-    background-color: rgb(0, 255, 76);
-    height: 100%;
-} */
-
+/* sub-menu styles */
 .sub-menu {
     width: 150% !important;
     position: absolute;
@@ -113,7 +78,6 @@ img.icone_user {
     padding: 10px;
     margin: 0;
     top: 70px;
-    /* Ajustez cette valeur en fonction de votre layout */
     right: 0;
 }
 
@@ -136,7 +100,8 @@ img.icone_user {
     cursor: pointer;
 }
 
-.change-langage-container{
+/* language switcher styles */
+.change-langage-container {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -144,11 +109,11 @@ img.icone_user {
     right: 120px;
 }
 
-.change-langage{
+.change-langage {
     height: 100%;
 }
 
-.change-langage-btn{
+.change-langage-btn {
     cursor: pointer;
     color: #FFFFFF;
 }
@@ -158,19 +123,175 @@ img.icone_user {
     gap: 10px;
 }
 
-.change-langage-btn {
-    cursor: pointer;
-}
-
 .change-langage-btn.active {
     font-weight: bold;
 }
 
-.theme-switch-container{
+/* theme switcher styles */
+.theme-switch-container {
     display: flex;
-        align-items: center;
-        justify-content: center;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    right: 160px;
+    padding: 5px;
+}
+
+/* -- Menu burger et paneau lateral -- */
+
+/* Burger menu styles */
+.burger-menu {
+    display: none;
+    cursor: pointer;
+    position: absolute;
+    top: 20px;
+}
+
+.burger-menu img {
+    width: 40px;
+    height: 40px;
+}
+
+
+
+/* Responsive styles */
+@media (max-width: 768px) {
+    .navbar  {
+        background-color: #f0f0f000;
+        display: none;
+        height: 0px;
+    }
+
+    .navbar ul {
+        flex-direction: column;
+        align-items: flex-start;
         position: absolute;
-        right: 160px;
-        padding: 5px;
+        top: 0px;
+        left: -100%;
+        width: 100%;
+        background-color: rgba(255, 255, 255, 0.9);
+        transition: left 0.3s ease-in-out;
+        color: black;
+    }
+
+    .navbar ul.open {
+        left: 0;
+        color: black;
+    }
+
+    .burger-menu {
+        display: block;
+        left : 5px;
+    }
+
+        .burger-menu.open {
+            display: none;
+        }
+
+    .theme-switch-container,
+    .change-langage-container {
+        position: static;
+        margin: 10px 0;
+        color: black;
+    }
+
+    .icone.login-link {
+        position: static;
+        margin: 10px 0;
+        color: black;
+    }
+        .navbar a {
+            color: rgb(0, 0, 0);
+            text-decoration: none;
+            font-size: 1rem;
+        }
+}
+
+.menu-lateral {
+    /* width: 40vw; */
+    width: 60vw;
+    height: 90vh;
+    background-color: #ffffff95;
+    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(5px);
+    top: 0;
+    left:0;
+    position: fixed;
+    z-index: 1000;
+}
+
+.menu-lateral .close-icon {
+    width: 30px;
+    height: 30px;
+    position: absolute;
+    top: 20px;
+    left: 10px
+}
+
+.nav-links.container{
+    /* background-color: brown; */
+    width: 80%;
+    margin: auto;
+    padding: 10px;
+    margin-top: 80px;
+}
+
+.nav-links.container a{
+    color: rgb(0, 0, 0);
+    text-decoration: none;
+    font-size: 1rem;
+    text-decoration: none;
+}
+
+.nav-links.container .logo.home-link img{
+    margin: auto;
+    height: 100px;
+}
+
+.menu-lateral .logo-container-navbar {
+    margin: auto;
+    margin-bottom: 30px;
+}
+
+
+
+.nav-links.container li {
+    list-style-type: none;
+    justify-content: space-between;
+    margin-top: 10px;
+}
+
+.menu-lateral .separator{
+    /* background-color: aqua; */
+    height: 40px;
+    margin: auto;
+    border-bottom: 1px solid rgb(0, 0, 0);
+    margin-bottom: 20px;
+}
+
+.menu-lateral .separator.alf{
+    /* background-color: aqua; */
+    height: 40px;
+    width: 80%;
+    margin: auto;
+    border-bottom: 1px solid rgb(0, 0, 0);
+    margin-bottom: 30px;
+}
+
+.menu-lateral .separator.all{
+    /* background-color: aqua; */
+    height: 40px;
+    width: 100%;
+    margin: auto;
+    border-bottom: 1px solid rgb(0, 0, 0);
+    margin-bottom: 30px;
+}
+
+.menu-lateral .connexion-box{
+    bottom: 10px;
+    position: absolute;
+    width: 90%;
+    margin: auto;
+    left: 5%;
+    text-align: center;
 }
