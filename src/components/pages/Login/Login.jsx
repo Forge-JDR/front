@@ -29,8 +29,6 @@ const Login = ({ ...props }) => {
   const loginSubmit = () => {
     setIsLoading(true);
     setError("");
-    console.log(Email);
-    console.log(Password);
 
     dispatch(
       login({
