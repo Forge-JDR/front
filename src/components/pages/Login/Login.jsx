@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 
 import "./login.css";
 import forgeLogo from "../../../assets/logo/logo_complet.svg";
+import eyeIcon from "../../../assets/icone/eye-icon.png";
 
 import Button from "../../UI/atoms/button/button";
 // import SubmitButton from "../../UI/molecules/submitButton/submitButton";
@@ -23,6 +24,8 @@ const Login = ({ ...props }) => {
   const [Password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(t(""));
+
+  const [showPassword, setShowPassword] = useState(false);
 
   const loginSubmit = () => {
     setIsLoading(true);
@@ -73,11 +76,17 @@ const Login = ({ ...props }) => {
             id="password"
             name="password"
             label={t("login.password") + " *"}
-            type="password"
+            type={showPassword ? "text" : "password"}
             required={true}
             value={Password}
             onChange={(e) => setPassword(e.target.value)}
           />
+          <span
+            className="password-toggle-icon login"
+            onClick={() => setShowPassword(!showPassword)}
+          >
+            <img src={showPassword ? eyeIcon : eyeIcon} alt="img" />
+          </span>
           {error && <p className="error-message">{error}</p>}
           <Button onClick={loginSubmit} disabled={isLoading}>
             {isLoading ? t("login.loading") : t("login.submit")}

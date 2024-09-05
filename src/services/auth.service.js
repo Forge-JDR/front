@@ -1,10 +1,11 @@
 import api from '../config/api';
 
-const API_URL = process.env.REACT_APP_URL_BACK + "/login_check";
+const API_URL_LOGIN = process.env.REACT_APP_URL_BACK + "/api/login_check";
+const API_URL_REGISTER = process.env.REACT_APP_URL_BACK + "/register";
 
 const login = (username, password) => {
     return api
-        .post(API_URL, {
+        .post(API_URL_LOGIN, {
             username,
             password,
         })
@@ -27,14 +28,31 @@ const login = (username, password) => {
       });
 };
 
-const register = (email, password) => {
+const register = (username, password, pseudo) => {
     return api
-        .post(process.env.REACT_APP_URL_BACK + "/users", {
-            email,
+        .post(API_URL_REGISTER, {
+            username,
             password,
+            pseudo
         })
         .then((response) => {
-            return response.data;
+            const data = response.data;
+            if (data.token) {
+                window.localStorage.setItem("token", data.token);
+            }
+            return data;
+        })
+        .catch((error) => {
+            if (error.response) {
+                console.error("Response error:", error.response.data);
+                throw new Error(error.response.data.error);  // On jette une erreur avec un message clair
+            } else if (error.request) {
+                console.error("Request error:", error.request);
+                throw new Error("Erreur de requête : pas de réponse du serveur.");
+            } else {
+                console.error("Error", error.message);
+                throw new Error("Erreur lors de l'inscription.");
+            }
         });
 };
 
