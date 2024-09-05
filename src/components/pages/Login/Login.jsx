@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 
 import "./login.css";
 import forgeLogo from "../../../assets/logo/logo_complet.svg";
+import eyeIcon from "../../../assets/icone/eye-icon.png";
 
 import SubmitButton from "../../UI/molecules/submitButton/submitButton";
 import FieldForm from "../../UI/molecules/FieldForm/FieldForm";
@@ -23,9 +24,13 @@ const Login = ({ ...props }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(t(""));
 
+  const [showPassword, setShowPassword] = useState(false);
+
   const loginSubmit = () => {
     setIsLoading(true);
     setError("");
+    console.log(Email);
+    console.log(Password);
 
     dispatch(
       login({
@@ -72,11 +77,17 @@ const Login = ({ ...props }) => {
             id="password"
             name="password"
             label={t("login.password") + " *"}
-            type="password"
+            type={showPassword ? "text" : "password"}
             required={true}
             value={Password}
             onChange={(e) => setPassword(e.target.value)}
           />
+          <span
+            className="password-toggle-icon login"
+            onClick={() => setShowPassword(!showPassword)}
+          >
+            <img src={showPassword ? eyeIcon : eyeIcon} alt="img" />
+          </span>
           {error && <p className="error-message">{error}</p>}
           <SubmitButton onClick={loginSubmit} disabled={isLoading}>
             {isLoading ? t("login.loading") : t("login.submit")}

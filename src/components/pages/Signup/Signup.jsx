@@ -1,14 +1,14 @@
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
-
 import "./signup.css";
+
 import forgeLogo from "../../../assets/logo/logo_complet.svg";
+import eyeIcon from "../../../assets/icone/eye-icon.png";
 
 import SubmitButton from "../../UI/molecules/submitButton/submitButton";
 import FieldForm from "../../UI/molecules/FieldForm/FieldForm";
 import Form from "../../UI/organisms/Form";
 import { setMessage } from "../../../store/slices/message.slice";
-
 import { register } from "../../../store/store";
 import { login } from "../../../store/store";
 import { useDispatch } from "react-redux";
@@ -28,50 +28,99 @@ const Signup = () => {
   const [Password, setPassword] = useState("");
   const [ConfirmedPassword, setConfirmedPassword] = useState("");
 
+  const [pseudoError, setPseudoError] = useState("");
+  const [emailError, setEmailError] = useState("");
+  const [passwordError, setPasswordError] = useState("");
+  const [confirmedPasswordError, setConfirmedPasswordError] = useState("");
+
+  // Nouveaux états pour gérer la visibilité des mots de passe
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmedPassword, setShowConfirmedPassword] = useState(false);
+
   const registerSubmit = async () => {
     setIsLoading(true);
     setError("");
 
+    if (!validateFields()) {
+      setIsLoading(false);
+      return; // Ne pas envoyer la requête si la validation échoue
+    }
+
     try {
-      try {
-        // Étape 1: Lancer l'inscription
-        await dispatch(
-          register({
-            email: Email,
-            username: Pseudo,
-            pseudo: Pseudo,
-            password: Password,
-          })
-        ).unwrap(); // Unwrap pour gérer l'erreur directement
-      } catch (error) {
-        console.log("erreur inscription : " + error);
-      }
+      await dispatch(
+        register({
+          username: Email,
+          pseudo: Pseudo,
+          password: Password,
+        })
+      ).unwrap();
 
       let loginResult;
-      try {
-        // Étape 2: Lancer la connexion si l'inscription est réussie
-        loginResult = await dispatch(
-          login({
-            username: Pseudo,
-            password: Password,
-          })
-        ).unwrap();
-        console.log(loginResult);
-      } catch (error) {
-        console.log("erreur a la connexion : " + error);
-      }
+      loginResult = await dispatch(
+        login({
+          username: Email,
+          password: Password,
+        })
+      ).unwrap();
 
-      // Étape 3: Rediriger vers la page d'accueil si la connexion est réussie
       if (loginResult.token) {
-        console.log("navigatoin accueil");
         navigate("/");
       }
     } catch (error) {
-      setError("Inscription ou connexion échouée.");
-      dispatch(setMessage(error.message));
+      console.error("Erreur lors de l'inscription :", error);
+
+      if (error === "Pseudo déjà utilisé.") {
+        setError("Ce pseudo est déjà pris.");
+      } else if (error === "Cet e-mail est déjà utilisé.") {
+        setError("Cet e-mail est déjà utilisé.");
+      } else {
+        setError("Une erreur est survenue lors de l'inscription");
+      }
     } finally {
       setIsLoading(false);
     }
+  };
+
+  const validateFields = () => {
+    let valid = true;
+
+    if (!Pseudo) {
+      setPseudoError("Ce champ est obligatoire");
+      valid = false;
+    } else {
+      setPseudoError("");
+    }
+
+    if (!Email) {
+      setEmailError("Ce champ est obligatoire");
+      valid = false;
+    } else {
+      setEmailError("");
+    }
+
+    if (!Password) {
+      setPasswordError("Ce champ est obligatoire");
+      valid = false;
+    } else if (Password.length < 8 || Password.length > 16) {
+      setPasswordError(
+        "Le mot de passe doit contenir entre 8 et 16 caractères"
+      );
+      valid = false;
+    } else {
+      setPasswordError("");
+    }
+
+    if (!ConfirmedPassword) {
+      setConfirmedPasswordError("Ce champ est obligatoire");
+      valid = false;
+    } else if (ConfirmedPassword !== Password) {
+      setConfirmedPasswordError("Les mots de passe ne correspondent pas");
+      valid = false;
+    } else {
+      setConfirmedPasswordError("");
+    }
+
+    return valid;
   };
 
   return (
@@ -85,7 +134,9 @@ const Signup = () => {
             required={true}
             value={Pseudo}
             onChange={(e) => setPseudo(e.target.value)}
+            errorMessage={pseudoError}
           />
+
           <FieldForm
             type="email"
             label={t("signup.email") + " *"}
@@ -93,23 +144,47 @@ const Signup = () => {
             required={true}
             value={Email}
             onChange={(e) => setEmail(e.target.value)}
+            errorMessage={emailError}
           />
-          <FieldForm
-            label={t("signup.password") + " *"}
-            name="password"
-            required={true}
-            type="password"
-            value={Password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-          <FieldForm
-            label={t("signup.confirmPassword") + " *"}
-            name="confirmPassword"
-            required={true}
-            type="password"
-            value={ConfirmedPassword}
-            onChange={(e) => setConfirmedPassword(e.target.value)}
-          />
+
+          {/* Champ de mot de passe avec icône pour afficher/masquer */}
+          <div className="password-field">
+            <FieldForm
+              label={t("signup.password") + " *"}
+              name="password"
+              required={true}
+              type={showPassword ? "text" : "password"} // Bascule entre text et password
+              value={Password}
+              onChange={(e) => setPassword(e.target.value)}
+              errorMessage={passwordError}
+            />
+            <span
+              className="password-toggle-icon"
+              onClick={() => setShowPassword(!showPassword)}
+            >
+              <img src={showPassword ? eyeIcon : eyeIcon} alt="img" />
+            </span>
+          </div>
+
+          {/* Champ de confirmation du mot de passe avec icône pour afficher/masquer */}
+          <div className="password-field">
+            <FieldForm
+              label={t("signup.confirmPassword") + " *"}
+              name="confirmPassword"
+              required={true}
+              type={showConfirmedPassword ? "text" : "password"}
+              value={ConfirmedPassword}
+              onChange={(e) => setConfirmedPassword(e.target.value)}
+              errorMessage={confirmedPasswordError}
+            />
+            <span
+              className="password-toggle-icon"
+              onClick={() => setShowConfirmedPassword(!showConfirmedPassword)}
+            >
+              <img src={showConfirmedPassword ? eyeIcon : eyeIcon} alt="img" />
+            </span>
+          </div>
+
           {error && <p className="error-message">{error}</p>}
           <SubmitButton onClick={registerSubmit} disabled={isLoading}>
             {isLoading ? t("login.loading") : t("signup.submit")}

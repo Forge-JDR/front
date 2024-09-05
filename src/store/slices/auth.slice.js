@@ -27,23 +27,43 @@ export const login = createAsyncThunk(
     }
 );
 
+// export const register = createAsyncThunk(
+//     "auth/register",
+//     async ({ email, password, username, pseudo }, thunkAPI) => {
+//         try {
+//             await AuthService.register(email, password, username, pseudo);
+//         } catch (error) {
+//             const message =
+//                 (error.response &&
+//                     error.response.data &&
+//                     error.response.data.message) ||
+//                 error.message ||
+//                 error.toString();
+//             thunkAPI.dispatch(setMessage(message));
+//             return thunkAPI.rejectWithValue();
+//         }
+//     }
+// );
+
 export const register = createAsyncThunk(
     "auth/register",
-    async ({ email, password, username, pseudo }, thunkAPI) => {
+    async ({ username, password, pseudo }, thunkAPI) => {
         try {
-            await AuthService.register(email, password, username, pseudo);
+            const data = await AuthService.register(username, password, pseudo);
+            return { token: data.token, refresh_token: data.refresh_token }; // Assurez-vous que le retour correspond bien aux données attendues
         } catch (error) {
             const message =
                 (error.response &&
                     error.response.data &&
-                    error.response.data.message) ||
+                    error.response.data.error) ||  // Changez 'message' par 'error' si c'est la clé correcte
                 error.message ||
                 error.toString();
             thunkAPI.dispatch(setMessage(message));
-            return thunkAPI.rejectWithValue();
+            return thunkAPI.rejectWithValue(message);  // Renvoie le message d'erreur
         }
     }
 );
+
 
 
 export const logout = createAsyncThunk("auth/logout", async () => {

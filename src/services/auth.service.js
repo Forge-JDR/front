@@ -28,21 +28,31 @@ const login = (username, password) => {
       });
 };
 
-const register = (email, password, pseudo, username) => {
+const register = (username, password, pseudo) => {
     return api
-        .post(API_URL_REGISTER , {
-            email,
+        .post(API_URL_REGISTER, {
+            username,
             password,
-            pseudo, 
-            username
+            pseudo
         })
         .then((response) => {
             const data = response.data;
             if (data.token) {
                 window.localStorage.setItem("token", data.token);
-                // Vous pouvez également stocker d'autres informations utilisateur si nécessaire
             }
             return data;
+        })
+        .catch((error) => {
+            if (error.response) {
+                console.error("Response error:", error.response.data);
+                throw new Error(error.response.data.error);  // On jette une erreur avec un message clair
+            } else if (error.request) {
+                console.error("Request error:", error.request);
+                throw new Error("Erreur de requête : pas de réponse du serveur.");
+            } else {
+                console.error("Error", error.message);
+                throw new Error("Erreur lors de l'inscription.");
+            }
         });
 };
 

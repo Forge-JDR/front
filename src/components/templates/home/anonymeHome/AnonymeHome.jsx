@@ -46,7 +46,7 @@ const AnonymeHome = () => {
             <div className="bottom">
               <div className="button-container">
                 <button className="cta-button">
-                  <a href="/signup" class="button">
+                  <a href="/signup" className="button">
                     {t("home.createAccount")}
                   </a>
                 </button>
