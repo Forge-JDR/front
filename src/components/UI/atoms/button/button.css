@@ -1,0 +1,44 @@
+.forgeJdr-button {
+    border-radius: 10px;
+    margin: auto;
+    padding: 10px;
+    padding-left: 3dvb;
+    padding-right: 3dvb;
+    font-size: 1rem;
+    cursor: pointer;
+    border: none;
+}
+
+.submit {
+    background-color: var(--main-blue-color);
+    color: rgb(255, 255, 255);
+}
+
+.cancel {
+
+}
+
+.disabled {
+    background-color: rgb(194, 194, 194);
+    color: rgb(131, 131, 131);;
+}
+.disabled:hover {
+    cursor:not-allowed ;
+}
+
+.delete {
+    background: linear-gradient(70deg, #a21d1d, #3d0303);
+    color: white;
+}
+.delete:hover {
+    background: linear-gradient(70deg, #3d0303, #a21d1d);
+}
+
+.edit {
+    background: linear-gradient(70deg, var(--main-blue-color), #02373f);
+    color: white;
+}
+
+.edit:hover {
+    background: linear-gradient(70deg, #02373f, var(--main-blue-color));
+}

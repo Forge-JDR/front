@@ -1,6 +1,6 @@
 :root {
-    --main-blue-color:#2596BE;
-    --main-purple-color:#752ACB;
+    --main-blue-color:rgb(37, 150, 190);
+    --main-purple-color:rgb(117, 42, 203);
 }
 
 @import url('https://fonts.googleapis.com/css2?family=MedievalSharp&display=swap');

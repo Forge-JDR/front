@@ -3,9 +3,10 @@ import { useTranslation } from "react-i18next";
 
 import "./newCaracterForm.css";
 
-import SubmitButton from "../../UI/molecules/submitButton/submitButton";
+import Button from "../../UI/atoms/button/button";
+// import SubmitButton from "../../UI/molecules/submitButton/submitButton";
 import FieldForm from "../../UI/molecules/FieldForm/FieldForm";
-import CancelButton from "../../UI/molecules/cancelButton/cancelButton";
+// import CancelButton from "../../UI/molecules/cancelButton/cancelButton";
 
 import iconeUplaod from "../../../assets/upload_icone.svg";
 
@@ -52,17 +53,17 @@ const NewCaracterForm = ({ closeForm, ...rest }) => {
         </div>
 
         <div className="btn bottom">
-          <CancelButton className="cancel" onClick={closeForm}>
+          <Button className="cancel" onClick={closeForm}>
             {t("newCaracterForm.cancel")}
-          </CancelButton>
-          <SubmitButton
+          </Button>
+          <Button
             className="confirm"
             onClick={() => {
               console.log("newCaracterForm submitted");
             }}
           >
             {t("newCaracterForm.create")}
-          </SubmitButton>
+          </Button>
         </div>
       </div>
     </div>

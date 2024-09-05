@@ -7,7 +7,8 @@ import "./login.css";
 import forgeLogo from "../../../assets/logo/logo_complet.svg";
 import eyeIcon from "../../../assets/icone/eye-icon.png";
 
-import SubmitButton from "../../UI/molecules/submitButton/submitButton";
+import Button from "../../UI/atoms/button/button";
+// import SubmitButton from "../../UI/molecules/submitButton/submitButton";
 import FieldForm from "../../UI/molecules/FieldForm/FieldForm";
 import Form from "../../UI/organisms/Form";
 
@@ -87,9 +88,9 @@ const Login = ({ ...props }) => {
             <img src={showPassword ? eyeIcon : eyeIcon} alt="img" />
           </span>
           {error && <p className="error-message">{error}</p>}
-          <SubmitButton onClick={loginSubmit} disabled={isLoading}>
+          <Button onClick={loginSubmit} disabled={isLoading}>
             {isLoading ? t("login.loading") : t("login.submit")}
-          </SubmitButton>
+          </Button>
         </Form>
 
         <div className="logo-container">

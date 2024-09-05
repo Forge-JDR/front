@@ -5,7 +5,8 @@ import "./signup.css";
 import forgeLogo from "../../../assets/logo/logo_complet.svg";
 import eyeIcon from "../../../assets/icone/eye-icon.png";
 
-import SubmitButton from "../../UI/molecules/submitButton/submitButton";
+import Button from "../../UI/atoms/button/button";
+// import SubmitButton from "../../UI/molecules/submitButton/submitButton";
 import FieldForm from "../../UI/molecules/FieldForm/FieldForm";
 import Form from "../../UI/organisms/Form";
 import { setMessage } from "../../../store/slices/message.slice";
@@ -146,7 +147,6 @@ const Signup = () => {
             onChange={(e) => setEmail(e.target.value)}
             errorMessage={emailError}
           />
-
           {/* Champ de mot de passe avec icône pour afficher/masquer */}
           <div className="password-field">
             <FieldForm
@@ -189,6 +189,7 @@ const Signup = () => {
           <SubmitButton onClick={registerSubmit} disabled={isLoading}>
             {isLoading ? t("login.loading") : t("signup.submit")}
           </SubmitButton>
+
         </Form>
         <div className="logo-container">
           <a href="/">
