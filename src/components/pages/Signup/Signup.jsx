@@ -6,7 +6,6 @@ import forgeLogo from "../../../assets/logo/logo_complet.svg";
 import eyeIcon from "../../../assets/icone/eye-icon.png";
 
 import Button from "../../UI/atoms/button/button";
-// import SubmitButton from "../../UI/molecules/submitButton/submitButton";
 import FieldForm from "../../UI/molecules/FieldForm/FieldForm";
 import Form from "../../UI/organisms/Form";
 import { setMessage } from "../../../store/slices/message.slice";
@@ -186,10 +185,9 @@ const Signup = () => {
           </div>
 
           {error && <p className="error-message">{error}</p>}
-          <SubmitButton onClick={registerSubmit} disabled={isLoading}>
+          <Button onClick={registerSubmit} disabled={isLoading}>
             {isLoading ? t("login.loading") : t("signup.submit")}
-          </SubmitButton>
-
+          </Button>
         </Form>
         <div className="logo-container">
           <a href="/">
