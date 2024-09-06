@@ -12,12 +12,19 @@ import ConnectedNavbar from "../../templates/connectedNavBar/ConnectedNavbar";
 import CardCreate from "../../UI/molecules/CardCreate/CardCreate";
 import NewRpgForm from "../../templates/NewRpgForm/NewRpgForm";
 import CardRpg from "../../UI/organisms/CardRpg/CardRpg";
+import Footer from "../../UI/organisms/footer/Footer";
 
 const Creation = () => {
   const userConnected = "admin";
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const wikis = useSelector((state) => state.wikis.wikisList);
+
+  const links = [
+    { name: t("navbar.sheet"), url: "/caracters" },
+    { name: t("navbar.creation"), url: "/creation" },
+    { name: t("navbar.discover"), url: "/discover" },
+  ];
 
   useEffect(() => {
     dispatch(fetchWikis());
@@ -77,10 +84,7 @@ const Creation = () => {
           </div>
         </div>
       </div>
-      <div className="footer">
-        <img className="logo-text" src={forgeLogoTxt} alt="logo_text" />
-        <p>Copyright 2024</p>
-      </div>
+      <Footer links={links}></Footer>
     </>
   );
 };

@@ -83,6 +83,7 @@ body {
   margin-top: 15px;
   font-size: 16px;
   background-color: var(--main-blue-color);
+  color: white;
 }
 
 .logo-container{
@@ -120,7 +121,7 @@ button[disabled] {
   position: absolute;
   /* background-color: aqua; */
   right: 10px;
-  top: 50%;
+  top: 55%;
   transform: translateY(-50%);
   cursor: pointer;
   height: 15%; 

@@ -3,20 +3,29 @@ import { useSelector, useDispatch } from "react-redux";
 import { store, fetchWikis } from "../../../store/store";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 import "./discover.css";
 
 import forgeLogoTxt from "../../../assets/logo/logo_texte.svg";
 import defaultWikiImage from "../../../assets/wiki_default.png";
+import Footer from "../../UI/organisms/footer/Footer";
 
 import ConnectedNavbar from "../../templates/connectedNavBar/ConnectedNavbar";
 import CardRpgDiscover from "../../UI/organisms/CardRpgDiscover/CardRpgDiscover";
 
 const Discover = ({ ...props }) => {
   const dispatch = useDispatch();
+  const { t } = useTranslation();
   const wiki = useSelector((state) => state.wikis.wikisList);
   const wikiStatus = useSelector((state) => state.wikis.status);
   const navigate = useNavigate();
+
+  const links = [
+    { name: t("navbar.sheet"), url: "/caracters" },
+    { name: t("navbar.creation"), url: "/creation" },
+    { name: t("navbar.discover"), url: "/discover" },
+  ];
 
   useEffect(() => {
     if (wikiStatus === "idle") {
@@ -67,10 +76,7 @@ const Discover = ({ ...props }) => {
           </div>
         </div>
       </div>
-      <div className="footer">
-        <img className="logo-text" src={forgeLogoTxt} alt="logo_text" />
-        <p>Copyright 2024</p>
-      </div>
+      <Footer links={links}></Footer>
     </>
   );
 };

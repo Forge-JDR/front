@@ -5,6 +5,7 @@ import { useParams } from "react-router-dom";
 import ErrorComponent from "../../ErrorBoundaries/ErrorComponent";
 
 import WikiEditor from "../../UI/organisms/wikiEditor/WikiEditor";
+import { useTranslation } from "react-i18next";
 
 import forgeLogoTxt from "../../../assets/logo/logo_texte.svg";
 import defaultWikiImage from "../../../assets/wiki_default.png";
@@ -13,12 +14,20 @@ import ConnectedNavbar from "../../templates/connectedNavBar/ConnectedNavbar";
 import CardCreate from "../../UI/molecules/CardCreate/CardCreate";
 import NewRpgForm from "../../templates/NewRpgForm/NewRpgForm";
 import CardRpg from "../../UI/organisms/CardRpg/CardRpg";
+import Footer from "../../UI/organisms/footer/Footer";
 
 const WikiEdition = ({ ...props }) => {
   const { id } = useParams();
   const dispatch = useDispatch();
+  const { t } = useTranslation();
   const wiki = useSelector((state) => state.wikis.wikiInfo);
   const wikiStatus = useSelector((state) => state.wikis.status);
+
+  const links = [
+    { name: t("navbar.sheet"), url: "/caracters" },
+    { name: t("navbar.creation"), url: "/creation" },
+    { name: t("navbar.discover"), url: "/discover" },
+  ];
 
   useEffect(() => {
     if (wikiStatus === "idle") {
@@ -117,10 +126,7 @@ const WikiEdition = ({ ...props }) => {
           </div>
         </div>
       </div>
-      <div className="footer">
-        <img className="logo-text" src={forgeLogoTxt} alt="logo_text" />
-        <p>Copyright 2024</p>
-      </div>
+      <Footer links={links}></Footer>
     </>
   );
 };
