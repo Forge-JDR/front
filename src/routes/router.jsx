@@ -6,6 +6,8 @@ import Signup from "../components/pages/Signup/Signup";
 import Creation from "../components/pages/Creation/Creation";
 import Caracters from "../components/pages/Caracters/Caracters";
 import WikiEdition from "../components/pages/WikiEdition/WikiEdition";
+import CGU from "../components/pages/GCU/Cgu";
+import Contact from "../components/pages/Contact/Contact";
 
 import Discover from "../components/pages/Discover/Discover";
 import { RequireAuth } from "./requireAuth";
@@ -77,6 +79,14 @@ export const Router = () => {
           <WikiEdition />
         </ErrorBoundary>
       ),
+    },
+    {
+      path: "contact",
+      element: <Contact />,
+    },
+    {
+      path: "cgu",
+      element: <CGU />,
     },
   ]);
 

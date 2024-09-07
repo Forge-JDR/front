@@ -1,20 +1,29 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { store, fetchWiki } from "../../../store/store";
+import { useTranslation } from "react-i18next";
 import { useParams } from "react-router-dom";
 import ErrorComponent from "../../ErrorBoundaries/ErrorComponent";
 
 import ConnectedNavbar from "../../templates/connectedNavBar/ConnectedNavbar";
 
 import forgeLogoTxt from "../../../assets/logo/logo_texte.svg";
+import Footer from "../../UI/organisms/footer/Footer";
 
 import "./wiki.css";
 
 const Wiki = ({ ...props }) => {
   const { id } = useParams();
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const wiki = useSelector((state) => state.wikis.wikiInfo);
   const wikiStatus = useSelector((state) => state.wikis.status);
+
+  const links = [
+    { name: t("navbar.sheet"), url: "/caracters" },
+    { name: t("navbar.creation"), url: "/creation" },
+    { name: t("navbar.discover"), url: "/discover" },
+  ];
 
   useEffect(() => {
     if (wikiStatus === "idle") {
@@ -113,10 +122,7 @@ const Wiki = ({ ...props }) => {
           </div>
         </div>
       </div>
-      <div className="footer">
-        <img className="logo-text" src={forgeLogoTxt} alt="logo_text" />
-        <p>Copyright 2024</p>
-      </div>
+      <Footer links={links}></Footer>
     </>
   );
 };

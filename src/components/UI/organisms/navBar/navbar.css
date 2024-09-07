@@ -182,6 +182,8 @@ img.icone_user {
     .burger-menu {
         display: block;
         left : 5px;
+        position: fixed;
+        z-index: 5000;
     }
 
         .burger-menu.open {
@@ -225,7 +227,8 @@ img.icone_user {
     height: 30px;
     position: absolute;
     top: 20px;
-    left: 10px
+    left: 10px;
+    cursor: pointer;
 }
 
 .nav-links.container{

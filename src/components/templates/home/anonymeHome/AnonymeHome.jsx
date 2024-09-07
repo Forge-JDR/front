@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 
 import "./anonymeHome.css";
 import forgeLogo from "../../../../assets/logo/logo_complet.svg";
-import forgeLogoTxt from "../../../../assets/logo/logo_texte.svg";
+
 import screen from "../../../../assets/screenshot.png";
 import step1 from "../../../../assets/home/step_createAccount.svg";
 import step2 from "../../../../assets/home/step_imagine.svg";
@@ -16,6 +16,7 @@ import fonct3 from "../../../../assets/home/fonc3.jpg";
 import fonct4 from "../../../../assets/home/fonc4.jpg";
 
 import NavBar from "../../../UI/organisms/navBar/NavBar";
+import Footer from "../../../UI/organisms/footer/Footer";
 
 const AnonymeHome = () => {
   const { t } = useTranslation();
@@ -123,10 +124,7 @@ const AnonymeHome = () => {
           </div>
         </div>
       </div>
-      <div className="footer">
-        <img className="logo-text" src={forgeLogoTxt} alt="logo_text" />
-        <p>Copyright 2024</p>
-      </div>
+      <Footer links={links}></Footer>
     </div>
   );
 };

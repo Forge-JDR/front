@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { store, fetchWikis } from "../../../../store/store";
 
 import "./connectedHome.css";
-
+import Footer from "../../../UI/organisms/footer/Footer";
 import forgeLogoTxt from "../../../../assets/logo/logo_texte.svg";
 import defaultWikiImage from "../../../../assets/wiki_default.png";
 
@@ -96,7 +96,11 @@ const ConnectedHome = () => {
       </>
     );
   };
-
+  const links = [
+    { name: t("navbar.sheet"), url: "/caracters" },
+    { name: t("navbar.creation"), url: "/creation" },
+    { name: t("navbar.discover"), url: "/discover" },
+  ];
   return (
     <>
       <div className="connected-home background">
@@ -135,10 +139,7 @@ const ConnectedHome = () => {
           </div>
         </div>
       </div>
-      <div className="footer">
-        <img className="logo-text" src={forgeLogoTxt} alt="logo_text" />
-        <p>Copyright 2024</p>
-      </div>
+      <Footer links={links}></Footer>
     </>
   );
 };

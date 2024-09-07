@@ -11,11 +11,18 @@ import ConnectedNavbar from "../../templates/connectedNavBar/ConnectedNavbar";
 import CardCaracter from "../../UI/organisms/CardCaracter/CardCaracter";
 import CardCreate from "../../UI/molecules/CardCreate/CardCreate";
 import NewCaracterForm from "../../templates/NewCaracterForm/NewCaracterForm";
+import Footer from "../../UI/organisms/footer/Footer";
 
 import imageTest from "../../../assets/home/fonc3.jpg";
 
 const Caracters = () => {
   const { t } = useTranslation();
+
+  const links = [
+    { name: t("navbar.sheet"), url: "/caracters" },
+    { name: t("navbar.creation"), url: "/creation" },
+    { name: t("navbar.discover"), url: "/discover" },
+  ];
 
   const [isDisplayFormNew, setIsDisplayFormNew] = useState(false);
 
@@ -69,10 +76,7 @@ const Caracters = () => {
           </div>
         </div>
       </div>
-      <div className="footer">
-        <img className="logo-text" src={forgeLogoTxt} alt="logo_text" />
-        <p>Copyright 2024</p>
-      </div>
+      <Footer links={links}></Footer>
     </>
   );
 };
