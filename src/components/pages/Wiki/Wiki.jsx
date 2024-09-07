@@ -19,12 +19,6 @@ const Wiki = ({ ...props }) => {
   const wiki = useSelector((state) => state.wikis.wikiInfo);
   const wikiStatus = useSelector((state) => state.wikis.status);
 
-  const links = [
-    { name: t("navbar.sheet"), url: "/caracters" },
-    { name: t("navbar.creation"), url: "/creation" },
-    { name: t("navbar.discover"), url: "/discover" },
-  ];
-
   useEffect(() => {
     if (wikiStatus === "idle") {
       dispatch(fetchWiki(id));
@@ -122,7 +116,7 @@ const Wiki = ({ ...props }) => {
           </div>
         </div>
       </div>
-      <Footer links={links}></Footer>
+      <Footer></Footer>
     </>
   );
 };

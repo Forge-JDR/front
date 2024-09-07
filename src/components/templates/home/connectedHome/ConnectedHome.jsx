@@ -96,11 +96,6 @@ const ConnectedHome = () => {
       </>
     );
   };
-  const links = [
-    { name: t("navbar.sheet"), url: "/caracters" },
-    { name: t("navbar.creation"), url: "/creation" },
-    { name: t("navbar.discover"), url: "/discover" },
-  ];
   return (
     <>
       <div className="connected-home background">
@@ -139,7 +134,7 @@ const ConnectedHome = () => {
           </div>
         </div>
       </div>
-      <Footer links={links}></Footer>
+      <Footer></Footer>
     </>
   );
 };

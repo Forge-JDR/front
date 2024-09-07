@@ -1,0 +1,69 @@
+/* Utilisation des styles similaires à la page des personnages pour uniformité */
+.background.creation {
+    width: 100%;
+    height: auto;
+    min-height: 100vh;
+    background-color: #f3f2f2;
+    display: flex;
+}
+
+.background-hexa.image{
+    width: 100vw;
+    position: fixed;
+}
+
+.main-container.cgu-page {
+    margin: auto;
+    margin-top: 70px;
+    width: 90%;
+    padding: 20px;
+    position: relative;
+    align-items: center;
+    justify-content: center;
+}
+
+.title-cgu-page p {
+    color: var(--main-purple-color);
+    font-family: 'MedievalSharp', cursive;
+    font-size: 40px;
+    text-align: center;
+}
+
+.cgu-content {
+    
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(10px);
+    margin: auto;
+    margin-top: 50px;
+}
+
+.cgu-content p,
+.cgu-content h2 {
+    font-family: Arial, sans-serif;
+    color: #333;
+    line-height: 1.6;
+}
+
+.cgu-content h2 {
+    margin-top: 20px;
+    color: var(--main-blue-color);
+    font-size: 1.2rem;
+}
+
+.cgu-date {
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.footer-cgu{
+    bottom: 0;
+}
+
+@media (max-width: 768px) {
+    .main-container.cgu-page {
+        margin-top: 0px ;
+    }
+}
