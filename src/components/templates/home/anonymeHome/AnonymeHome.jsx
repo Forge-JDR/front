@@ -124,7 +124,7 @@ const AnonymeHome = () => {
           </div>
         </div>
       </div>
-      <Footer links={links}></Footer>
+      <Footer></Footer>
     </div>
   );
 };

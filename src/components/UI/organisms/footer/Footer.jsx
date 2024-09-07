@@ -11,7 +11,21 @@ import forgeLogoTxt from "../../../../assets/logo/logo_texte.svg";
 
 import ThemeSwitch from "../../molecules/ThemeSwitch/ThemeSwitch";
 
-const Footer = ({ links }) => {
+const Footer = () => {
+  const { t } = useTranslation();
+  const token = localStorage.getItem("token");
+
+  let links;
+
+  if (token) {
+    links = [
+      { name: t("navbar.sheet"), url: "/caracters" },
+      { name: t("navbar.creation"), url: "/creation" },
+      { name: t("navbar.discover"), url: "/discover" },
+    ];
+  } else {
+    links = [];
+  }
   const location = useLocation();
 
   return (

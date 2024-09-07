@@ -69,5 +69,35 @@
         "newRPG": "New RPG",
         "newCharactere": "New Charactere",
         "newGame": "New Game"
-    }
+    },
+    "TCU": {
+    "title": "Terms and Conditions of Use (TCU) for the ForgeJDR site",
+    "date": "Effective Date: 10/09/2024",
+    "pitch": "Welcome to ForgeJDR. By accessing and using our site, you agree to comply with these Terms and Conditions of Use (TCU). Please read them carefully.",
+    "title1": "1. Purpose",
+    "texte1": "These TCU are intended to define the terms and conditions under which users can access and use the services offered by ForgeJDR, including the creation of role-playing games and character sheets.",
+    "title2": "2. Acceptance of the TCU",
+    "texte2": "Accessing and using the site implies full acceptance of these TCU. If you do not agree with these terms, please refrain from using our service.",
+    "title3": "3. Access to the Service",
+    "texte3": "Access to the site is free of charge. Some services or features may require the creation of a user account. ForgeJDR reserves the right to restrict or suspend access to the site for maintenance or updates without prior notice.",
+    "title4": "4. Account Creation",
+    "texte4": "To use certain features (such as saving character sheets or creating RPGs), users must create an account by providing accurate, complete, and up-to-date information.",
+    "title5": "5. User Responsibility",
+    "texte5": "The user agrees to: Not use the site in an illegal manner or contrary to public decency. Not publish any offensive, defamatory, violent, racist, or hateful content. Not use the site to spread malware or engage in any form of hacking.",
+    "title6": "6. User-Generated Content",
+    "texte6": "Users can create and publish character sheets and RPG scenarios through the site. By submitting content, users guarantee that they hold all the necessary rights to publish this content and grant ForgeJDR a non-exclusive, worldwide, free, and transferable license to use, modify, and distribute the content on the site.",
+    "title7": "7. Intellectual Property",
+    "texte7": "All content on the site (including text, images, graphics, logos) is protected by intellectual property rights and is the exclusive property of ForgeJDR or its partners. Users retain the intellectual property rights to their content created on the site but grant ForgeJDR the right to use it in accordance with these TCU.",
+    "title8": "8. Moderation",
+    "texte8": "ForgeJDR reserves the right to moderate, modify, or delete any user-published content if it is deemed non-compliant with these TCU or infringes on the rights of third parties.",
+    "title9": "9. Data Protection",
+    "texte9": "Personal data collected during account creation or site usage is processed in accordance with our [Privacy Policy]. It will only be used to improve the service, in compliance with the General Data Protection Regulation (GDPR).",
+    "title10": "10. Limitation of Liability",
+    "texte10": "ForgeJDR disclaims any responsibility for: Service interruptions due to technical or maintenance issues. Loss of data or content created by users. Any indirect damage resulting from the use of the site.",
+    "title11": "11. Modification of the TCU",
+    "texte11": "ForgeJDR reserves the right to modify these TCU at any time. Users will be informed of changes and will need to accept the new terms to continue using the service.",
+    "title12": "12. Governing Law and Jurisdiction",
+    "texte12": "These TCU are governed by French law. In case of any dispute related to the use of the site, the courts of [City] will have jurisdiction."
+}
+
 }

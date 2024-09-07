@@ -18,12 +18,6 @@ import imageTest from "../../../assets/home/fonc3.jpg";
 const Caracters = () => {
   const { t } = useTranslation();
 
-  const links = [
-    { name: t("navbar.sheet"), url: "/caracters" },
-    { name: t("navbar.creation"), url: "/creation" },
-    { name: t("navbar.discover"), url: "/discover" },
-  ];
-
   const [isDisplayFormNew, setIsDisplayFormNew] = useState(false);
 
   const displayForm = () => {
@@ -76,7 +70,7 @@ const Caracters = () => {
           </div>
         </div>
       </div>
-      <Footer links={links}></Footer>
+      <Footer></Footer>
     </>
   );
 };
