@@ -4,15 +4,19 @@ import { useTranslation } from "react-i18next";
 import "./cgu.css"; // Import du fichier de style pour les CGU
 import Footer from "../../UI/organisms/footer/Footer";
 import ConnectedNavbar from "../../templates/connectedNavBar/ConnectedNavbar"; // Ajout du Navbar si c'est cohérent avec la structure du site
+import NavBar from "../../UI/organisms/navBar/NavBar";
 
 const CGU = () => {
   const { t } = useTranslation();
+
+  const links = [];
+  const token = localStorage.getItem("token");
 
   return (
     <>
       <div className="background creation">
         <div className="background-hexa image"></div>
-        <ConnectedNavbar></ConnectedNavbar>
+        {token ? <ConnectedNavbar /> : <NavBar links={links} />}
         <div className="main-container cgu-page">
           <div className="title-cgu-page">
             <p>{t("TCU.title")}</p>

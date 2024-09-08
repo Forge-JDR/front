@@ -34,7 +34,7 @@ const AnonymeHome = () => {
                 <div className="pitch">
                   <p>{t("home.pitch")}</p>
                 </div>
-                <div className="logo">
+                <div className="logo container">
                   <img className="logo" src={forgeLogo} alt="Logo" />
                 </div>
               </div>
@@ -63,6 +63,7 @@ const AnonymeHome = () => {
             src={step1}
             alt="icone_createAccount"
           />
+          <div className="contrast"></div>
           <p>{t("home.step1")}</p>
         </div>
         <div className="step-card step2">

@@ -50,17 +50,6 @@ body {
     background-color: #d5d5d5;
 }
 
-
-
-/* discover app container */
-
-/* div#discover-app{
-    width: 100%;
-    background-color: blue;
-    display: flex;
-    height: 150px;
-} */
-
 .main-vue {
     display: flex;
     flex-direction: column;
@@ -150,8 +139,7 @@ img.logo{
 }
 
 .right-side img{
-    width: 800px;
-    height: 100%;
+    width: 80%;
     box-shadow: 0 10px 10px rgba(0, 0, 0, 0.5);
 }
 
@@ -228,3 +216,86 @@ img.logo{
     font-family: 'MedievalSharp', cursive;
 }
 
+.overlay {
+    width: 100%;
+    height: 100%;
+}
+
+.overlay:hover {
+    background-color: #00000070;
+    backdrop-filter: blur(5px);
+    width: 100%;
+    height: 100%;
+}
+
+/* Responsive */
+
+@media (max-width: 768px) {
+
+    /* Ta configuration existante */
+    .main-presentation {
+        margin-top: 0px;
+        width: 100vw;
+        height: 100vh;
+    }
+
+    .pitch p {
+        color: white;
+        font-family: 'MedievalSharp', cursive;
+        font-size: 1.5rem;
+    }
+
+    .right-side {
+        display: none;
+        width: 0%;
+    }
+
+    .left-side {
+        width: 100%;
+        text-align: center;
+    }
+
+    .left-side .logo.container {
+        height: 40%;
+    }
+
+    .left-side img.logo {
+        height: 100%;
+    }
+
+    /* Modifications pour les step cards en mode responsive */
+    .step-presentation {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        /* Empiler les step cards verticalement */
+        align-items: center;
+        text-align: center;
+        justify-content: center;
+        padding: 20px 0;
+        background-color: #f3f2f2;
+        height: auto;
+    }
+
+    .step-presentation img {
+        width: 30%;
+    }
+
+    .step-card {
+        margin-bottom: 20px;
+        /* Espacement entre chaque carte */
+        align-items: center;
+        text-align: center;
+    }
+
+    .fonctionality-card{
+        height: 25%;
+    }
+
+    .fonctionalities-presentation{
+        height: 100vh;
+        position: relative;
+    }
+
+    
+}

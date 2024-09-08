@@ -9,8 +9,10 @@ import ConnectedNavbar from "../../templates/connectedNavBar/ConnectedNavbar";
 import FieldForm from "../../UI/molecules/FieldForm/FieldForm"; // Si tu as un composant similaire pour les champs de formulaire
 import Button from "../../UI/atoms/button/button"; // Bouton réutilisable, si disponible
 import SelectForm from "../../UI/molecules/SelectForm/SelectForm";
+import NavBar from "../../UI/organisms/navBar/NavBar";
 
 const Contact = () => {
+  const token = localStorage.getItem("token");
   const { t } = useTranslation();
 
   const [name, setName] = useState("");
@@ -18,6 +20,8 @@ const Contact = () => {
   const [title, setTitle] = useState("");
   const [message, setMessage] = useState("");
   const [email, setEmail] = useState("");
+
+  const links = [];
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -51,7 +55,7 @@ const Contact = () => {
   return (
     <>
       <div className="background creation">
-        <ConnectedNavbar></ConnectedNavbar>
+        {token ? <ConnectedNavbar /> : <NavBar links={links} />}
         <div className="main-container contact-page">
           <div className="title-contact-page">
             <p>{t("contact.title")}</p>
