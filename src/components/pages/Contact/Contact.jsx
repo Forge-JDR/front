@@ -33,10 +33,10 @@ const Contact = () => {
     // Utilise EmailJS pour envoyer l'email
     emailjs
       .send(
-        "service_aorub7v", // Remplace par ton service ID
-        "template_0jx0mar", // Remplace par ton template ID
+        process.env.REACT_APP_EMAILJS_SERVICE_ID, // Service ID depuis .env
+        process.env.REACT_APP_EMAILJS_TEMPLATE_ID, // Template ID depuis .env
         templateParams,
-        "nPI6ES88Jbu3IZejp" // Remplace par ton user ID (trouvé sur ton compte EmailJS)
+        process.env.REACT_APP_EMAILJS_USER_ID // User ID depuis .env
       )
       .then((result) => {
         console.log("SUCCESS!", result.status, result.text);
