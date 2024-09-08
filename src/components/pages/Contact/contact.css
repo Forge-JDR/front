@@ -1,0 +1,43 @@
+.background.creation {
+    width: 100%;
+    height: auto;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(45deg, #6a11cb, #2575fc);
+    /* Ajuste cette couleur selon ton design */
+}
+
+.main-container.contact-page {
+    width: 60%;
+    /* Ajuste cette largeur selon tes besoins */
+    background-color: #FFFFFF30;
+    /* Exemple de gradient */
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    color: white;
+}
+
+.title-contact-page p {
+    font-size: 2em;
+    /* Taille de police du titre */
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.contact-content form {
+    display: flex;
+    flex-direction: column;
+}
+
+.contact-content form input,
+.contact-content form select,
+.contact-content form textarea {
+    padding: 10px;
+    margin-bottom: 10px;
+    border: none;
+    border-radius: 5px;
+}
+

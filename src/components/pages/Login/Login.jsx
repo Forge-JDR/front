@@ -25,11 +25,19 @@ const Login = ({ ...props }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(t(""));
 
+  const [passwordError, setPasswordError] = useState("");
+  const [emailError, setEmailError] = useState("");
+
   const [showPassword, setShowPassword] = useState(false);
 
   const loginSubmit = () => {
     setIsLoading(true);
     setError("");
+
+    if (!validateFields()) {
+      setIsLoading(false);
+      return; // Ne pas envoyer la requête si la validation échoue
+    }
 
     dispatch(
       login({
@@ -59,6 +67,26 @@ const Login = ({ ...props }) => {
       });
   };
 
+  const validateFields = () => {
+    let valid = true;
+
+    if (!Email) {
+      setEmailError("Ce champ est obligatoire");
+      valid = false;
+    } else {
+      setEmailError("");
+    }
+
+    if (!Password) {
+      setPasswordError("Ce champ est obligatoire");
+      valid = false;
+    } else {
+      setPasswordError("");
+    }
+
+    return valid;
+  };
+
   return (
     <div className="main-container login">
       <div className="form-register-container">
@@ -70,6 +98,7 @@ const Login = ({ ...props }) => {
             label={t("login.username") + " *"}
             required={true}
             value={Email}
+            errorMessage={emailError}
             onChange={(e) => setEmail(e.target.value)}
           />
           <FieldForm
@@ -79,6 +108,7 @@ const Login = ({ ...props }) => {
             type={showPassword ? "text" : "password"}
             required={true}
             value={Password}
+            errorMessage={passwordError}
             onChange={(e) => setPassword(e.target.value)}
           />
           <span
