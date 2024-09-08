@@ -169,26 +169,24 @@ const NavBar = ({ links }) => {
             ))}
             <div className="separator alf"></div>
             <li className="new-menu">
-              <a href="#link1">Nous contacter</a>
+              <a href="/contact">Nous contacter</a>
             </li>
             <li className="new-menu">
-              <a href="#link1">CGU</a>
+              <a href="/cgu">CGU</a>
             </li>
             <div className="connexion-box">
               <div className="separator all"></div>
-              <li className="new-menu">
-                {token ? (
-                  <li>
-                    <Link onClick={handleLogout}>{t("home.logout")}</Link>
-                  </li>
-                ) : (
-                  <li>
-                    <Link to="/login" onClick={() => setShowSubMenu(false)}>
-                      {t("home.login")}
-                    </Link>
-                  </li>
-                )}
-              </li>
+              {token ? (
+                <li>
+                  <Link onClick={handleLogout}>{t("home.logout")}</Link>
+                </li>
+              ) : (
+                <li>
+                  <Link to="/login" onClick={() => setShowSubMenu(false)}>
+                    {t("home.login")}
+                  </Link>
+                </li>
+              )}
             </div>
           </div>
         </div>

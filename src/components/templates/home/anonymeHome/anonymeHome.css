@@ -50,17 +50,6 @@ body {
     background-color: #d5d5d5;
 }
 
-
-
-/* discover app container */
-
-/* div#discover-app{
-    width: 100%;
-    background-color: blue;
-    display: flex;
-    height: 150px;
-} */
-
 .main-vue {
     display: flex;
     flex-direction: column;
@@ -150,8 +139,7 @@ img.logo{
 }
 
 .right-side img{
-    width: 800px;
-    height: 100%;
+    width: 80%;
     box-shadow: 0 10px 10px rgba(0, 0, 0, 0.5);
 }
 
@@ -228,3 +216,15 @@ img.logo{
     font-family: 'MedievalSharp', cursive;
 }
 
+/* Responsive */
+
+@media (max-width: 768px) {
+
+    .main-presentation {
+        margin-top: 0px;
+    }
+
+    .right-side {
+        display: none;
+    }
+}
