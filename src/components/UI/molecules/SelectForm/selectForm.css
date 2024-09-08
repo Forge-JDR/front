@@ -1,0 +1,23 @@
+.select-form {
+    position: relative;
+    margin-bottom: 40px;
+}
+
+.select-form select {
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #FFFFFF50;
+    background-color: #FFFFFF50;
+    font-size: 16px;
+    outline: none;
+}
+
+.select-form .select-error {
+    border-color: red;
+}
+
+.select-form .error-message {
+    color: red;
+    font-size: 12px;
+}

@@ -98,6 +98,15 @@
     "texte11": "ForgeJDR reserves the right to modify these TCU at any time. Users will be informed of changes and will need to accept the new terms to continue using the service.",
     "title12": "12. Governing Law and Jurisdiction",
     "texte12": "These TCU are governed by French law. In case of any dispute related to the use of the site, the courts of [City] will have jurisdiction."
+},
+"contact" : {
+    "title" : "Contact us",
+    "message" : "Your message",
+    "name" : "First name and laste name *",
+    "messageType": "Message type",
+    "titleMessage": "Object of your message *",
+    "email" : "E-mail *",
+    "send": "Send"
 }
 
 }

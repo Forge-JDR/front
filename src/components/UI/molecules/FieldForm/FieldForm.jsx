@@ -31,27 +31,3 @@ const FieldForm = ({
   );
 };
 export default FieldForm;
-
-// const FieldForm = ({
-//   label,
-//   name,
-//   type = "text",
-//   value,
-//   onChange,
-//   errorMessage,
-//   required,
-// }) => (
-//   <div className="form-group">
-//     <label htmlFor={name}>{label}</label>
-//     <input
-//       type={type}
-//       id={name}
-//       name={name}
-//       value={value}
-//       onChange={onChange}
-//       required={required}
-//       className={errorMessage ? "input-error" : ""}
-//     />
-//     {errorMessage && <p className="error-message">{errorMessage}</p>}
-//   </div>
-// );

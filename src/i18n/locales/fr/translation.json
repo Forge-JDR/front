@@ -98,5 +98,14 @@
         "texte11" : "ForgeJDR se réserve le droit de modifier à tout moment les présentes CGU. Les utilisateurs seront informés des changements et devront accepter les nouvelles conditions pour continuer à utiliser le service.",
         "title12" : "12. Droit applicable et juridiction compétente",
         "texte12" : "Les présentes CGU sont soumises au droit français. En cas de litige relatif à l'utilisation du site, les tribunaux de [Ville] seront compétents."
+    },
+    "contact" : {
+        "title" : "Nous contacter",
+        "message" : "Votre message",
+        "name" : "Nom et prénom *",
+        "messageType": "Type de message",
+        "titleMessage": "Objet de votre message *",
+        "email" : "E-mail *",
+        "send": "Envoyer"
     }
 }
