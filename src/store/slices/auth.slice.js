@@ -1,20 +1,39 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { setMessage } from "./message.slice";
-import { Navigate } from "react-router-dom";
-
 import AuthService from "../../services/auth.service";
+import api from "../../config/api"; // Pour les appels API
 
 const token = localStorage.getItem("token");
 const refreshToken = localStorage.getItem("refresh_token");
 
+const API_URL = process.env.REACT_APP_URL_BACK + "/api";
+
+// Action pour obtenir l'utilisateur connecté via `createAsyncThunk`
+export const fetchCurrentUser = createAsyncThunk(
+    "auth/fetchCurrentUser",
+    async (_, thunkAPI) => {
+        try {
+            const response = await api.get(API_URL + "/me"); // Appel direct à l'API
+            return response.data;  // On retourne les données de l'utilisateur
+        } catch (error) {
+            const message =
+                (error.response && error.response.data && error.response.data.message) ||
+                error.message ||
+                error.toString();
+            thunkAPI.dispatch(setMessage(message));  // Dispatch du message d'erreur
+            return thunkAPI.rejectWithValue(message);  // Rejet de la promesse avec un message d'erreur
+        }
+    }
+);
+
+// Action pour le login
 export const login = createAsyncThunk(
     "auth/login",
     async ({ username, password }, thunkAPI) => {
         try {
             const data = await AuthService.login(username, password);
-            return { token: data };
+            return { token: data.token, refreshToken: data.refresh_token };
         } catch (error) {
-            
             const message =
                 (error.response &&
                     error.response.data &&
@@ -22,60 +41,42 @@ export const login = createAsyncThunk(
                 error.message ||
                 error.toString();
             thunkAPI.dispatch(setMessage(message));
-            return thunkAPI.rejectWithValue();
+            return thunkAPI.rejectWithValue(message);
         }
     }
 );
 
-// export const register = createAsyncThunk(
-//     "auth/register",
-//     async ({ email, password, username, pseudo }, thunkAPI) => {
-//         try {
-//             await AuthService.register(email, password, username, pseudo);
-//         } catch (error) {
-//             const message =
-//                 (error.response &&
-//                     error.response.data &&
-//                     error.response.data.message) ||
-//                 error.message ||
-//                 error.toString();
-//             thunkAPI.dispatch(setMessage(message));
-//             return thunkAPI.rejectWithValue();
-//         }
-//     }
-// );
-
+// Action pour l'inscription (register)
 export const register = createAsyncThunk(
     "auth/register",
     async ({ username, password, pseudo }, thunkAPI) => {
         try {
             const data = await AuthService.register(username, password, pseudo);
-            return { token: data.token, refresh_token: data.refresh_token }; // Assurez-vous que le retour correspond bien aux données attendues
+            return { token: data.token, refresh_token: data.refresh_token };
         } catch (error) {
             const message =
                 (error.response &&
                     error.response.data &&
-                    error.response.data.error) ||  // Changez 'message' par 'error' si c'est la clé correcte
+                    error.response.data.error) || 
                 error.message ||
                 error.toString();
             thunkAPI.dispatch(setMessage(message));
-            return thunkAPI.rejectWithValue(message);  // Renvoie le message d'erreur
+            return thunkAPI.rejectWithValue(message);
         }
     }
 );
 
-
-
+// Action pour la déconnexion
 export const logout = createAsyncThunk("auth/logout", async () => {
     await AuthService.logout();
 });
 
-
+// État initial basé sur le token localStorage
 const initialState = token
     ? { isLoggedIn: true, token, refreshToken }
-    : { isLoggedIn: false, token: null, refreshToken };
+    : { isLoggedIn: false, token: null, refreshToken: null };
 
-
+// Création du slice pour auth
 const authSlice = createSlice({
     name: "auth",
     initialState,
@@ -86,15 +87,13 @@ const authSlice = createSlice({
             state.isLoggedIn = true;
             localStorage.setItem("token", action.payload.token);
             localStorage.setItem("refresh_token", action.payload.refresh_token);
-            return state;
         },
-        deleteToken: (state, action ) => {
+        deleteToken: (state) => {
             localStorage.removeItem("token");
             localStorage.removeItem("refresh_token");
             state.isLoggedIn = false;
             state.token = null;
             state.refreshToken = null;
-            return state;
         }
     },
     extraReducers: (builder) => {
@@ -102,26 +101,28 @@ const authSlice = createSlice({
             .addCase(login.fulfilled, (state, action) => {
                 state.isLoggedIn = true;
                 state.token = action.payload.token;
-                state.refreshToken = action.payload.refresh_token;
+                state.refreshToken = action.payload.refreshToken;
             })
-            .addCase(login.rejected, (state, action) => {
-                state.isLoggedIn = false;
-                state.token = null;
-            })
-            .addCase(logout.fulfilled, (state, action) => {
+            .addCase(login.rejected, (state) => {
                 state.isLoggedIn = false;
                 state.token = null;
             })
             .addCase(register.fulfilled, (state, action) => {
-                console.log("register done !");
                 state.isLoggedIn = true;
-                state.token = action.payload.token; // Assurez-vous que le payload contient bien le token
+                state.token = action.payload.token;
                 state.refreshToken = action.payload.refresh_token;
+            })
+            .addCase(fetchCurrentUser.fulfilled, (state, action) => {
+                state.user = action.payload; // Stocke les données de l'utilisateur
+            })
+            .addCase(logout.fulfilled, (state) => {
+                state.isLoggedIn = false;
+                state.token = null;
+                state.refreshToken = null;
             });
     },
 });
 
+// Export des actions et du reducer
 export const { reloadToken, deleteToken } = authSlice.actions;
-
-const { reducer } = authSlice;
-export default reducer;
+export default authSlice.reducer;

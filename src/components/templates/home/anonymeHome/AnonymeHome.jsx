@@ -63,7 +63,6 @@ const AnonymeHome = () => {
             src={step1}
             alt="icone_createAccount"
           />
-          <div className="contrast"></div>
           <p>{t("home.step1")}</p>
         </div>
         <div className="step-card step2">

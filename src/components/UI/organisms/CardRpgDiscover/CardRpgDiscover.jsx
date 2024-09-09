@@ -5,9 +5,6 @@ import { deleteWiki } from "../../../../store/slices/Wikis.slice";
 
 import "./cardRpgDiscover.css";
 
-// import SubmitButton from "../../molecules/submitButton/submitButton";
-// import CancelButton from "../../molecules/cancelButton/cancelButton";
-
 const CardRpgDiscover = ({ id, srcImg, nameRpg, owner, ...rest }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
