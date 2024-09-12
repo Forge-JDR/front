@@ -41,17 +41,8 @@ export const addWiki = createAsyncThunk(
 
 export const updateWiki = createAsyncThunk(
     'wiki/update',
-    async ({ id, Name, Content }) => {
-        return await fetch(API_URL + "/wikis" + id, {
-            method: 'PATCH',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                Name: Name,
-                Content: Content
-            })
-        })
+    async ({ id, dataToUpdate }) => {
+        return await api.put(API_URL + "/wikis/" + id, dataToUpdate)
             .then(response => response.json())
             .then(wiki => wiki.data)
             .catch(err => console.log("erreur dans la modification du wiki : ", err))
