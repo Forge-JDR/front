@@ -3,9 +3,9 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { deleteWiki } from "../../../../store/slices/Wikis.slice";
 
-import "./cardRpgDiscover.css";
+import "./cardRpgDiscoverHome.css";
 
-const CardRpgDiscover = ({ id, srcImg, nameRpg, owner, ...rest }) => {
+const CardRpgDiscoverHome = ({ id, srcImg, nameRpg, owner, ...rest }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -15,7 +15,7 @@ const CardRpgDiscover = ({ id, srcImg, nameRpg, owner, ...rest }) => {
 
   return (
     <>
-      <div className="rpg discover">
+      <div className="rpg discover-list home">
         <div className="img">
           <img src={srcImg} alt="" />
         </div>
@@ -32,4 +32,4 @@ const CardRpgDiscover = ({ id, srcImg, nameRpg, owner, ...rest }) => {
   );
 };
 
-export default CardRpgDiscover;
+export default CardRpgDiscoverHome;

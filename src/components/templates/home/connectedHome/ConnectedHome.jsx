@@ -14,7 +14,7 @@ import Footer from "../../../UI/organisms/footer/Footer";
 import ConnectedNavbar from "../../connectedNavBar/ConnectedNavbar";
 import CardCreate from "../../../UI/molecules/CardCreate/CardCreate";
 import NewCaracterForm from "../../NewCaracterForm/NewCaracterForm";
-import CardRpgDiscover from "../../../UI/organisms/CardRpgDiscover/CardRpgDiscover";
+import CardRpgDiscoverHome from "../../../UI/organisms/CardRpgDiscoverHome/CardRpgDiscoverHome";
 import CardRpgHome from "../../../UI/organisms/CardRpgHome/CardRpgHome";
 
 const ConnectedHome = () => {
@@ -60,12 +60,12 @@ const ConnectedHome = () => {
               navigate(`/wiki/${el.id}`);
             }}
           >
-            <CardRpgDiscover
-              className=".list-rpg-published .home"
+            <CardRpgDiscoverHome
+              className="list-rpg-published home"
               id={el.id}
               srcImg={el.imageFile ? el.imageFile.path : defaultWikiImage}
               nameRpg={el.Name}
-              owner={el.me?.pseudo}
+              owner={el.user?.pseudo}
             />
           </div>
         )
@@ -74,11 +74,7 @@ const ConnectedHome = () => {
   };
 
   const RecentRpg = () => {
-    if (
-      !ConnectedUser ||
-      !Array.isArray(ConnectedUser.Wikis) ||
-      ConnectedUser.Wikis.length === 0
-    ) {
+    if (!ConnectedUser) {
       return <p>Chargement des JDR...</p>;
     }
 
@@ -89,7 +85,7 @@ const ConnectedHome = () => {
       <>
         {recentUserWikis.map((wiki) => (
           <div
-            className="discover-rpg-card rpg"
+            className="my-rpg-card rpg"
             key={wiki.id}
             onClick={() => {
               navigate(`/wiki/edit/${wiki.id}`);
@@ -119,46 +115,56 @@ const ConnectedHome = () => {
   return (
     <>
       <div className="connected-home background">
-        <div className="background-hexa image">
-          <ConnectedNavbar />
-          {isDisplayFormNew && <NewCaracterForm closeForm={displayForm} />}
-          <div className="main-contaner personnal-home">
-            {/* Affichage du pseudo de l'utilisateur */}
-            <div className="my-content">
-              <div className="left rpg-creation">
-                {/* JDR de l'utilisateur connecté */}
-                <div className="box-content">{RecentRpg()}</div>
-              </div>
-              <div className="right content">
-                <div className="my-caracters">
-                  <div className="box-content inline-content">
-                    {/* Personnages de l'utilisateur connecté */}
-                    <CardCreate
-                      width="20%"
-                      height="100%"
-                      title={t("connectedHome.newCharactere")}
-                      onClick={displayForm}
-                    ></CardCreate>
-                  </div>
+        <ConnectedNavbar />
+        <div className="background-hexa image home"></div>
+        {isDisplayFormNew && <NewCaracterForm closeForm={displayForm} />}
+        <div className="main-contaner personnal-home">
+          <div className="home-user content" id="home-user-content"></div>
+          <div className="my-content">
+            <div className="left rpg-creation">
+              {/* JDR de l'utilisateur connecté */}
+              <div className="box-content">{RecentRpg()}</div>
+            </div>
+            <div className="right content">
+              <div className="my-caracters">
+                <div className="box-content inline-content">
+                  {/* Personnages de l'utilisateur connecté */}
+                  <CardCreate
+                    width="20%"
+                    height="100%"
+                    title={t("connectedHome.newCharactere")}
+                    onClick={displayForm}
+                  ></CardCreate>
                 </div>
-                <div className="my-games">
-                  {/* Parties de l'utilisateur connecté */}
-                  <div className="comming-soon">{t("commun.commingSoon")}</div>
-                  <div className="box-content inline-content">
-                    <CardCreate
-                      width="20%"
-                      height="100%"
-                      title={t("connectedHome.newGame")}
-                    ></CardCreate>
-                  </div>
+              </div>
+              <div className="my-games">
+                {/* Parties de l'utilisateur connecté */}
+                <div className="comming-soon">{t("commun.commingSoon")}</div>
+                <div className="box-content inline-content">
+                  <CardCreate
+                    width="20%"
+                    height="100%"
+                    title={t("connectedHome.newGame")}
+                  ></CardCreate>
                 </div>
               </div>
             </div>
-            {/* LListe des JDR publiés */}
-            <div className="discover list">{ListDiscoverWikis()}</div>
+          </div>
+          {/* LListe des JDR publiés */}
+          <div className="discover list">
+            {ListDiscoverWikis()}
+            <div
+              className="button view-more "
+              onClick={() => {
+                navigate(`/discover`);
+              }}
+            >
+              <p>Découvrir</p>
+            </div>
           </div>
         </div>
       </div>
+
       <Footer></Footer>
     </>
   );
