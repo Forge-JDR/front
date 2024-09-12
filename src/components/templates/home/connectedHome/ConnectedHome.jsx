@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
-import { fetchWikis } from "../../../../store/store";
+import { store, fetchWikis } from "../../../../store/store";
 import { fetchCurrentUser } from "../../../../store/slices/auth.slice"; // Import de l'action fetchCurrentUser
 
 import "./connectedHome.css";
@@ -15,6 +15,7 @@ import ConnectedNavbar from "../../connectedNavBar/ConnectedNavbar";
 import CardCreate from "../../../UI/molecules/CardCreate/CardCreate";
 import NewCaracterForm from "../../NewCaracterForm/NewCaracterForm";
 import CardRpgDiscover from "../../../UI/organisms/CardRpgDiscover/CardRpgDiscover";
+import CardRpgHome from "../../../UI/organisms/CardRpgHome/CardRpgHome";
 
 const ConnectedHome = () => {
   const { t } = useTranslation();
@@ -60,6 +61,7 @@ const ConnectedHome = () => {
             }}
           >
             <CardRpgDiscover
+              className=".list-rpg-published .home"
               id={el.id}
               srcImg={el.imageFile ? el.imageFile.path : defaultWikiImage}
               nameRpg={el.Name}
@@ -93,7 +95,8 @@ const ConnectedHome = () => {
               navigate(`/wiki/edit/${wiki.id}`);
             }}
           >
-            <CardRpgDiscover
+            <CardRpgHome
+              className="home user-jdr"
               id={wiki.id}
               srcImg={wiki.imageFile ? wiki.imageFile.path : defaultWikiImage}
               nameRpg={wiki.Name}

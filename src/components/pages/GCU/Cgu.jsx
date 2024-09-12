@@ -14,7 +14,7 @@ const CGU = () => {
 
   return (
     <>
-      <div className="background creation">
+      <div className="background cgu">
         <div className="background-hexa image"></div>
         {token ? <ConnectedNavbar /> : <NavBar links={links} />}
         <div className="main-container cgu-page">
