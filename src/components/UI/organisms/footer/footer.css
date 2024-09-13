@@ -3,17 +3,21 @@
     height: 150px;
     padding: 10px;
     text-align: center;
+    position: relative;
+    /* Changement ici */
+    margin-top: 10px;
     bottom: 0;
+    background-color: #f3f3f3;
+    /* Assure-toi d'avoir un fond visible si besoin */
 }
 
-.footer .main-content{
+.footer .main-content {
     display: flex;
     position: relative;
     height: 80%;
 }
 
-.footer .logo-txt-container{
-    /* background-color:brown ; */
+.footer .logo-txt-container {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -23,7 +27,6 @@
 }
 
 .footer .links-container {
-    /* background-color: rgb(42, 67, 165); */
     display: flex;
     flex-direction: column;
     width: 80%;
@@ -31,71 +34,51 @@
 }
 
 .footer .copyright-container {
-    bottom: 0;
     text-align: center;
     font-size: 0.8rem;
     color: rgb(106, 106, 106);
-    /* background-color: rgb(42, 165, 83); */
 }
 
 .footer img {
     height: 50%;
 }
 
-.footer .site-plan{
+.footer .site-plan {
     display: flex;
-        justify-content: space-between;
-        /* Espace entre les colonnes */
-        /* align-items: center; */
-        /* Centrer verticalement */
-        width: 100%;
-        position: relative;
-    
+    justify-content: space-between;
+    width: 100%;
+    position: relative;
 }
 
 .footer .site-plan .navigation,
-.footer .site-plan .help-and-contact{
+.footer .site-plan .help-and-contact {
     width: 50%;
     display: flex;
-        flex-direction: column;
-        /* justify-content: center; */
-        /* Centrer le contenu verticalement dans la colonne */
-        text-align: left;
-        /* Aligner le texte à gauche */
-        padding-left: 10%;
-        /* Ajout de padding pour un espacement interne */
+    flex-direction: column;
+    text-align: left;
+    padding-left: 10%;
 }
 
-
-.footer .navigation .links, 
-.footer .help-and-contact .links{
+.footer .navigation .links,
+.footer .help-and-contact .links {
     color: rgb(0, 0, 0);
-        text-decoration: none;
-        font-size: 1rem;
-        text-decoration: none;
-        
-        
+    text-decoration: none;
+    font-size: 1rem;
 }
 
-.footer .title-navigation{
+.footer .title-navigation {
     font-size: 1.2rem;
     font-weight: 600;
-    margin-bottom: 0px
+    margin-bottom: 0px;
 }
 
-.footer  li{
+.footer li {
     list-style-type: none;
     margin: 5px 0;
 }
 
-.footer li a{
+.footer li a {
     font-size: 1rem;
     text-decoration: none;
     color: rgb(0, 0, 0);
-}
-
-@media (max-width: 768px){
-    .footer{
-        display: none;
-    }
 }

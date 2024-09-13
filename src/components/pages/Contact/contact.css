@@ -1,12 +1,11 @@
-.background.creation {
+.background.contact {
     width: 100%;
     height: auto;
     min-height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
-    background: linear-gradient(45deg, #6a11cb, #2575fc);
-    /* Ajuste cette couleur selon ton design */
+    background: linear-gradient(70deg, var(--main-blue-color), var(--main-purple-color));  
 }
 
 .main-container.contact-page {
