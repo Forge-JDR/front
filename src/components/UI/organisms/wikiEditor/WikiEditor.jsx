@@ -8,6 +8,7 @@ const WikiEditor = ({ children, defaultContent, onSave }) => {
   const [lastChange, setLastChange] = useState(null);
   const quillRef = useRef(null);
   const editorInstance = useRef(null);
+  const [isSaving, setIsSaving] = useState(false);
 
   useEffect(() => {
     // Initialiser Quill uniquement si l'instance n'existe pas encore
@@ -25,14 +26,13 @@ const WikiEditor = ({ children, defaultContent, onSave }) => {
         },
       });
 
-      // Charger le contenu par défaut si disponible
+      // Charger le contenu par défaut
       if (defaultContent) {
         try {
-          const parsedContent = JSON.parse(defaultContent); // Traiter le contenu comme Delta (JSON)
-          editorInstance.current.setContents(parsedContent);
+          const parsedContent = JSON.parse(defaultContent); // Si c'est un Delta (JSON)
+          editorInstance.current.setContents(parsedContent); // Charger le Delta
         } catch (error) {
-          console.error("Erreur lors du parsing du contenu", error);
-          editorInstance.current.setText(defaultContent); // Si erreur, afficher le texte brut
+          editorInstance.current.setText(defaultContent); // Sinon, traiter comme du texte brut
         }
       }
 
@@ -45,33 +45,40 @@ const WikiEditor = ({ children, defaultContent, onSave }) => {
       });
     }
 
-    // Nettoyer les événements et l'instance au démontage du composant
+    // Nettoyer l'éditeur au démontage du composant
     return () => {
       if (editorInstance.current) {
         editorInstance.current.off("text-change");
         editorInstance.current.off("selection-change");
-        editorInstance.current = null; // Supprimer l'instance
+        editorInstance.current = null;
       }
     };
   }, [defaultContent]);
 
   const saveContent = () => {
     const contentToSave = editorInstance.current.getContents();
+    setIsSaving(true); // Début de la sauvegarde
+
     if (onSave) {
-      onSave(contentToSave); // Appeler la fonction de rappel avec le contenu de l'éditeur
+      onSave(contentToSave); // Appeler la fonction de sauvegarde
     }
+
+    setIsSaving(false); // Fin de la sauvegarde
   };
 
   return (
     <div>
-      {/* Utiliser un div simple pour Quill */}
       <div ref={quillRef} style={{ height: "300px" }} />
 
       {children}
 
       <div className="controls">
-        <button className="controls-right" onClick={saveContent}>
-          Sauvegarder
+        <button
+          className="controls-right"
+          onClick={saveContent}
+          disabled={isSaving}
+        >
+          {isSaving ? "Chargement..." : "Sauvegarder"}
         </button>
       </div>
 
