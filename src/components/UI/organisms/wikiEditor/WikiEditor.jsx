@@ -6,12 +6,12 @@ import "./WikiEditor.css";
 const WikiEditor = ({ children, defaultContent, onSave }) => {
   const [range, setRange] = useState(null);
   const [lastChange, setLastChange] = useState(null);
+  const [isSaving, setIsSaving] = useState(false);
+  const [saveSuccess, setSaveSuccess] = useState(false); // Nouvel état pour le message de sauvegarde réussie
   const quillRef = useRef(null);
   const editorInstance = useRef(null);
-  const [isSaving, setIsSaving] = useState(false);
 
   useEffect(() => {
-    // Initialiser Quill uniquement si l'instance n'existe pas encore
     if (!editorInstance.current && quillRef.current) {
       editorInstance.current = new Quill(quillRef.current, {
         theme: "snow",
@@ -26,7 +26,6 @@ const WikiEditor = ({ children, defaultContent, onSave }) => {
         },
       });
 
-      // Charger le contenu par défaut
       if (defaultContent) {
         try {
           const parsedContent = JSON.parse(defaultContent); // Si c'est un Delta (JSON)
@@ -55,15 +54,21 @@ const WikiEditor = ({ children, defaultContent, onSave }) => {
     };
   }, [defaultContent]);
 
-  const saveContent = () => {
+  const saveContent = async () => {
     const contentToSave = editorInstance.current.getContents();
-    setIsSaving(true); // Début de la sauvegarde
+    setIsSaving(true); // Commence la sauvegarde
 
     if (onSave) {
-      onSave(contentToSave); // Appeler la fonction de sauvegarde
+      await onSave(contentToSave); // Appeler la fonction de sauvegarde
     }
 
     setIsSaving(false); // Fin de la sauvegarde
+    setSaveSuccess(true); // Affiche le message de succès
+
+    // Cacher le message après 3 secondes
+    setTimeout(() => {
+      setSaveSuccess(false);
+    }, 3000);
   };
 
   return (
@@ -81,6 +86,13 @@ const WikiEditor = ({ children, defaultContent, onSave }) => {
           {isSaving ? "Chargement..." : "Sauvegarder"}
         </button>
       </div>
+
+      {/* Affichage du message de confirmation */}
+      {saveSuccess && (
+        <div className="save-success-message">
+          Sauvegarde effectuée avec succès !
+        </div>
+      )}
 
       <div className="state">
         <div className="state-title">Current Range:</div>
