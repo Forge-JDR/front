@@ -15,12 +15,18 @@
 }
 
 .cancel {
+background-color: rgb(194, 194, 194);
+    color: rgb(131, 131, 131);
+}
 
+.cancel:hover {
+    background-color: rgb(194, 194, 194);
+    color: rgb(87, 87, 87);
 }
 
 .disabled {
     background-color: rgb(194, 194, 194);
-    color: rgb(131, 131, 131);;
+    color: rgb(131, 131, 131);
 }
 .disabled:hover {
     cursor:not-allowed ;
