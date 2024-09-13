@@ -21,6 +21,8 @@ const Discover = ({ ...props }) => {
   const wikiStatus = useSelector((state) => state.wikis.status);
   const navigate = useNavigate();
 
+  const [searchTerm, setSearchTerm] = useState(""); // État pour la recherche
+
   useEffect(() => {
     if (wikiStatus === "idle") {
       dispatch(fetchWikis());
@@ -31,14 +33,19 @@ const Discover = ({ ...props }) => {
     console.log(wiki);
   });
 
-  const WikisElements = (wikiPram) => {
-    if (!wikiPram[0]) return <p>On load</p>;
+  // Filtrer les wikis en fonction du terme de recherche
+  const filteredWikis = wiki[0]?.filter((wiki) =>
+    wiki.Name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
-    return wikiPram[0].map((wiki) => {
+  const WikisElements = (wikiList) => {
+    if (!wikiList) return <p>On load</p>;
+
+    return wikiList.map((wiki) => {
       return (
         wiki.Status === "published" && (
           <div
-            className="personnal-rpg-card rpg"
+            className="published-rpg-card"
             key={wiki.id}
             onClick={() => {
               navigate(`/wiki/${wiki.id}`);
@@ -58,19 +65,29 @@ const Discover = ({ ...props }) => {
 
   return (
     <>
-      <div className="background creation">
-        <div className="background-hexa image">
-          <ConnectedNavbar />
-          <div className="main-contaner personnal-rpg">
+      <div className="background-hexa image discover"></div>
+      <div className="background discover">
+        <ConnectedNavbar />
+        <div className="list-published-rpg main-container">
+          <div className="filter-bar">
+            <input
+              type="text"
+              placeholder="Rechercher un RPG"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="search-bar"
+            />
+          </div>
+          <div className="grid-rpg-published">
             <div onLoad={() => store.dispatch(fetchWikis())}>
-              <div className="card-container rpg creation inline-content">
-                {WikisElements(wiki)}
+              <div className="card-container-published-rpg">
+                {WikisElements(filteredWikis)}
               </div>
             </div>
           </div>
         </div>
       </div>
-      <Footer></Footer>
+      <Footer />
     </>
   );
 };

@@ -15,7 +15,7 @@ const CardRpgDiscover = ({ id, srcImg, nameRpg, owner, ...rest }) => {
 
   return (
     <>
-      <div className="rpg discover">
+      <div className="card-rpg-discover">
         <div className="img">
           <img src={srcImg} alt="" />
         </div>
