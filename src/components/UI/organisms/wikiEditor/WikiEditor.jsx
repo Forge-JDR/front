@@ -4,46 +4,35 @@ import "quill/dist/quill.snow.css";
 import "./WikiEditor.css";
 
 const WikiEditor = ({ children, defaultContent, onSave }) => {
-  const [range, setRange] = useState();
-  const [lastChange, setLastChange] = useState();
-  const [readOnly, setReadOnly] = useState(false);
+  const [range, setRange] = useState(null);
+  const [lastChange, setLastChange] = useState(null);
   const quillRef = useRef(null);
   const editorInstance = useRef(null);
 
   useEffect(() => {
-    // Assurez-vous que l'éditeur Quill n'est pas initialisé deux fois
-    if (editorInstance.current) {
-      editorInstance.current = null;
-    }
-
-    if (quillRef.current) {
-      // Détruire l'instance Quill précédente avant de recréer une nouvelle instance
-      if (editorInstance.current) {
-        editorInstance.current = null;
-      }
-
-      // Initialiser l'éditeur Quill
+    // Initialiser Quill uniquement si l'instance n'existe pas encore
+    if (!editorInstance.current && quillRef.current) {
       editorInstance.current = new Quill(quillRef.current, {
         theme: "snow",
-        readOnly: readOnly,
         modules: {
           toolbar: [
-            [{ 'header': [1, 2, false] }],
-            ['bold', 'italic', 'underline', 'strike'],
-            ['image', 'code-block'],
-            [{ 'list': 'ordered' }, { 'list': 'bullet' }],
-            ['link', 'image'],
+            [{ header: [1, 2, false] }],
+            ["bold", "italic", "underline", "strike"],
+            ["image", "code-block"],
+            [{ list: "ordered" }, { list: "bullet" }],
+            ["link", "image"],
           ],
         },
       });
 
-      // Charger le contenu par défaut
-      if (defaultContent && defaultContent.Content) {
+      // Charger le contenu par défaut si disponible
+      if (defaultContent) {
         try {
-          const parsedContent = JSON.parse(defaultContent.Content); // Si c'est un Delta (JSON)
-          editorInstance.current.setContents(parsedContent); // Charger le Delta
+          const parsedContent = JSON.parse(defaultContent); // Traiter le contenu comme Delta (JSON)
+          editorInstance.current.setContents(parsedContent);
         } catch (error) {
-          editorInstance.current.setText(defaultContent.Content); // Sinon, traiter comme du texte brut
+          console.error("Erreur lors du parsing du contenu", error);
+          editorInstance.current.setText(defaultContent); // Si erreur, afficher le texte brut
         }
       }
 
@@ -56,15 +45,15 @@ const WikiEditor = ({ children, defaultContent, onSave }) => {
       });
     }
 
-    // Nettoyer l'éditeur au démontage du composant
+    // Nettoyer les événements et l'instance au démontage du composant
     return () => {
       if (editorInstance.current) {
         editorInstance.current.off("text-change");
         editorInstance.current.off("selection-change");
-        editorInstance.current = null;
+        editorInstance.current = null; // Supprimer l'instance
       }
     };
-  }, [readOnly, defaultContent]);
+  }, [defaultContent]);
 
   const saveContent = () => {
     const contentToSave = editorInstance.current.getContents();
@@ -82,7 +71,7 @@ const WikiEditor = ({ children, defaultContent, onSave }) => {
 
       <div className="controls">
         <button className="controls-right" onClick={saveContent}>
-          Save Content
+          Sauvegarder
         </button>
       </div>
 

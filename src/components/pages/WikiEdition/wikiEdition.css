@@ -1,0 +1,51 @@
+.background-edition{
+    position: relative;
+    min-height: 70vh;
+}
+
+
+.background-hexa.image.edition-rpg{
+    height: 100vh;
+        background-image: url('../../../assets/hexa_background_transparent.svg');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        margin: 0;
+        position: fixed;
+}
+
+.title-rpg-editor{
+    /* background-color: brown; */
+    position: relative;
+}
+
+
+.title-rpg-editor input{
+    font-size: 30px;
+}
+
+.main-contaner.rpg-editor{
+    margin-top: 80px;
+    padding: 30px;
+}
+
+.state{
+    display: none;
+}
+
+.controls button{
+    border-radius: 10px;
+        margin: auto;
+        padding: 10px;
+        padding-left: 3dvb;
+        padding-right: 3dvb;
+        font-size: 1rem;
+        cursor: pointer;
+        border: none;
+    background-color: var(--main-blue-color);
+        color: rgb(255, 255, 255);
+}
+
+[role="toolbar"]:nth-child(2){
+    display: none;
+}

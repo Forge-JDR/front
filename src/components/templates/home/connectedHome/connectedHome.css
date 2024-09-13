@@ -190,6 +190,10 @@ flex: 1 1 calc(20% - 40px);
     cursor: pointer;
 }
 
+.footer{
+    position: relative;
+}
+
 @media (max-width: 768px) {
 
     /* Structure générale pour l'écran mobile */
