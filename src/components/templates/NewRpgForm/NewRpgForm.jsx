@@ -46,11 +46,6 @@ const NewRpgForm = ({ closeForm, ...rest }) => {
           <p>{t("newRpgForm.new")}</p>
         </div>
         <div className="main-container info-new-rpg">
-          <div className="img-container left">
-            <div className="upload-img">
-              <img src={iconeUplaod} alt="RPG" className="rpg-image" />
-            </div>
-          </div>
           <div className="info-container right">
             <FieldForm
               id="rpgName"

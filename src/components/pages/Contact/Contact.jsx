@@ -54,7 +54,7 @@ const Contact = () => {
 
   return (
     <>
-      <div className="background creation">
+      <div className="background contact">
         {token ? <ConnectedNavbar /> : <NavBar links={links} />}
         <div className="main-container contact-page">
           <div className="title-contact-page">

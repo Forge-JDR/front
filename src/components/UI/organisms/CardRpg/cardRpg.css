@@ -30,6 +30,22 @@
     justify-content: center ;
 }
 
+.confirm-delete{
+    background-color: #FFFFFF;
+    width: 60%;
+    padding: 20px;
+    text-align: center;
+    border-radius: 10px;
+}
+
+.btn.bottom-modal{
+    margin-top: 15px;
+}
+
+.btn.bottom-modal button{
+    margin: 10px;
+}
+
 /* .button{
     width: 150px;
     display: flex;

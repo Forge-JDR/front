@@ -164,7 +164,6 @@ const ConnectedHome = () => {
           </div>
         </div>
       </div>
-
       <Footer></Footer>
     </>
   );
