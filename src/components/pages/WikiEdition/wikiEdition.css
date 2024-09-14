@@ -144,7 +144,7 @@
 }
 
 .tabs button.active-tab {
-    background-color: #007bff;
+    background-color: #8251c1;
     color: white;
 }
 
@@ -174,4 +174,30 @@
     border: 1px solid #ccc;
     padding: 10px;
     margin-bottom: 10px;
+}
+
+.save-button{
+    border-radius: 10px;
+        margin: auto;
+        padding: 10px;
+        padding-left: 3dvb;
+        padding-right: 3dvb;
+        font-size: 1rem;
+        cursor: pointer;
+        border: none;
+        background-color: var(--main-blue-color);
+        color: rgb(255, 255, 255);
+}
+
+.class-section .form{
+    background-color: #ffffffb4;
+    backdrop-filter: blur(5px);
+    width: 95%;
+    margin: auto;
+    padding: 10px;
+    position: relative;
+}
+
+.class-section input{
+    width: 50%;
 }

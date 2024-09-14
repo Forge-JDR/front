@@ -31,7 +31,7 @@ const NewRpgForm = ({ closeForm, ...rest }) => {
       .then((response) => {
         if (response.meta.requestStatus === "fulfilled") {
           const newWikiId = response.payload.id;
-          navigate(`/wiki/${newWikiId}`);
+          navigate(`/wiki/edit/${newWikiId}`);
         }
       })
       .catch((error) => {

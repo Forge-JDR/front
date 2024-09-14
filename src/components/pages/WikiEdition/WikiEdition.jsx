@@ -184,21 +184,25 @@ const WikiEdition = ({ ...props }) => {
             {/* Contenu de l'onglet "Classe" */}
             {activeTab === "classe" && (
               <div className="class-section">
-                <h3>Ajouter une nouvelle classe</h3>
-                <input
-                  type="text"
-                  name="name"
-                  placeholder="Nom de la classe"
-                  value={newClass.name}
-                  onChange={handleClassChange}
-                />
-                <textarea
-                  name="content"
-                  placeholder="Description de la classe"
-                  value={newClass.content}
-                  onChange={handleClassChange}
-                />
-                <button onClick={handleAddClass}>Ajouter la classe</button>
+                <div className="form">
+                  <h3>Ajouter une nouvelle classe</h3>
+                  <input
+                    type="text"
+                    name="name"
+                    placeholder="Nom de la classe"
+                    value={newClass.name}
+                    onChange={handleClassChange}
+                  />
+                  <textarea
+                    name="content"
+                    placeholder="Description de la classe"
+                    value={newClass.content}
+                    onChange={handleClassChange}
+                  />
+                  <button className="save-button" onClick={handleAddClass}>
+                    Ajouter la classe
+                  </button>
+                </div>
 
                 {/* Liste des classes */}
                 <div className="class-list">
@@ -243,7 +247,9 @@ const WikiEdition = ({ ...props }) => {
                   value={newRace.imageUrl}
                   onChange={handleRaceChange}
                 />
-                <button onClick={handleAddRace}>Ajouter la race</button>
+                <button className="save-button" onClick={handleAddRace}>
+                  Ajouter la race
+                </button>
 
                 {/* Liste des races */}
                 <div className="race-list">
@@ -300,7 +306,9 @@ const WikiEdition = ({ ...props }) => {
                   value={newBeast.imageUrl}
                   onChange={handleBeastChange}
                 />
-                <button onClick={handleAddBeast}>Ajouter au Bestiaire</button>
+                <button className="save-button" onClick={handleAddBeast}>
+                  Ajouter au Bestiaire
+                </button>
 
                 {/* Liste des objets du bestiaire */}
                 <div className="bestiary-list">
