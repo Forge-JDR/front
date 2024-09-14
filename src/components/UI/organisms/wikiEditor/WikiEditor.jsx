@@ -4,46 +4,34 @@ import "quill/dist/quill.snow.css";
 import "./WikiEditor.css";
 
 const WikiEditor = ({ children, defaultContent, onSave }) => {
-  const [range, setRange] = useState();
-  const [lastChange, setLastChange] = useState();
-  const [readOnly, setReadOnly] = useState(false);
+  const [range, setRange] = useState(null);
+  const [lastChange, setLastChange] = useState(null);
+  const [isSaving, setIsSaving] = useState(false);
+  const [saveSuccess, setSaveSuccess] = useState(false); // Nouvel état pour le message de sauvegarde réussie
   const quillRef = useRef(null);
   const editorInstance = useRef(null);
 
   useEffect(() => {
-    // Assurez-vous que l'éditeur Quill n'est pas initialisé deux fois
-    if (editorInstance.current) {
-      editorInstance.current = null;
-    }
-
-    if (quillRef.current) {
-      // Détruire l'instance Quill précédente avant de recréer une nouvelle instance
-      if (editorInstance.current) {
-        editorInstance.current = null;
-      }
-
-      // Initialiser l'éditeur Quill
+    if (!editorInstance.current && quillRef.current) {
       editorInstance.current = new Quill(quillRef.current, {
         theme: "snow",
-        readOnly: readOnly,
         modules: {
           toolbar: [
-            [{ 'header': [1, 2, false] }],
-            ['bold', 'italic', 'underline', 'strike'],
-            ['image', 'code-block'],
-            [{ 'list': 'ordered' }, { 'list': 'bullet' }],
-            ['link', 'image'],
+            [{ header: [1, 2, false] }],
+            ["bold", "italic", "underline", "strike"],
+            ["image", "code-block"],
+            [{ list: "ordered" }, { list: "bullet" }],
+            ["link", "image"],
           ],
         },
       });
 
-      // Charger le contenu par défaut
-      if (defaultContent && defaultContent.Content) {
+      if (defaultContent) {
         try {
-          const parsedContent = JSON.parse(defaultContent.Content); // Si c'est un Delta (JSON)
+          const parsedContent = JSON.parse(defaultContent); // Si c'est un Delta (JSON)
           editorInstance.current.setContents(parsedContent); // Charger le Delta
         } catch (error) {
-          editorInstance.current.setText(defaultContent.Content); // Sinon, traiter comme du texte brut
+          editorInstance.current.setText(defaultContent); // Sinon, traiter comme du texte brut
         }
       }
 
@@ -64,27 +52,47 @@ const WikiEditor = ({ children, defaultContent, onSave }) => {
         editorInstance.current = null;
       }
     };
-  }, [readOnly, defaultContent]);
+  }, [defaultContent]);
 
-  const saveContent = () => {
+  const saveContent = async () => {
     const contentToSave = editorInstance.current.getContents();
+    setIsSaving(true); // Commence la sauvegarde
+
     if (onSave) {
-      onSave(contentToSave); // Appeler la fonction de rappel avec le contenu de l'éditeur
+      await onSave(contentToSave); // Appeler la fonction de sauvegarde
     }
+
+    setIsSaving(false); // Fin de la sauvegarde
+    setSaveSuccess(true); // Affiche le message de succès
+
+    // Cacher le message après 3 secondes
+    setTimeout(() => {
+      setSaveSuccess(false);
+    }, 3000);
   };
 
   return (
     <div>
-      {/* Utiliser un div simple pour Quill */}
       <div ref={quillRef} style={{ height: "300px" }} />
 
       {children}
 
       <div className="controls">
-        <button className="controls-right" onClick={saveContent}>
-          Save Content
+        <button
+          className="controls-right"
+          onClick={saveContent}
+          disabled={isSaving}
+        >
+          {isSaving ? "Chargement..." : "Sauvegarder"}
         </button>
       </div>
+
+      {/* Affichage du message de confirmation */}
+      {saveSuccess && (
+        <div className="save-success-message">
+          Sauvegarde effectuée avec succès !
+        </div>
+      )}
 
       <div className="state">
         <div className="state-title">Current Range:</div>

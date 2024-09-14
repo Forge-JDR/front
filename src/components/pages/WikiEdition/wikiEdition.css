@@ -1,0 +1,203 @@
+.background-edition{
+    position: relative;
+    min-height: 70vh;
+}
+
+
+.background-hexa.image.edition-rpg{
+    height: 100vh;
+        background-image: url('../../../assets/hexa_background_transparent.svg');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        margin: 0;
+        position: fixed;
+}
+
+.title-rpg-editor{
+    /* background-color: brown; */
+    position: relative;
+}
+
+
+.title-rpg-editor input{
+    font-size: 30px;
+}
+
+.main-contaner.rpg-editor{
+    margin-top: 80px;
+    padding: 30px;
+}
+
+.state{
+    display: none;
+}
+
+.controls button{
+    border-radius: 10px;
+        margin: auto;
+        padding: 10px;
+        padding-left: 3dvb;
+        padding-right: 3dvb;
+        font-size: 1rem;
+        cursor: pointer;
+        border: none;
+    background-color: var(--main-blue-color);
+        color: rgb(255, 255, 255);
+}
+
+[role="toolbar"]:nth-child(2){
+    display: none;
+}
+
+.save-success-message {
+    color: green;
+    font-size: 16px;
+    margin-top: 10px;
+}
+
+.bestiary-section {
+    margin-top: 20px;
+}
+
+.bestiary-inputs {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.bestiary-list {
+    margin-top: 20px;
+}
+
+.bestiary-list ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+.bestiary-list li {
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+.tabs {
+    display: flex;
+    margin-bottom: 20px;
+}
+
+.tabs button {
+    padding: 10px 20px;
+    cursor: pointer;
+    border: none;
+    background-color: #ccc;
+    margin-right: 10px;
+    border-radius: 5px;
+}
+
+.tabs button.active-tab {
+    background-color: #007bff;
+    color: white;
+}
+
+.rpg-editor {
+    margin-top: 20px;
+}
+
+.bestiary-section {
+    margin-top: 20px;
+}
+
+.bestiary-inputs {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.bestiary-list {
+    margin-top: 20px;
+}
+
+.bestiary-list ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+.bestiary-list li {
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+.tabs {
+    display: flex;
+    margin-bottom: 20px;
+}
+
+.tabs button {
+    padding: 10px 20px;
+    cursor: pointer;
+    border: none;
+    background-color: #ccc;
+    margin-right: 10px;
+    border-radius: 5px;
+}
+
+.tabs button.active-tab {
+    background-color: #8251c1;
+    color: white;
+}
+
+.rpg-editor,
+.class-section,
+.race-section,
+.bestiary-section {
+    margin-top: 20px;
+}
+
+.bestiary-list,
+.class-list,
+.race-list {
+    margin-top: 20px;
+}
+
+.bestiary-list ul,
+.class-list ul,
+.race-list ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+.bestiary-list li,
+.class-list li,
+.race-list li {
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+.save-button{
+    border-radius: 10px;
+        margin: auto;
+        padding: 10px;
+        padding-left: 3dvb;
+        padding-right: 3dvb;
+        font-size: 1rem;
+        cursor: pointer;
+        border: none;
+        background-color: var(--main-blue-color);
+        color: rgb(255, 255, 255);
+}
+
+.class-section .form{
+    background-color: #ffffffb4;
+    backdrop-filter: blur(5px);
+    width: 95%;
+    margin: auto;
+    padding: 10px;
+    position: relative;
+}
+
+.class-section input{
+    width: 50%;
+}
