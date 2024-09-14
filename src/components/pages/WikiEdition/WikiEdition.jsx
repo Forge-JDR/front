@@ -1,49 +1,61 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { updateWiki, fetchWiki } from "../../../store/store";
-import ErrorComponent from "../../ErrorBoundaries/ErrorComponent";
+import {
+  updateWiki,
+  fetchWiki,
+  addBestiary,
+  updateBestiary,
+  deleteBestiary,
+  addRace,
+  updateRace,
+  deleteRace,
+  addJob,
+  updateJob,
+  deleteJob,
+} from "../../../store/store";
 import ConnectedNavbar from "../../templates/connectedNavBar/ConnectedNavbar";
 import WikiEditor from "../../UI/organisms/wikiEditor/WikiEditor";
+import QuillEditor from "../../UI/molecules/QuillEditor/QuillEditor";
 import Footer from "../../UI/organisms/footer/Footer";
-
 import "./wikiEdition.css";
 
-const WikiEdition = ({ ...props }) => {
+const WikiEdition = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
   const wiki = useSelector((state) => state.wikis.wikiInfo);
   const wikiStatus = useSelector((state) => state.wikis.status);
 
-  // État pour le nom du JDR (wiki)
+  // State for the wiki's name and content
   const [wikiName, setWikiName] = useState("");
-  const [wikiContent, setWikiContent] = useState(""); // État pour le contenu principal du JDR (Univers)
+  const [wikiContent, setWikiContent] = useState("");
 
-  // État pour le bestiaire
+  // State for managing bestiaries
   const [bestiaire, setBestiaire] = useState([]);
   const [newBeast, setNewBeast] = useState({
+    id: null,
     name: "",
-    content: "",
+    content: { ops: [] },
     type: "",
-    imageUrl: "",
   });
 
-  // État pour les classes
-  const [classes, setClasses] = useState([]);
-  const [newClass, setNewClass] = useState({
-    name: "",
-    content: "",
-  });
-
-  // État pour les races
+  // State for managing races
   const [races, setRaces] = useState([]);
   const [newRace, setNewRace] = useState({
+    id: null,
     name: "",
-    content: "",
-    imageUrl: "",
+    content: { ops: [] },
   });
 
-  // État pour gérer l'onglet actif
+  // State for managing jobs
+  const [jobs, setJobs] = useState([]);
+  const [newJob, setNewJob] = useState({
+    id: null,
+    name: "",
+    content: { ops: [] },
+  });
+
+  // State for handling the active tab
   const [activeTab, setActiveTab] = useState("univers");
 
   useEffect(() => {
@@ -55,78 +67,257 @@ const WikiEdition = ({ ...props }) => {
   useEffect(() => {
     if (wiki && wiki.Name) {
       setWikiName(wiki.Name);
-      setWikiContent(wiki.Content); // Mettre à jour le contenu JSON du wiki (Univers)
-      setBestiaire(wiki.Bestiaries || []); // Mettre à jour le bestiaire si existant
-      setClasses(wiki.Jobs || []); // Mettre à jour les classes si existantes
-      setRaces(wiki.Races || []); // Mettre à jour les races si existantes
+      setWikiContent(wiki.Content || "");
+      
+      setBestiaire(wiki.bestiaries || []);
+      setRaces(wiki.races || []);
+      setJobs(wiki.jobs || []); // Load jobs
     }
   }, [wiki]);
 
-  // Fonction de sauvegarde du contenu principal (Univers)
+  // Handle saving the main content (universe)
   const handleSave = (updatedContent) => {
-    const dataToUpdate = {
-      Name: wikiName, // Utilise le nom modifié
-      Content: JSON.stringify(updatedContent), // Sauvegarde du contenu modifié (Univers)
-      // Bestiaries: bestiaire, // Sauvegarde du bestiaire
-      // Jobs: classes, // Sauvegarde des classes
-      // Races: races, // Sauvegarde des races
-    };
-
-    dispatch(updateWiki({ id, dataToUpdate }));
+    if (activeTab === "univers") {
+      const dataToUpdate = {
+        Name: wikiName,
+        Content: JSON.stringify(updatedContent),
+      };
+      dispatch(updateWiki({ id, dataToUpdate }));
+    }
   };
 
-  // Gestion des changements dans les champs de texte du bestiaire
+  // Handlers for bestiary
   const handleBeastChange = (e) => {
     const { name, value } = e.target;
     setNewBeast((prev) => ({ ...prev, [name]: value }));
   };
 
-  // Ajouter un nouvel objet au bestiaire
-  const handleAddBeast = () => {
-    if (
-      newBeast.name &&
-      newBeast.content &&
-      newBeast.imageUrl &&
-      newBeast.type
-    ) {
-      setBestiaire((prev) => [...prev, newBeast]);
-      setNewBeast({ name: "", content: "", type: "", imageUrl: "" }); // Réinitialise les champs de texte
+  const handleContentChange = (content) => {
+    setNewBeast((prev) => ({ ...prev, content }));
+  };
+
+  const handleAddOrUpdateBeast = () => {
+    if (newBeast.name && newBeast.content && newBeast.type) {
+      if (newBeast.id) {
+        const dataToUpdate = {
+          Name: newBeast.name,
+          Content: JSON.stringify(newBeast.content),
+          Type: newBeast.type,
+        };
+
+        dispatch(updateBestiary({ WikiId: id, id: newBeast.id, dataToUpdate }))
+          .then((response) => {
+            if (response.payload) {
+              setBestiaire((prev) =>
+                prev.map((beast) => (beast.id === newBeast.id ? response.payload : beast))
+              );
+              setNewBeast({ id: null, name: "", content: { ops: [] }, type: "" });
+              setActiveTab("bestiaire");
+            }
+          })
+          .catch((error) => {
+            console.log("Erreur lors de la mise à jour du bestiaire :", error);
+          });
+      } else {
+        dispatch(
+          addBestiary({
+            WikiId: id,
+            Name: newBeast.name,
+            Content: JSON.stringify(newBeast.content),
+            Type: newBeast.type,
+          })
+        )
+          .then((response) => {
+            if (response.payload) {
+              setBestiaire((prev) => [...prev, response.payload]);
+              setNewBeast({ id: null, name: "", content: { ops: [] }, type: "" });
+              setActiveTab("bestiaire");
+            }
+          })
+          .catch((error) => {
+            console.log("Erreur lors de l'ajout au bestiaire :", error);
+          });
+      }
+    } else {
+      alert("Veuillez remplir tous les champs du bestiaire avant d'ajouter.");
     }
   };
 
-  const handleNameChange = (e) => {
-    setWikiName(e.target.value); // Met à jour le nom du JDR
+  const handleDeleteBeast = (beastId) => {
+    dispatch(deleteBestiary({ WikiId: id, id: beastId }))
+      .then(() => {
+        setBestiaire((prev) => prev.filter((beast) => beast.id !== beastId));
+        setNewBeast({ id: null, name: "", content: { ops: [] }, type: "" });
+        setActiveTab("bestiaire");
+      })
+      .catch((error) => {
+        console.log("Erreur lors de la suppression du bestiaire :", error);
+      });
   };
 
-  // Gestion des changements dans les champs de texte des classes
-  const handleClassChange = (e) => {
-    const { name, value } = e.target;
-    setNewClass((prev) => ({ ...prev, [name]: value }));
+  const handleEditBeast = (beast) => {
+    setNewBeast({
+      id: beast.id,
+      name: beast.Name || "",
+      content: beast.Content ? JSON.parse(beast.Content) : { ops: [] },
+      type: beast.Type || "",
+    });
   };
 
-  // Ajouter une nouvelle classe
-  const handleAddClass = () => {
-    if (newClass.name && newClass.content) {
-      setClasses((prev) => [...prev, newClass]);
-      setNewClass({ name: "", content: "" }); // Réinitialise les champs de texte
-    }
-  };
-
-  // Gestion des changements dans les champs de texte des races
+  // Handlers for race
   const handleRaceChange = (e) => {
     const { name, value } = e.target;
     setNewRace((prev) => ({ ...prev, [name]: value }));
   };
 
-  // Ajouter une nouvelle race
-  const handleAddRace = () => {
-    if (newRace.name && newRace.content && newRace.imageUrl) {
-      setRaces((prev) => [...prev, newRace]);
-      setNewRace({ name: "", content: "", imageUrl: "" }); // Réinitialise les champs de texte
+  const handleRaceContentChange = (content) => {
+    setNewRace((prev) => ({ ...prev, content }));
+  };
+
+  const handleAddOrUpdateRace = () => {
+    if (newRace.name && newRace.content) {
+      if (newRace.id) {
+        const dataToUpdate = {
+          Name: newRace.name,
+          Content: JSON.stringify(newRace.content),
+        };
+
+        dispatch(updateRace({ WikiId: id, id: newRace.id, dataToUpdate }))
+          .then((response) => {
+            if (response.payload) {
+              setRaces((prev) =>
+                prev.map((race) => (race.id === newRace.id ? response.payload : race))
+              );
+              setNewRace({ id: null, name: "", content: { ops: [] } });
+              setActiveTab("races");
+            }
+          })
+          .catch((error) => {
+            console.log("Erreur lors de la mise à jour de la race :", error);
+          });
+      } else {
+        dispatch(
+          addRace({
+            WikiId: id,
+            Name: newRace.name,
+            Content: JSON.stringify(newRace.content),
+          })
+        )
+          .then((response) => {
+            if (response.payload) {
+              setRaces((prev) => [...prev, response.payload]);
+              setNewRace({ id: null, name: "", content: { ops: [] } });
+              setActiveTab("races");
+            }
+          })
+          .catch((error) => {
+            console.log("Erreur lors de l'ajout de la race :", error);
+          });
+      }
+    } else {
+      alert("Veuillez remplir tous les champs de la race avant d'ajouter.");
     }
   };
 
-  // Fonction pour gérer le changement d'onglet
+  const handleDeleteRace = (raceId) => {
+    dispatch(deleteRace({ WikiId: id, id: raceId }))
+      .then(() => {
+        setRaces((prev) => prev.filter((race) => race.id !== raceId));
+        setNewRace({ id: null, name: "", content: { ops: [] } });
+        setActiveTab("races");
+      })
+      .catch((error) => {
+        console.log("Erreur lors de la suppression de la race :", error);
+      });
+  };
+
+  const handleEditRace = (race) => {
+    setNewRace({
+      id: race.id,
+      name: race.Name || "",
+      content: race.Content ? JSON.parse(race.Content) : { ops: [] },
+    });
+  };
+
+  // Handlers for jobs (similar to races)
+  const handleJobChange = (e) => {
+    const { name, value } = e.target;
+    setNewJob((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleJobContentChange = (content) => {
+    setNewJob((prev) => ({ ...prev, content }));
+  };
+
+  const handleAddOrUpdateJob = () => {
+    if (newJob.name && newJob.content) {
+      if (newJob.id) {
+        const dataToUpdate = {
+          name: newJob.name,
+          Content: JSON.stringify(newJob.content),
+        };
+
+        dispatch(updateJob({ WikiId: id, id: newJob.id, dataToUpdate }))
+          .then((response) => {
+            if (response.payload) {
+              setJobs((prev) =>
+                prev.map((job) => (job.id === newJob.id ? response.payload : job))
+              );
+              setNewJob({ id: null, name: "", content: { ops: [] } });
+              setActiveTab("jobs");
+            }
+          })
+          .catch((error) => {
+            console.log("Erreur lors de la mise à jour du job :", error);
+          });
+      } else {
+        dispatch(
+          addJob({
+            WikiId: id,
+            name: newJob.name,
+            Content: JSON.stringify(newJob.content),
+          })
+        )
+          .then((response) => {
+            if (response.payload) {
+              setJobs((prev) => [...prev, response.payload]);
+              setNewJob({ id: null, name: "", content: { ops: [] } });
+              setActiveTab("jobs");
+            }
+          })
+          .catch((error) => {
+            console.log("Erreur lors de l'ajout du job :", error);
+          });
+      }
+    } else {
+      alert("Veuillez remplir tous les champs du job avant d'ajouter.");
+    }
+  };
+
+  const handleDeleteJob = (jobId) => {
+    dispatch(deleteJob({ WikiId: id, id: jobId }))
+      .then(() => {
+        setJobs((prev) => prev.filter((job) => job.id !== jobId));
+        setNewJob({ id: null, name: "", content: { ops: [] } });
+        setActiveTab("jobs");
+      })
+      .catch((error) => {
+        console.log("Erreur lors de la suppression du job :", error);
+      });
+  };
+
+  const handleEditJob = (job) => {
+    setNewJob({
+      id: job.id,
+      name: job.name || "",
+      content: job.Content ? JSON.parse(job.Content) : { ops: [] },
+    });
+  };
+
+  const handleNameChange = (e) => {
+    setWikiName(e.target.value);
+  };
+
   const handleTabChange = (tab) => {
     setActiveTab(tab);
   };
@@ -142,11 +333,11 @@ const WikiEdition = ({ ...props }) => {
                 type="text"
                 id="wikiName"
                 value={wikiName}
-                onChange={() => handleNameChange()}
+                onChange={handleNameChange}
               />
             </div>
 
-            {/* Section des onglets */}
+            {/* Tabs Section */}
             <div className="tabs">
               <button
                 className={activeTab === "univers" ? "active-tab" : ""}
@@ -155,188 +346,162 @@ const WikiEdition = ({ ...props }) => {
                 Univers
               </button>
               <button
-                className={activeTab === "classe" ? "active-tab" : ""}
-                onClick={() => handleTabChange("classe")}
-              >
-                Classe
-              </button>
-              <button
-                className={activeTab === "race" ? "active-tab" : ""}
-                onClick={() => handleTabChange("race")}
-              >
-                Race
-              </button>
-              <button
                 className={activeTab === "bestiaire" ? "active-tab" : ""}
                 onClick={() => handleTabChange("bestiaire")}
               >
                 Bestiaire
               </button>
+              <button
+                className={activeTab === "races" ? "active-tab" : ""}
+                onClick={() => handleTabChange("races")}
+              >
+                Races
+              </button>
+              <button
+                className={activeTab === "jobs" ? "active-tab" : ""}
+                onClick={() => handleTabChange("jobs")}
+              >
+                Jobs
+              </button>
             </div>
 
-            {/* Contenu de l'onglet "Univers" */}
+            {/* Universe Tab Content */}
             {activeTab === "univers" && (
               <div className="rpg-editor">
                 <WikiEditor defaultContent={wikiContent} onSave={handleSave} />
               </div>
             )}
 
-            {/* Contenu de l'onglet "Classe" */}
-            {activeTab === "classe" && (
-              <div className="class-section">
-                <div className="form">
-                  <h3>Ajouter une nouvelle classe</h3>
-                  <input
-                    type="text"
-                    name="name"
-                    placeholder="Nom de la classe"
-                    value={newClass.name}
-                    onChange={handleClassChange}
-                  />
-                  <textarea
-                    name="content"
-                    placeholder="Description de la classe"
-                    value={newClass.content}
-                    onChange={handleClassChange}
-                  />
-                  <button className="save-button" onClick={handleAddClass}>
-                    Ajouter la classe
-                  </button>
-                </div>
-
-                {/* Liste des classes */}
-                <div className="class-list">
-                  <h4>Classes</h4>
-                  {classes.length === 0 ? (
-                    <p>Aucune classe ajoutée</p>
-                  ) : (
-                    <ul>
-                      {classes.map((classItem, index) => (
-                        <li key={index}>
-                          <h5>{classItem.name}</h5>
-                          <p>{classItem.content}</p>
-                        </li>
-                      ))}
-                    </ul>
-                  )}
-                </div>
-              </div>
-            )}
-
-            {/* Contenu de l'onglet "Race" */}
-            {activeTab === "race" && (
-              <div className="race-section">
-                <h3>Ajouter une nouvelle race</h3>
-                <input
-                  type="text"
-                  name="name"
-                  placeholder="Nom de la race"
-                  value={newRace.name}
-                  onChange={handleRaceChange}
-                />
-                <textarea
-                  name="content"
-                  placeholder="Description de la race"
-                  value={newRace.content}
-                  onChange={handleRaceChange}
-                />
-                <input
-                  type="text"
-                  name="imageUrl"
-                  placeholder="Lien de l'image"
-                  value={newRace.imageUrl}
-                  onChange={handleRaceChange}
-                />
-                <button className="save-button" onClick={handleAddRace}>
-                  Ajouter la race
-                </button>
-
-                {/* Liste des races */}
-                <div className="race-list">
-                  <h4>Races</h4>
-                  {races.length === 0 ? (
-                    <p>Aucune race ajoutée</p>
-                  ) : (
-                    <ul>
-                      {races.map((race, index) => (
-                        <li key={index}>
-                          <h5>{race.name}</h5>
-                          <p>{race.content}</p>
-                          <img
-                            src={race.imageUrl}
-                            alt={race.name}
-                            width={100}
-                          />
-                        </li>
-                      ))}
-                    </ul>
-                  )}
-                </div>
-              </div>
-            )}
-
-            {/* Contenu de l'onglet "Bestiaire" */}
+            {/* Bestiary Tab Content */}
             {activeTab === "bestiaire" && (
               <div className="bestiary-section">
-                <h3>Ajouter un nouvel objet au bestiaire</h3>
+                <h3>{newBeast.id ? "Modifier le monstre" : "Ajouter un nouvel objet au bestiaire"}</h3>
                 <input
                   type="text"
                   name="name"
                   placeholder="Nom du monstre"
                   value={newBeast.name}
                   onChange={handleBeastChange}
+                  className="input-field"
                 />
-                <textarea
-                  name="content"
-                  placeholder="Description"
-                  value={newBeast.content}
-                  onChange={handleBeastChange}
-                />
+                <div className="ql-editor-container">
+                  <QuillEditor
+                    value={newBeast.content}
+                    onChange={handleContentChange}
+                  />
+                </div>
                 <input
                   type="text"
                   name="type"
                   placeholder="Type de monstre"
                   value={newBeast.type}
                   onChange={handleBeastChange}
+                  className="input-field"
                 />
+                <button className="save-button" onClick={handleAddOrUpdateBeast}>
+                  {newBeast.id ? "Modifier" : "Ajouter"} au Bestiaire
+                </button>
+              </div>
+            )}
+
+            {/* Bestiary List */}
+            {activeTab === "bestiaire" && (
+              <div className="bestiary-list">
+                <h4>Liste des Bestiaires</h4>
+                <ul>
+                  {bestiaire.map((beast) => (
+                    <li key={beast.id}>
+                      <h5>{beast.Name || "Nom indisponible"}</h5>
+                      <button onClick={() => handleEditBeast(beast)}>Modifier</button>
+                      <button onClick={() => handleDeleteBeast(beast.id)}>Supprimer</button>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+
+            {/* Races Tab Content */}
+            {activeTab === "races" && (
+              <div className="race-section">
+                <h3>{newRace.id ? "Modifier la race" : "Ajouter une nouvelle race"}</h3>
                 <input
                   type="text"
-                  name="imageUrl"
-                  placeholder="Lien de l'image"
-                  value={newBeast.imageUrl}
-                  onChange={handleBeastChange}
+                  name="name"
+                  placeholder="Nom de la race"
+                  value={newRace.name}
+                  onChange={handleRaceChange}
+                  className="input-field"
                 />
-                <button className="save-button" onClick={handleAddBeast}>
-                  Ajouter au Bestiaire
-                </button>
-
-                {/* Liste des objets du bestiaire */}
-                <div className="bestiary-list">
-                  <h4>Bestiaire</h4>
-                  {bestiaire.length === 0 ? (
-                    <p>Aucun objet dans le bestiaire</p>
-                  ) : (
-                    <ul>
-                      {bestiaire.map((beast, index) => (
-                        <li key={index}>
-                          <h5>{beast.name}</h5>
-                          <p>{beast.content}</p>
-                          <p>Type : {beast.type}</p>
-                          <img
-                            src={beast.imageUrl}
-                            alt={beast.name}
-                            width={100}
-                          />
-                        </li>
-                      ))}
-                    </ul>
-                  )}
+                <div className="ql-editor-container">
+                  <QuillEditor
+                    value={newRace.content}
+                    onChange={handleRaceContentChange}
+                  />
                 </div>
+                <button className="save-button" onClick={handleAddOrUpdateRace}>
+                  {newRace.id ? "Modifier" : "Ajouter"} la Race
+                </button>
+              </div>
+            )}
+
+            {/* Races List */}
+            {activeTab === "races" && (
+              <div className="race-list">
+                <h4>Liste des Races</h4>
+                <ul>
+                  {races.map((race) => (
+                    <li key={race.id}>
+                      <h5>{race.Name || "Nom indisponible"}</h5>
+                      <button onClick={() => handleEditRace(race)}>Modifier</button>
+                      <button onClick={() => handleDeleteRace(race.id)}>Supprimer</button>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+
+            {/* Jobs Tab Content */}
+            {activeTab === "jobs" && (
+              <div className="bestiary-section">
+                <h3>{newJob.id ? "Modifier le job" : "Ajouter un nouveau job"}</h3>
+                <input
+                  type="text"
+                  name="name"
+                  placeholder="Nom du job"
+                  value={newJob.name}
+                  onChange={handleJobChange}
+                  className="input-field"
+                />
+                <div className="ql-editor-container">
+                  <QuillEditor
+                    value={newJob.content}
+                    onChange={handleJobContentChange}
+                  />
+                </div>
+                <button className="save-button" onClick={handleAddOrUpdateJob}>
+                  {newJob.id ? "Modifier" : "Ajouter"} le Job
+                </button>
+              </div>
+            )}
+
+            {/* Jobs List */}
+            {activeTab === "jobs" && (
+              <div className="bestiary-list">
+                <h4>Liste des Jobs</h4>
+                <ul>
+                  {jobs.map((job) => (
+                    <li key={job.id}>
+                      <h5>{job.name || "Nom indisponible"}</h5>
+                      <button onClick={() => handleEditJob(job)}>Modifier</button>
+                      <button onClick={() => handleDeleteJob(job.id)}>Supprimer</button>
+                    </li>
+                  ))}
+                </ul>
               </div>
             )}
           </div>
+          <Footer />
         </div>
-        <Footer />
       </div>
     </>
   );

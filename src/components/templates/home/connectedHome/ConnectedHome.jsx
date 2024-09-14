@@ -2,9 +2,8 @@ import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
-import { store, fetchWikis } from "../../../../store/store";
-import { fetchCurrentUser } from "../../../../store/slices/auth.slice"; // Import de l'action fetchCurrentUser
-
+import { fetchWikis } from "../../../../store/store";
+import { fetchCurrentUser } from "../../../../store/slices/auth.slice";
 import "./connectedHome.css";
 
 import forgeLogoTxt from "../../../../assets/logo/logo_texte.svg";
@@ -22,7 +21,7 @@ const ConnectedHome = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const wiki = useSelector((state) => state.wikis.wikisList);
+  const wikis = useSelector((state) => state.wikis.wikisList);
   const wikiStatus = useSelector((state) => state.wikis.status);
   const ConnectedUser = useSelector((state) => state.auth.user);
 
@@ -32,7 +31,7 @@ const ConnectedHome = () => {
     setIsDisplayFormNew(!isDisplayFormNew);
   };
 
-  // Fetch des wikis au montage du composant si nécessaire
+  // Fetch wikis if necessary
   useEffect(() => {
     if (wikiStatus === "idle") {
       dispatch(fetchWikis());
@@ -43,34 +42,31 @@ const ConnectedHome = () => {
     dispatch(fetchCurrentUser());
   }, [dispatch]);
 
-  const wikis = useSelector((state) => state.wikis.userWikis);
-
-  const userWikis = ConnectedUser?.Wikis;
-
   const ListDiscoverWikis = () => {
-    if (!wiki[0]) return <p>On load</p>;
+    // Check if `wikis` is an array and map over it if it has elements
+    if (!Array.isArray(wikis) || wikis.length === 0) {
+      return <p>Chargement des JDR...</p>;
+    }
 
-    return wiki[0].map((el) => {
-      return (
-        el.Status === "published" && (
-          <div
-            className="discover-rpg-card rpg"
-            key={el.id}
-            onClick={() => {
-              navigate(`/wiki/${el.id}`);
-            }}
-          >
-            <CardRpgDiscoverHome
-              className="list-rpg-published home"
-              id={el.id}
-              srcImg={el.imageFile ? el.imageFile.path : defaultWikiImage}
-              nameRpg={el.Name}
-              owner={el.user?.pseudo}
-            />
-          </div>
-        )
-      );
-    });
+    return wikis.map((el) => (
+      el.Status === "published" && (
+        <div
+          className="discover-rpg-card rpg"
+          key={el.id}
+          onClick={() => {
+            navigate(`/wiki/${el.id}`);
+          }}
+        >
+          <CardRpgDiscoverHome
+            className="list-rpg-published home"
+            id={el.id}
+            srcImg={el.imageFile ? el.imageFile.path : defaultWikiImage}
+            nameRpg={el.Name}
+            owner={el.user?.pseudo}
+          />
+        </div>
+      )
+    ));
   };
 
   const RecentRpg = () => {
@@ -78,7 +74,7 @@ const ConnectedHome = () => {
       return <p>Chargement des JDR...</p>;
     }
 
-    // Filtrer les 3 JDR les plus récents de l'utilisateur
+    // Filter the 3 most recent RPGs
     const recentUserWikis = ConnectedUser.Wikis.slice(0, 3);
 
     return (
@@ -100,7 +96,7 @@ const ConnectedHome = () => {
             />
           </div>
         ))}
-        {/* Afficher une carte de création si l'utilisateur a moins de 3 JDR */}
+        {/* Show creation card if user has less than 3 RPGs */}
         {recentUserWikis.length < 3 && (
           <CardCreate
             width="100%"
@@ -122,39 +118,39 @@ const ConnectedHome = () => {
           <div className="home-user content" id="home-user-content"></div>
           <div className="my-content">
             <div className="left rpg-creation">
-              {/* JDR de l'utilisateur connecté */}
+              {/* User's RPGs */}
               <div className="box-content">{RecentRpg()}</div>
             </div>
             <div className="right content">
               <div className="my-caracters">
                 <div className="box-content inline-content">
-                  {/* Personnages de l'utilisateur connecté */}
+                  {/* User's characters */}
                   <CardCreate
                     width="20%"
                     height="100%"
                     title={t("connectedHome.newCharactere")}
                     onClick={displayForm}
-                  ></CardCreate>
+                  />
                 </div>
               </div>
               <div className="my-games">
-                {/* Parties de l'utilisateur connecté */}
+                {/* User's games */}
                 <div className="comming-soon">{t("commun.commingSoon")}</div>
                 <div className="box-content inline-content">
                   <CardCreate
                     width="20%"
                     height="100%"
                     title={t("connectedHome.newGame")}
-                  ></CardCreate>
+                  />
                 </div>
               </div>
             </div>
           </div>
-          {/* LListe des JDR publiés */}
+          {/* List of published RPGs */}
           <div className="discover list">
             {ListDiscoverWikis()}
             <div
-              className="button view-more "
+              className="button view-more"
               onClick={() => {
                 navigate(`/discover`);
               }}
@@ -164,7 +160,7 @@ const ConnectedHome = () => {
           </div>
         </div>
       </div>
-      <Footer></Footer>
+      <Footer />
     </>
   );
 };

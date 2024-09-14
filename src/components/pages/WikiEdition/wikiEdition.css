@@ -1,195 +1,169 @@
-.background-edition{
+/* Background and container styles */
+.background-edition {
     position: relative;
     min-height: 70vh;
 }
 
-
-.background-hexa.image.edition-rpg{
+.background-hexa.image.edition-rpg {
     height: 100vh;
-        background-image: url('../../../assets/hexa_background_transparent.svg');
-        background-size: cover;
-        background-position: center;
-        background-repeat: no-repeat;
-        margin: 0;
-        position: fixed;
+    background-image: url('../../../assets/hexa_background_transparent.svg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    margin: 0;
+    position: fixed;
 }
 
-.title-rpg-editor{
-    /* background-color: brown; */
+/* Title section */
+.title-rpg-editor {
     position: relative;
 }
 
-
-.title-rpg-editor input{
+.title-rpg-editor input {
     font-size: 30px;
 }
 
-.main-contaner.rpg-editor{
+/* Main container */
+.main-contaner.rpg-editor {
     margin-top: 80px;
     padding: 30px;
 }
 
-.state{
-    display: none;
+/* Tabs */
+.tabs {
+    display: flex;
+    margin-bottom: 20px;
 }
 
-.controls button{
+.tabs button {
+    padding: 10px 20px;
+    cursor: pointer;
+    border: none;
+    background-color: #ccc;
+    margin-right: 10px;
+    border-radius: 5px;
+}
+
+.tabs button.active-tab {
+    background-color: #8251c1; /* Color for active tab */
+    color: white;
+}
+
+/* Editor sections */
+.rpg-editor,
+.bestiary-section,
+.race-section,
+.class-section {
+    margin-top: 20px;
+}
+
+/* List styles */
+.bestiary-list,
+.race-list,
+.class-list {
+    margin-top: 20px;
+}
+
+.bestiary-list ul,
+.race-list ul,
+.class-list ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+.bestiary-list li,
+.race-list li,
+.class-list li {
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+/* Input fields */
+.input-field {
+    position: relative;
+    z-index: 2;
+    margin-top: 20px;
+}
+
+/* Save button */
+.save-button {
     border-radius: 10px;
-        margin: auto;
-        padding: 10px;
-        padding-left: 3dvb;
-        padding-right: 3dvb;
-        font-size: 1rem;
-        cursor: pointer;
-        border: none;
+    margin: auto;
+    padding: 10px;
+    padding-left: 3dvb;
+    padding-right: 3dvb;
+    font-size: 1rem;
+    cursor: pointer;
+    border: none;
     background-color: var(--main-blue-color);
-        color: rgb(255, 255, 255);
+    color: white;
+    position: relative;
+    z-index: 2;
+    margin-top: 20px;
 }
 
-[role="toolbar"]:nth-child(2){
+/* Quill editor container */
+.ql-editor-container {
+    position: relative;
+    z-index: 1;
+    margin-bottom: 20px;
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+/* Quill editor */
+.ql-editor {
+    min-height: 150px;
+    max-height: 150px;
+    overflow-y: auto;
+    background-color: white;
+}
+
+/* Bestiary and race sections */
+.bestiary-section,
+.race-section {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    z-index: 2;
+    padding: 10px;
+    background-color: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(5px);
+    border-radius: 10px;
+    position: relative;
+}
+
+/* Input fields inside sections */
+.bestiary-section input,
+.race-section input,
+.bestiary-section button,
+.race-section button {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+}
+
+/* List containers */
+.bestiary-list,
+.race-list {
+    margin-top: 20px;
+}
+
+/* Toolbar */
+[role="toolbar"]:nth-child(2) {
     display: none;
 }
 
+/* Success message */
 .save-success-message {
     color: green;
     font-size: 16px;
     margin-top: 10px;
 }
 
-.bestiary-section {
-    margin-top: 20px;
-}
-
-.bestiary-inputs {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-
-.bestiary-list {
-    margin-top: 20px;
-}
-
-.bestiary-list ul {
-    list-style: none;
-    padding-left: 0;
-}
-
-.bestiary-list li {
-    border: 1px solid #ccc;
-    padding: 10px;
-    margin-bottom: 10px;
-}
-
-.tabs {
-    display: flex;
-    margin-bottom: 20px;
-}
-
-.tabs button {
-    padding: 10px 20px;
-    cursor: pointer;
-    border: none;
-    background-color: #ccc;
-    margin-right: 10px;
-    border-radius: 5px;
-}
-
-.tabs button.active-tab {
-    background-color: #007bff;
-    color: white;
-}
-
-.rpg-editor {
-    margin-top: 20px;
-}
-
-.bestiary-section {
-    margin-top: 20px;
-}
-
-.bestiary-inputs {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-
-.bestiary-list {
-    margin-top: 20px;
-}
-
-.bestiary-list ul {
-    list-style: none;
-    padding-left: 0;
-}
-
-.bestiary-list li {
-    border: 1px solid #ccc;
-    padding: 10px;
-    margin-bottom: 10px;
-}
-
-.tabs {
-    display: flex;
-    margin-bottom: 20px;
-}
-
-.tabs button {
-    padding: 10px 20px;
-    cursor: pointer;
-    border: none;
-    background-color: #ccc;
-    margin-right: 10px;
-    border-radius: 5px;
-}
-
-.tabs button.active-tab {
-    background-color: #8251c1;
-    color: white;
-}
-
-.rpg-editor,
-.class-section,
-.race-section,
-.bestiary-section {
-    margin-top: 20px;
-}
-
-.bestiary-list,
-.class-list,
-.race-list {
-    margin-top: 20px;
-}
-
-.bestiary-list ul,
-.class-list ul,
-.race-list ul {
-    list-style: none;
-    padding-left: 0;
-}
-
-.bestiary-list li,
-.class-list li,
-.race-list li {
-    border: 1px solid #ccc;
-    padding: 10px;
-    margin-bottom: 10px;
-}
-
-.save-button{
-    border-radius: 10px;
-        margin: auto;
-        padding: 10px;
-        padding-left: 3dvb;
-        padding-right: 3dvb;
-        font-size: 1rem;
-        cursor: pointer;
-        border: none;
-        background-color: var(--main-blue-color);
-        color: rgb(255, 255, 255);
-}
-
-.class-section .form{
+/* Class section specific styles */
+.class-section .form {
     background-color: #ffffffb4;
     backdrop-filter: blur(5px);
     width: 95%;
@@ -198,6 +172,20 @@
     position: relative;
 }
 
-.class-section input{
+.class-section input {
     width: 50%;
+}
+
+/* Additional button styles */
+.controls button {
+    border-radius: 10px;
+    margin: auto;
+    padding: 10px;
+    padding-left: 3dvb;
+    padding-right: 3dvb;
+    font-size: 1rem;
+    cursor: pointer;
+    border: none;
+    background-color: var(--main-blue-color);
+    color: white;
 }

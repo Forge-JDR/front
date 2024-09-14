@@ -1,0 +1,19 @@
+/* Quill editor container */
+.ql-editor-container {
+  position: relative;
+  z-index: 1; /* Assurez-vous que l'éditeur n'est pas devant les autres champs */
+  margin-bottom: 20px; /* Espace entre l'éditeur et les autres éléments */
+}
+
+/* Quill editor */
+.ql-editor {
+  min-height: 150px; /* Ajustez la hauteur minimale de l'éditeur */
+  max-height: 300px; /* Limitez la hauteur maximale */
+  overflow-y: auto; /* Ajouter un défilement vertical si le contenu dépasse */
+}
+
+/* Boutons ou autres champs d'entrée */
+.input-field, .save-button {
+  position: relative;
+  z-index: 2; /* Place les autres champs devant l'éditeur si nécessaire */
+}
