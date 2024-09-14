@@ -1,0 +1,72 @@
+
+
+.background-hexa.image.rpg-view {
+    height: 100vh;
+    background-image: url('../../../assets/hexa_background_transparent.svg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    margin: 0;
+    position: fixed;
+}
+
+.main-contaner-rpg-view{
+    background-color: rgba(0, 255, 255, 0);
+    margin-top : 90px;
+    min-height: 80vh;
+    padding: 20px;
+    position: relative;
+}
+
+.wiki-banner img {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+}
+
+.wiki-title {
+    text-align: center;
+    margin: 20px 0;
+}
+
+.wiki-container {
+    display: flex;
+    margin: 20px;
+}
+
+.wiki-sidebar {
+    width: 20%;
+    border-right: 1px solid #ccc;
+    padding: 20px;
+}
+
+.wiki-sidebar ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.wiki-sidebar ul li {
+    margin: 10px 0;
+    cursor: pointer;
+    padding: 10px;
+    border-radius: 5px;
+    background-color: #f3f3f3;
+}
+
+.wiki-sidebar ul li.active {
+    background-color: #832dce;
+    color: white;
+}
+
+.wiki-content-container {
+    width: 80%;
+    padding: 20px;
+}
+
+.wiki-content {
+    margin-top: 20px;
+}
+
+.wiki-content h4 {
+    margin-top: 0;
+}

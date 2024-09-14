@@ -1,9 +1,10 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { store, fetchWiki } from "../../../store/store";
 import { useTranslation } from "react-i18next";
 import { useParams } from "react-router-dom";
 import ErrorComponent from "../../ErrorBoundaries/ErrorComponent";
+import { QuillDeltaToHtmlConverter } from "quill-delta-to-html";
 
 import ConnectedNavbar from "../../templates/connectedNavBar/ConnectedNavbar";
 
@@ -19,81 +20,77 @@ const Wiki = ({ ...props }) => {
   const wiki = useSelector((state) => state.wikis.wikiInfo);
   const wikiStatus = useSelector((state) => state.wikis.status);
 
+  // État pour gérer les onglets
+  const [activeTab, setActiveTab] = useState("univers");
+
   useEffect(() => {
     if (wikiStatus === "idle") {
       dispatch(fetchWiki(id));
     }
   }, [wikiStatus, dispatch]);
 
-  const WikiElements = (wikiPram) => {
-    if (wikiStatus === "idle") return <p>On load</p>;
+  const handleTabChange = (tab) => {
+    setActiveTab(tab); // Permet de changer d'onglet
+  };
+
+  const renderDeltaToHtml = (delta) => {
+    if (!delta) return ""; // Retourne une chaîne vide si le contenu est manquant
+
     try {
+      const deltaObj = JSON.parse(delta); // Parse le Delta string en objet
+      const converter = new QuillDeltaToHtmlConverter(deltaObj.ops, {}); // Utilise QuillDeltaToHtmlConverter
+      return converter.convert(); // Retourne le HTML converti
+    } catch (error) {
+      return "Erreur lors de l'affichage du contenu.";
+    }
+  };
+
+  const WikiElements = (wikiPram) => {
+    if (wikiStatus === "idle") return <p>Chargement...</p>;
+    try {
+      // Onglets avec le contenu correspondant
+      const contentMap = {
+        univers: renderDeltaToHtml(wikiPram.Content),
+        race:
+          wikiPram?.Races?.length === 0
+            ? "Aucun contenu"
+            : wikiPram.Races.map((race) => (
+                <div key={race.id}>
+                  <h4>{race.name}</h4>
+                  <p>{race.content}</p>
+                </div>
+              )),
+        classe:
+          wikiPram?.Jobs?.length === 0
+            ? "Aucun contenu"
+            : wikiPram.Jobs.map((job) => (
+                <div key={job.id}>
+                  <h4>{job.name}</h4>
+                  <p>{job.content}</p>
+                </div>
+              )),
+
+        bestiaire:
+          wikiPram?.bestiaries?.length === 0
+            ? "Aucun contenu"
+            : wikiPram.bestiaries.map((bes) => (
+                <div key={bes.id}>
+                  <h4>{bes.name}</h4>
+                  <p>{bes.content}</p>
+                  <p>Type : {bes.type}</p>
+                  <img src={bes.imageUrl} alt={bes.name} width={100} />
+                </div>
+              )),
+      };
+
       return (
-        <div id={wikiPram._id} key={wikiPram.id}>
-          Wiki n°{wikiPram.id}
-          <br></br>
-          Nom : {wikiPram.Name} <br></br>
-          Status: {wikiPram.Status}
-          <br></br>
-          Owner : {wikiPram.user.pseudo}
-          <br></br>
-          Content : {wikiPram.Content}
-          <br></br>
-          CreateAt : {wikiPram.createdAt}
-          <br></br>
-          {wikiPram.imageFile ? (
-            <img
-              src={wikiPram.imageFile.fichierImage}
-              alt="image"
-              width={150}
-              height={150}
-            />
-          ) : (
-            "Pas d'image"
-          )}
-          <br></br>
-          Jobs :{" "}
-          {wikiPram.Jobs.map((job) => {
-            return (
-              <div key={job.id}>
-                Nom du job :{job.name}
-                <br></br> Content : {job.Content}
-              </div>
-            );
-          })}{" "}
-          <br></br>
-          Races :{" "}
-          {wikiPram.Races.map((race) => {
-            return (
-              <div key={race.id}>
-                Nom du job :{race.name}
-                <br></br> Content : {race.Content}
-              </div>
-            );
-          })}{" "}
-          <br></br>
-          Bestiaire :{" "}
-          {wikiPram.bestiaries.map((bes) => {
-            return (
-              <div key={bes.id}>
-                Nom du job :{bes.name}
-                <br></br> Content : {bes.Content}
-                <br></br> Type : {bes.Type}
-                <br></br> Image : {bes.imageUrl}
-              </div>
-            );
-          })}{" "}
-          <br></br>
-          Scenarios :{" "}
-          {wikiPram.Scenarios.map((scenario) => {
-            return (
-              <div key={scenario.id}>
-                Nom du job :{scenario.name}
-                <br></br> Content : {scenario.Content}
-              </div>
-            );
-          })}{" "}
-          <br></br>
+        <div className="wiki-content">
+          {/* Affichage dynamique du contenu en fonction de l'onglet actif */}
+          <div
+            dangerouslySetInnerHTML={{
+              __html: contentMap[activeTab] || "Aucun contenu disponible.",
+            }}
+          />
         </div>
       );
     } catch (error) {
@@ -101,15 +98,56 @@ const Wiki = ({ ...props }) => {
     }
   };
 
-  const WikiEditorElement = (wikiPram) => {};
-
   return (
     <>
-      <div className="background creation">
-        <div className="background-hexa image">
-          <ConnectedNavbar></ConnectedNavbar>
+      <ConnectedNavbar></ConnectedNavbar>
+      <div className="background-hexa image rpg-view" />
+      <div className="main-contaner-rpg-view">
+        {/* Bandeau avec l'image du Wiki */}
+        {wiki.imageFile && (
+          <div className="wiki-banner">
+            <img src={wiki.imageFile.fichierImage} alt={wiki.Name} />
+          </div>
+        )}
 
-          <div className="main-contaner personnal-caracter">
+        {/* Titre du Wiki */}
+        <div className="wiki-title">
+          <h1>{wiki.Name}</h1>
+        </div>
+
+        <div className="wiki-container">
+          {/* Barre latérale avec les onglets */}
+          <div className="wiki-sidebar">
+            <ul>
+              <li
+                className={activeTab === "univers" ? "active" : ""}
+                onClick={() => handleTabChange("univers")}
+              >
+                Univers
+              </li>
+              <li
+                className={activeTab === "race" ? "active" : ""}
+                onClick={() => handleTabChange("race")}
+              >
+                Races
+              </li>
+              <li
+                className={activeTab === "classe" ? "active" : ""}
+                onClick={() => handleTabChange("classe")}
+              >
+                Classes
+              </li>
+              <li
+                className={activeTab === "bestiaire" ? "active" : ""}
+                onClick={() => handleTabChange("bestiaire")}
+              >
+                Bestiaire
+              </li>
+            </ul>
+          </div>
+
+          {/* Contenu à droite */}
+          <div className="wiki-content-container">
             <div onLoad={() => store.dispatch(fetchWiki(id))}>
               {WikiElements(wiki)}
             </div>
