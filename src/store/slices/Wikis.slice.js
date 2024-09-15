@@ -165,6 +165,45 @@ export const addJob = createAsyncThunk(
       }
     }
   );
+
+  export const addScenario = createAsyncThunk(
+    'wiki/addScenario',
+    async ({ WikiId, name, content }) => {
+      const bdy = { name, content };
+      try {
+        const response = await api.post(`${API_URL}/wikis/${WikiId}/scenarios`, bdy);
+        return response.data;
+      } catch (err) {
+        console.log("Erreur dans l'ajout du scénario :", err);
+        throw err;
+      }
+    }
+  );
+  
+  export const updateScenario = createAsyncThunk(
+    'wiki/updateScenario',
+    async ({ WikiId, id, dataToUpdate }) => {
+      return await api.put(`${API_URL}/wikis/${WikiId}/scenarios/${id}`, dataToUpdate)
+        .then(response => response.data)
+        .catch(err => {
+          console.log("Erreur dans la modification du scénario :", err);
+          throw err;
+        });
+    }
+  );
+  
+  export const deleteScenario = createAsyncThunk(
+    'wiki/deleteScenario',
+    async ({ WikiId, id }) => {
+      try {
+        await api.delete(`${API_URL}/wikis/${WikiId}/scenarios/${id}`);
+        return id;
+      } catch (err) {
+        console.log("Erreur dans la suppression du scénario :", err);
+        throw err;
+      }
+    }
+  );
   
 
 const WikiServices = createSlice({
@@ -190,6 +229,7 @@ const WikiServices = createSlice({
         state.wikiInfo.races = action.payload.Races || [];
         state.wikiInfo.bestiaries = action.payload.bestiaries || [];
         state.wikiInfo.jobs = action.payload.Jobs || [];
+        state.wikiInfo.scenarios = action.payload.Scenarios || [];
         state.status = action.meta.requestStatus;
       })
       .addCase(addWiki.fulfilled, (state, action) => {
@@ -254,6 +294,23 @@ const WikiServices = createSlice({
       })
       .addCase(deleteJob.fulfilled, (state, action) => {
         state.wikiInfo.jobs = state.wikiInfo.jobs.filter((job) => job.id !== action.payload);
+        state.status = 'idle';
+      })
+      .addCase(addScenario.fulfilled, (state, action) => {
+        const newScenario = action.payload;
+        if (newScenario && newScenario.id && newScenario.name) {
+          state.wikiInfo.scenarios = [...state.wikiInfo.scenarios, newScenario];
+        }
+        state.status = 'idle';
+      })
+      .addCase(updateScenario.fulfilled, (state, action) => {
+        state.wikiInfo.scenarios = state.wikiInfo.scenarios.map(scenario =>
+          scenario.id === action.payload.id ? action.payload : scenario
+        );
+        state.status = 'idle';
+      })
+      .addCase(deleteScenario.fulfilled, (state, action) => {
+        state.wikiInfo.scenarios = state.wikiInfo.scenarios.filter(scenario => scenario.id !== action.payload);
         state.status = 'idle';
       });
   }
