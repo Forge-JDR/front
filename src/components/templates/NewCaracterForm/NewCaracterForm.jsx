@@ -22,16 +22,6 @@ const NewCaracterForm = ({ closeForm, ...rest }) => {
           <p>{t("newCaracterForm.new")}</p>
         </div>
         <div className="main-container info-new-caracter">
-          <div className="img-container left">
-            <div className="upload-img">
-              <img
-                src={iconeUplaod}
-                alt="Caracter"
-                className="caracter-image"
-              />
-              {/* <img src="your_image_url" alt="RPG" className="rpg-image" /> */}
-            </div>
-          </div>
           <div className="info-container right">
             <FieldForm
               id="caracterName"

@@ -15,6 +15,7 @@ import CardCreate from "../../../UI/molecules/CardCreate/CardCreate";
 import NewCaracterForm from "../../NewCaracterForm/NewCaracterForm";
 import CardRpgDiscoverHome from "../../../UI/organisms/CardRpgDiscoverHome/CardRpgDiscoverHome";
 import CardRpgHome from "../../../UI/organisms/CardRpgHome/CardRpgHome";
+import NewRpgForm from "../../../templates/NewRpgForm/NewRpgForm";
 
 const ConnectedHome = () => {
   const { t } = useTranslation();
@@ -26,9 +27,14 @@ const ConnectedHome = () => {
   const ConnectedUser = useSelector((state) => state.auth.user);
 
   const [isDisplayFormNew, setIsDisplayFormNew] = useState(false);
+  const [isDisplayFormNewRpg, setIsDisplayFormNewRpg] = useState(false);
 
   const displayForm = () => {
     setIsDisplayFormNew(!isDisplayFormNew);
+  };
+
+  const displayFormRpg = () => {
+    setIsDisplayFormNewRpg(!isDisplayFormNewRpg);
   };
 
   // Fetch wikis if necessary
@@ -48,25 +54,26 @@ const ConnectedHome = () => {
       return <p>Chargement des JDR...</p>;
     }
 
-    return wikis.map((el) => (
-      el.Status === "published" && (
-        <div
-          className="discover-rpg-card rpg"
-          key={el.id}
-          onClick={() => {
-            navigate(`/wiki/${el.id}`);
-          }}
-        >
-          <CardRpgDiscoverHome
-            className="list-rpg-published home"
-            id={el.id}
-            srcImg={el.imageFile ? el.imageFile.path : defaultWikiImage}
-            nameRpg={el.Name}
-            owner={el.user?.pseudo}
-          />
-        </div>
-      )
-    ));
+    return wikis.map(
+      (el) =>
+        el.Status === "published" && (
+          <div
+            className="discover-rpg-card rpg"
+            key={el.id}
+            onClick={() => {
+              navigate(`/wiki/${el.id}`);
+            }}
+          >
+            <CardRpgDiscoverHome
+              className="list-rpg-published home"
+              id={el.id}
+              srcImg={el.imageFile ? el.imageFile.path : defaultWikiImage}
+              nameRpg={el.Name}
+              owner={el.user?.pseudo}
+            />
+          </div>
+        )
+    );
   };
 
   const RecentRpg = () => {
@@ -102,6 +109,7 @@ const ConnectedHome = () => {
             width="100%"
             height="30%"
             title={t("connectedHome.newRPG")}
+            onClick={displayFormRpg}
           />
         )}
       </>
@@ -114,6 +122,7 @@ const ConnectedHome = () => {
         <ConnectedNavbar />
         <div className="background-hexa image home"></div>
         {isDisplayFormNew && <NewCaracterForm closeForm={displayForm} />}
+        {isDisplayFormNewRpg && <NewRpgForm closeForm={displayFormRpg} />}
         <div className="main-contaner personnal-home">
           <div className="home-user content" id="home-user-content"></div>
           <div className="my-content">

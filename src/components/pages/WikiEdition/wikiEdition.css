@@ -2,6 +2,7 @@
 .background-edition {
     position: relative;
     min-height: 70vh;
+    padding: 20px;
 }
 
 .background-hexa.image.edition-rpg {
@@ -15,12 +16,27 @@
 }
 
 /* Title section */
+.title-status-bar {
+display: flex;
+    align-items: center;
+    /* Aligne verticalement les éléments sur la même ligne */
+    justify-content: space-between;
+    /* Assure que les deux éléments sont bien placés à gauche et à droite */
+}
+
 .title-rpg-editor {
     position: relative;
+    flex: 1;
 }
 
 .title-rpg-editor input {
     font-size: 30px;
+}
+
+.wiki-status {
+    flex: 1;
+    text-align: right;
+    /* Aligne le contenu à droite */
 }
 
 /* Main container */
@@ -32,7 +48,7 @@
 /* Tabs */
 .tabs {
     display: flex;
-    margin-bottom: 20px;
+    margin-top: 20px;
 }
 
 .tabs button {
@@ -139,9 +155,18 @@
 .race-section input,
 .bestiary-section button,
 .race-section button {
-    width: 100%;
+    width: 20%;
     padding: 10px;
     margin-top: 5px;
+
+}
+
+.bestiary-section ,
+.race-section ,
+.bestiary-section ,
+.race-section  {
+    width: 90%;
+    margin: auto;
 }
 
 /* List containers */
