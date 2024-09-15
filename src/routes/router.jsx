@@ -8,6 +8,7 @@ import Caracters from "../components/pages/Caracters/Caracters";
 import WikiEdition from "../components/pages/WikiEdition/WikiEdition";
 import CGU from "../components/pages/GCU/Cgu";
 import Contact from "../components/pages/Contact/Contact";
+import User from "../components/pages/User/User";
 
 import Discover from "../components/pages/Discover/Discover";
 import { RequireAuth } from "./requireAuth";
@@ -88,6 +89,16 @@ export const Router = () => {
       path: "cgu",
       element: <CGU />,
     },
+    {
+      path: "user",
+      element: (
+        <RequireAuth>
+          <User />
+        </RequireAuth>
+      ),
+      
+
+    }
   ]);
 
   return <RouterProvider router={router} />;

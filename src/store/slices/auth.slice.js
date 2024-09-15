@@ -71,6 +71,25 @@ export const logout = createAsyncThunk("auth/logout", async () => {
     await AuthService.logout();
 });
 
+export const updateAccount = createAsyncThunk(
+    "auth/updateAccount",
+    async (data, thunkAPI) => {
+        try {
+            const response = await api.put(API_URL + "/me", data);
+            return response.data;
+        } catch (error) {
+            const message =
+                (error.response &&
+                    error.response.data &&
+                    error.response.data.message) ||
+                error.message ||
+                error.toString();
+            thunkAPI.dispatch(setMessage(message));
+            return thunkAPI.rejectWithValue(message);
+        }
+    }
+);
+
 // État initial basé sur le token localStorage
 const initialState = token
     ? { isLoggedIn: true, token, refreshToken }
@@ -119,6 +138,9 @@ const authSlice = createSlice({
                 state.isLoggedIn = false;
                 state.token = null;
                 state.refreshToken = null;
+            })
+            .addCase(updateAccount.fulfilled, (state, action) => {
+                state.user = action.payload; // Mise à jour des données de l'utilisateur
             });
     },
 });
