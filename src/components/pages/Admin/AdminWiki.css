@@ -1,5 +1,6 @@
 .admin-wiki-page {
-    max-width: 800px;
+    max-width: 900px;
+    width: 90%;
     margin: 0 auto;
     padding: 20px;
     background-color: #f9f9f9;
@@ -47,3 +48,16 @@
     padding: 5px 10px;
   }
   
+  .admin-panel-background{
+    width: 100%;
+      height: auto;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(70deg, var(--main-blue-color), var(--main-purple-color));
+  }
+
+  h2{
+    margin-bottom: 30px;
+  }
