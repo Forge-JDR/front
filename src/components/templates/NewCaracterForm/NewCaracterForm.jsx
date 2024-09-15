@@ -1,19 +1,40 @@
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
 import { useTranslation } from "react-i18next";
+import { addCaracter } from "../../../store/store";  // Adjust path to your Redux slice
+import QuillEditor from "../../UI/molecules/QuillEditor/QuillEditor";
 
 import "./newCaracterForm.css";
 
 import Button from "../../UI/atoms/button/button";
-// import SubmitButton from "../../UI/molecules/submitButton/submitButton";
 import FieldForm from "../../UI/molecules/FieldForm/FieldForm";
-// import CancelButton from "../../UI/molecules/cancelButton/cancelButton";
 
-import iconeUplaod from "../../../assets/upload_icone.svg";
-
-const NewCaracterForm = ({ closeForm, ...rest }) => {
+const NewCaracterForm = ({ closeForm, updateList, ...rest }) => {
   const [caracterName, setCaracterName] = useState("");
-  const [style, setStyle] = useState("");
+  const [caracterContent, setCaracterContent] = useState("");  // Adding 'content' to store the character's description or content
   const { t } = useTranslation();
+  const dispatch = useDispatch();
+
+  const handleSubmit = async () => {
+    if (!caracterName || !caracterContent) {
+      alert(t("newCaracterForm.missingFields"));  // Add validation if fields are missing
+      return;
+    }
+
+    try {
+      // Dispatch the action to create the new character
+      await dispatch(addCaracter({ name: caracterName, content:  JSON.stringify(caracterContent)})).unwrap();  // Ensure correct payload keys
+      console.log("New character created");
+      closeForm();  // Close the form on successful submission
+      updateList();  // Call function to refresh the character list if needed
+    } catch (error) {
+      console.log("Error creating new character", error);
+    }
+  };
+
+  const handleContentChange = (content) => {
+    setCaracterContent(content);
+  };
 
   return (
     <div className="background-form" onClick={closeForm}>
@@ -22,16 +43,6 @@ const NewCaracterForm = ({ closeForm, ...rest }) => {
           <p>{t("newCaracterForm.new")}</p>
         </div>
         <div className="main-container info-new-caracter">
-          <div className="img-container left">
-            <div className="upload-img">
-              <img
-                src={iconeUplaod}
-                alt="Caracter"
-                className="caracter-image"
-              />
-              {/* <img src="your_image_url" alt="RPG" className="rpg-image" /> */}
-            </div>
-          </div>
           <div className="info-container right">
             <FieldForm
               id="caracterName"
@@ -41,14 +52,17 @@ const NewCaracterForm = ({ closeForm, ...rest }) => {
               value={caracterName}
               onChange={(e) => setCaracterName(e.target.value)}
             />
-            <FieldForm
-              id="style"
-              name="style"
-              label={t("newCaracterForm.rpg")}
-              required={true}
-              value={style}
-              onChange={(e) => setStyle(e.target.value)}
-            />
+            {/* <FieldForm
+              id="content"
+              name="content"
+              label={t("newCaracterForm.caracterContent")}  // Assuming 'content' is a field for character description
+              value={caracterContent}
+              onChange={(e) => setCaracterContent(e.target.value)}
+            /> */}
+            {/* Caracter Content Editor */}
+            <div className="caracter-editor-content">
+              <QuillEditor value={caracterContent} onChange={handleContentChange} />
+            </div>
           </div>
         </div>
 
@@ -58,9 +72,7 @@ const NewCaracterForm = ({ closeForm, ...rest }) => {
           </Button>
           <Button
             className="confirm"
-            onClick={() => {
-              console.log("newCaracterForm submitted");
-            }}
+            onClick={handleSubmit}
           >
             {t("newCaracterForm.create")}
           </Button>
