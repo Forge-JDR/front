@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { logout } from "../../../../store/store";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 import "./navbar.css";
@@ -16,6 +16,7 @@ import ThemeSwitch from "../../molecules/ThemeSwitch/ThemeSwitch";
 
 const NavBar = ({ links }) => {
   const { t, i18n } = useTranslation();
+  const user = useSelector((state) => state.auth.user);
   const token = localStorage.getItem("token");
   const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
 
@@ -108,35 +109,41 @@ const NavBar = ({ links }) => {
               <img className="icone_user" src={iconeUser} alt="utilisateur" />
             </div>
             {showSubMenu && (
-              <>
+              <ul className="sub-menu">
                 {token ? (
-                  <ul className="sub-menu">
+                  <>
+                    {user?.roles[0] === "ROLE_ADMIN" && (
+                      <li>
+                        <Link to="/admin/wiki">Panel admin</Link>
+                      </li>
+                    )}
+                    <li>
+                      <Link to="/user">Mon compte</Link>
+                    </li>
                     <li>
                       <div onClick={handleLogout}>{t("home.logout")}</div>
                     </li>
-                  </ul>
+                  </>
                 ) : (
-                  <ul className="sub-menu">
-                    <li>
-                      <Link to="/login" onClick={() => setShowSubMenu(false)}>
-                        {t("home.login")}
-                      </Link>
-                    </li>
-                  </ul>
+                  <li>
+                    <Link to="/login" onClick={() => setShowSubMenu(false)}>
+                      {t("home.login")}
+                    </Link>
+                  </li>
                 )}
-              </>
+              </ul>
             )}
           </li>
         </ul>
         <div className={`burger-menu ${isMenuOpen ? "open" : ""}`}>
           <img src={menuIcon} alt="Menu" />
-        </div>{" "}
+        </div>
       </nav>
       <div
         className={`burger-menu ${isMenuOpen ? "open" : ""}`}
         onClick={toggleMenu}
       >
-        <img src={menuIcon} alt="Menu" />{" "}
+        <img src={menuIcon} alt="Menu" />
       </div>
       {isMenuOpen && (
         <div className="menu-lateral">
@@ -168,6 +175,9 @@ const NavBar = ({ links }) => {
               </li>
             ))}
             <div className="separator alf"></div>
+            <li>
+              <Link to="/user">Mon compte</Link>
+            </li>
             <li className="new-menu">
               <a href="/contact">Nous contacter</a>
             </li>
@@ -177,9 +187,11 @@ const NavBar = ({ links }) => {
             <div className="connexion-box">
               <div className="separator all"></div>
               {token ? (
-                <li>
-                  <Link onClick={handleLogout}>{t("home.logout")}</Link>
-                </li>
+                <>
+                  <li>
+                    <Link onClick={handleLogout}>{t("home.logout")}</Link>
+                  </li>
+                </>
               ) : (
                 <li>
                   <Link to="/login" onClick={() => setShowSubMenu(false)}>
