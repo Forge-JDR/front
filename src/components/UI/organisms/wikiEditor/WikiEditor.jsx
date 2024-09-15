@@ -1,18 +1,20 @@
 import React, { useRef, useState, useEffect } from "react";
 import Quill from "quill";
 import "quill/dist/quill.snow.css";
+
 import "./WikiEditor.css";
 
 const WikiEditor = ({ children, defaultContent, onSave }) => {
   const [range, setRange] = useState(null);
   const [lastChange, setLastChange] = useState(null);
   const [isSaving, setIsSaving] = useState(false);
-  const [saveSuccess, setSaveSuccess] = useState(false); // Nouvel état pour le message de sauvegarde réussie
+  const [saveSuccess, setSaveSuccess] = useState(false);
   const quillRef = useRef(null);
   const editorInstance = useRef(null);
 
   useEffect(() => {
     if (!editorInstance.current && quillRef.current) {
+      // Initialize Quill editor
       editorInstance.current = new Quill(quillRef.current, {
         theme: "snow",
         modules: {
@@ -26,15 +28,7 @@ const WikiEditor = ({ children, defaultContent, onSave }) => {
         },
       });
 
-      if (defaultContent) {
-        try {
-          const parsedContent = JSON.parse(defaultContent); // Si c'est un Delta (JSON)
-          editorInstance.current.setContents(parsedContent); // Charger le Delta
-        } catch (error) {
-          editorInstance.current.setText(defaultContent); // Sinon, traiter comme du texte brut
-        }
-      }
-
+      // Attach event listeners
       editorInstance.current.on("text-change", () => {
         setLastChange(editorInstance.current.getContents());
       });
@@ -44,28 +38,40 @@ const WikiEditor = ({ children, defaultContent, onSave }) => {
       });
     }
 
-    // Nettoyer l'éditeur au démontage du composant
     return () => {
+      // Clean up the editor on unmount
       if (editorInstance.current) {
         editorInstance.current.off("text-change");
         editorInstance.current.off("selection-change");
         editorInstance.current = null;
       }
     };
-  }, [defaultContent]);
+  }, []);
+
+  // Update editor content when `defaultContent` changes
+  useEffect(() => {
+    if (editorInstance.current && defaultContent) {
+      try {
+        const parsedContent = JSON.parse(defaultContent); // Parse as Delta (JSON)
+        editorInstance.current.setContents(parsedContent); // Load the Delta content
+      } catch (error) {
+        editorInstance.current.setText(defaultContent); // Treat as plain text
+      }
+    }
+  }, [defaultContent]); // This effect runs when `defaultContent` changes
 
   const saveContent = async () => {
     const contentToSave = editorInstance.current.getContents();
-    setIsSaving(true); // Commence la sauvegarde
+    setIsSaving(true); // Start saving
 
     if (onSave) {
-      await onSave(contentToSave); // Appeler la fonction de sauvegarde
+      await onSave(contentToSave); // Call the save function
     }
 
-    setIsSaving(false); // Fin de la sauvegarde
-    setSaveSuccess(true); // Affiche le message de succès
+    setIsSaving(false); // End saving
+    setSaveSuccess(true); // Show success message
 
-    // Cacher le message après 3 secondes
+    // Hide the success message after 3 seconds
     setTimeout(() => {
       setSaveSuccess(false);
     }, 3000);
@@ -87,21 +93,12 @@ const WikiEditor = ({ children, defaultContent, onSave }) => {
         </button>
       </div>
 
-      {/* Affichage du message de confirmation */}
+      {/* Display success message */}
       {saveSuccess && (
         <div className="save-success-message">
           Sauvegarde effectuée avec succès !
         </div>
       )}
-
-      <div className="state">
-        <div className="state-title">Current Range:</div>
-        {range ? JSON.stringify(range) : "Empty"}
-      </div>
-      <div className="state">
-        <div className="state-title">Last Change:</div>
-        {lastChange ? JSON.stringify(lastChange.ops) : "Empty"}
-      </div>
     </div>
   );
 };
