@@ -70,7 +70,7 @@ img.icone_user {
 
 /* sub-menu styles */
 .sub-menu {
-    width: 150% !important;
+    width: 200px !important;
     position: absolute;
     background-color: white;
     border: 1px solid #ccc;
@@ -297,4 +297,69 @@ img.icone_user {
     margin: auto;
     left: 5%;
     text-align: center;
+}
+
+.sub-menu {
+    display: flex;
+    flex-direction: column;
+    list-style-type: none;
+    /* Supprime les puces */
+    padding: 5px;
+    margin: 0;
+    background-color: #f0f0f5;
+    /* Couleur de fond douce */
+    border-radius: 8px;
+    /* Bordures arrondies */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    /* Légère ombre portée */
+}
+
+.sub-menu li {
+    margin-bottom: 10px;
+    /* Espace entre les éléments */
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    /* Animation au survol */
+}
+
+.sub-menu li:last-child {
+    margin-bottom: 0;
+    /* Supprime l'espace après le dernier élément */
+}
+
+.sub-menu li a,
+.sub-menu li div {
+    display: block;
+    padding: 10px 15px;
+    text-decoration: none;
+    /* Supprime le soulignement des liens */
+    color: #333;
+    /* Couleur du texte */
+    background-color: #fff;
+    /* Fond blanc des éléments */
+    border-radius: 6px;
+    /* Bordures arrondies des éléments */
+    font-size: 16px;
+    font-weight: 500;
+    /* Texte plus visible */
+    text-align: center;
+    /* Centrer le texte */
+}
+
+.sub-menu li:hover a,
+.sub-menu li:hover div {
+    background-color: #e0e0eb;
+    /* Couleur au survol */
+    transform: translateY(-3px);
+    /* Effet de déplacement au survol */
+}
+
+.sub-menu li a:hover,
+.sub-menu li div:hover {
+    color: #5c118b;
+    /* Couleur du texte au survol */
+}
+
+.theme-switch-container,
+.change-langage-container{
+    display: none;
 }

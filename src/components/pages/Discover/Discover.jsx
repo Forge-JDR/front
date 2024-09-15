@@ -34,7 +34,7 @@ const Discover = ({ ...props }) => {
   });
 
   // Filtrer les wikis en fonction du terme de recherche
-  const filteredWikis = wiki[0]?.filter((wiki) =>
+  const filteredWikis = wiki?.filter((wiki) =>
     wiki.Name.toLowerCase().includes(searchTerm.toLowerCase())
   );
 

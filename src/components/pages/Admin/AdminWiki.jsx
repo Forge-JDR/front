@@ -4,6 +4,8 @@ import { Router, useNavigate } from "react-router-dom";
 import { fetchWikiAdmin, updateWiki } from "../../../store/slices/Wikis.slice"; // Import updateWiki action
 import "./AdminWiki.css"; // Import CSS
 
+import ConnectedNavbar from "../../templates/connectedNavBar/ConnectedNavbar";
+
 const AdminWiki = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -23,7 +25,7 @@ const AdminWiki = () => {
   // Handle changing the publication status
   const handleChangePublicationStatus = (id, newStatus) => {
     const dataToUpdate = { Status: newStatus };
-    
+
     dispatch(updateWiki({ id, dataToUpdate }))
       .then(() => {
         // Optionally, you can dispatch `fetchWikiAdmin()` to refresh the list after updating
@@ -51,63 +53,76 @@ const AdminWiki = () => {
     : wikis;
 
   return (
-    <div className="admin-wiki-page">
-      <h2>Administration des Wikis</h2>
+    <div className="admin-panel-background">
+      <ConnectedNavbar />
+      <div className="admin-wiki-page">
+        <h2>Administration des Wikis</h2>
 
-      {/* Filter Section */}
-      <div className="filter-section">
-        <label htmlFor="statusFilter">Filtrer par statut :</label>
-        <select id="statusFilter" value={statusFilter} onChange={handleStatusChange}>
-          <option value="">Tous</option>
-          <option value="published">Publié</option>
-          <option value="inProgress">En cours</option>
-          <option value="pendingToPublish">En attente de publication</option>
-        </select>
-      </div>
+        {/* Filter Section */}
+        <div className="filter-section">
+          <label htmlFor="statusFilter">{/*Filtrer par statut :*/}</label>
+          <select
+            id="statusFilter"
+            value={statusFilter}
+            onChange={handleStatusChange}
+          >
+            <option value="">Tous</option>
+            <option value="published">Publié</option>
+            <option value="inProgress">En cours</option>
+            <option value="pendingToPublish">En attente de publication</option>
+          </select>
+        </div>
 
-      {/* Wikis List */}
-      <div className="wikis-list">
-        {filteredWikis.length > 0 ? (
-          filteredWikis.map((wiki) => (
-            <div key={wiki.id} className="wiki-item">
-              <h3>{wiki.Name}</h3>
-              <p>ID: {wiki.id}</p>
-              <p>Status: {wiki.Status}</p>
-              {wiki.user && (
-                <p>
-                  Utilisateur: {wiki.user.pseudo} (ID: {wiki.user.id})
-                </p>
-              )}
-              {/* Display image if available */}
-              {wiki.imageFile && wiki.imageFile.fichierImage ? (
-                <img
-                  src={wiki.imageFile.fichierImage}
-                  alt={wiki.Name}
-                  className="wiki-image"
-                />
-              ) : (
-                <p>Aucune image disponible</p>
-              )}
+        {/* Wikis List */}
+        <div className="wikis-list">
+          {filteredWikis.length > 0 ? (
+            filteredWikis.map((wiki) => (
+              <div key={wiki.id} className="wiki-item">
+                <h3>{wiki.Name}</h3>
+                <p>ID: {wiki.id}</p>
+                <p>Status: {wiki.Status}</p>
+                {wiki.user && (
+                  <p>
+                    Utilisateur: {wiki.user.pseudo} (ID: {wiki.user.id})
+                  </p>
+                )}
+                {/* Display image if available */}
+                {wiki.imageFile && wiki.imageFile.fichierImage ? (
+                  <img
+                    src={wiki.imageFile.fichierImage}
+                    alt={wiki.Name}
+                    className="wiki-image"
+                  />
+                ) : (
+                  <p>Aucune image disponible</p>
+                )}
 
-              {/* Action Buttons */}
-              <div className="action-buttons">
-                <button onClick={() => handleViewWiki(wiki.id)}>Voir</button>
-                <button onClick={() => handleEditWiki(wiki.id)}>Editer</button>
-                <select
-                  onChange={(e) => handleChangePublicationStatus(wiki.id, e.target.value)}
-                  value={wiki.Status}
-                >
-                  <option value="">Changer état publication</option>
-                  <option value="published">Publié</option>
-                  <option value="inProgress">En cours</option>
-                  <option value="pendingToPublish">En attente de publication</option>
-                </select>
+                {/* Action Buttons */}
+                <div className="action-buttons">
+                  <button onClick={() => handleViewWiki(wiki.id)}>Voir</button>
+                  <button onClick={() => handleEditWiki(wiki.id)}>
+                    Editer
+                  </button>
+                  <select
+                    onChange={(e) =>
+                      handleChangePublicationStatus(wiki.id, e.target.value)
+                    }
+                    value={wiki.Status}
+                  >
+                    <option value="">Changer état publication</option>
+                    <option value="published">Publié</option>
+                    <option value="inProgress">En cours</option>
+                    <option value="pendingToPublish">
+                      En attente de publication
+                    </option>
+                  </select>
+                </div>
               </div>
-            </div>
-          ))
-        ) : (
-          <p>Aucun wiki trouvé.</p>
-        )}
+            ))
+          ) : (
+            <p>Aucun wiki trouvé.</p>
+          )}
+        </div>
       </div>
     </div>
   );

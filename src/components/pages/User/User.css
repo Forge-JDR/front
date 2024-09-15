@@ -1,5 +1,6 @@
 .user-account-page {
     max-width: 500px;
+    width: 50%;
     margin: 0 auto;
     padding: 20px;
     border: 1px solid #ccc;
@@ -15,7 +16,7 @@
     margin-bottom: 15px;
   }
   
-  .form-group label {
+  /* .form-group label {
     display: block;
     margin-bottom: 5px;
   }
@@ -25,18 +26,23 @@
     padding: 8px;
     border: 1px solid #ccc;
     border-radius: 5px;
-  }
+  } */
   
-  button {
-    padding: 10px 15px;
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
+  .backgroud-user-account{
+    width: 100%;
+      height: auto;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(70deg, var(--main-blue-color), var(--main-purple-color));
   }
-  
-  button:hover {
-    background-color: #0056b3;
+
+  h3{
+    margin-bottom: 20px;
   }
+
+    h2{
+      margin-bottom: 10px;
+    }
   

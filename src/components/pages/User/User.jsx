@@ -4,11 +4,15 @@ import { logout, updateAccount } from "../../../store/slices/auth.slice"; // Imp
 import "./User.css"; // Include some CSS for basic styling if needed
 import { useNavigate } from "react-router-dom"; // Import useNavigate
 
+import FieldForm from "../../UI/molecules/FieldForm/FieldForm";
+import Button from "../../UI/atoms/button/button";
+import ConnectedNavbar from "../../templates/connectedNavBar/ConnectedNavbar";
+
 const User = () => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.auth.user);
   const navigate = useNavigate(); // Initialize useNavigate
-  
+
   // Local state for user details
   const [username, setUsername] = useState(user?.username || "");
   const [currentPassword, setCurrentPassword] = useState("");
@@ -25,10 +29,15 @@ const User = () => {
     if (username) {
       dispatch(updateAccount({ username }))
         .then(() => {
-          alert("Nom d'utilisateur mis à jour avec succès")
+          alert("Nom d'utilisateur mis à jour avec succès");
           navigate("/"); // Redirect to the homepage
         })
-        .catch((error) => console.log("Erreur lors de la mise à jour du nom d'utilisateur :", error));
+        .catch((error) =>
+          console.log(
+            "Erreur lors de la mise à jour du nom d'utilisateur :",
+            error
+          )
+        );
     }
   };
 
@@ -45,61 +54,93 @@ const User = () => {
 
           navigate("/"); // Redirect to the homepage
         })
-        .catch((error) => console.log("Erreur lors de la mise à jour du mot de passe :", error));
+        .catch((error) =>
+          console.log("Erreur lors de la mise à jour du mot de passe :", error)
+        );
     }
   };
 
   return (
-    <div className="user-account-page">
-      <h2>Gestion de compte</h2>
+    <div className="backgroud-user-account">
+      <ConnectedNavbar />
+      <div className="user-account-page">
+        <h2>Gestion de compte</h2>
 
-      {/* Update Username Section */}
-      <div className="user-form-section">
-        <h3>Modifier le nom d'utilisateur</h3>
-        <form onSubmit={handleUpdateUsername}>
-          <div className="form-group">
-            <label htmlFor="username">Nouveau nom d'utilisateur:</label>
-            <input
-              type="text"
+        {/* Update Username Section */}
+        <div className="user-form-section">
+          <h3>Modifier le nom d'utilisateur</h3>
+          <form onSubmit={handleUpdateUsername}>
+            <FieldForm
               id="username"
+              name="username"
+              label="Nouveau nom d'utilisateur: "
               value={username}
               onChange={handleUsernameChange}
-              placeholder="Entrez le nouveau nom d'utilisateur"
-              required
             />
-          </div>
-          <button type="submit">Mettre à jour le nom d'utilisateur</button>
-        </form>
-      </div>
+            <div className="form-group">
+              {/* <label htmlFor="username">Nouveau nom d'utilisateur:</label>
+              <input
+                type="text"
+                id="username"
+                value={username}
+                onChange={handleUsernameChange}
+                placeholder="Entrez le nouveau nom d'utilisateur"
+                required
+              /> */}
+            </div>
+            <Button className="submit" type="submit">
+              Mettre à jour le nom d'utilisateur
+            </Button>
+          </form>
+        </div>
 
-      {/* Update Password Section */}
-      <div className="user-form-section">
-        <h3>Modifier le mot de passe</h3>
-        <form onSubmit={handleUpdatePassword}>
-          <div className="form-group">
-            <label htmlFor="currentPassword">Mot de passe actuel:</label>
-            <input
-              type="password"
-              id="currentPassword"
-              value={currentPassword}
-              onChange={handleCurrentPasswordChange}
-              placeholder="Entrez le mot de passe actuel"
-              required
-            />
-          </div>
-          <div className="form-group">
-            <label htmlFor="newPassword">Nouveau mot de passe:</label>
-            <input
-              type="password"
-              id="newPassword"
-              value={newPassword}
-              onChange={handleNewPasswordChange}
-              placeholder="Entrez le nouveau mot de passe"
-              required
-            />
-          </div>
-          <button type="submit">Mettre à jour le mot de passe</button>
-        </form>
+        {/* Update Password Section */}
+        <div className="user-form-section">
+          <h3>Modifier le mot de passe</h3>
+          <form onSubmit={handleUpdatePassword}>
+            <div className="form-group">
+              <FieldForm
+                id="currentPassword"
+                type="password"
+                name="currentPassword"
+                label="Entrez le mot de passe actuel"
+                value={currentPassword}
+                onChange={handleCurrentPasswordChange}
+              />
+              {/* <label htmlFor="currentPassword">Mot de passe actuel:</label>
+              <input
+                type="password"
+                id="currentPassword"
+                value={currentPassword}
+                onChange={handleCurrentPasswordChange}
+                placeholder="Entrez le mot de passe actuel"
+                required
+              /> */}
+            </div>
+            <div className="form-group">
+              <FieldForm
+                type="password"
+                id="newPassword"
+                name="newPassword"
+                label="Entrez le nouveau mot de passe "
+                value={newPassword}
+                onChange={handleNewPasswordChange}
+              />
+              {/* <label htmlFor="newPassword">Nouveau mot de passe:</label>
+              <input
+                type="password"
+                id="newPassword"
+                value={newPassword}
+                onChange={handleNewPasswordChange}
+                placeholder="Entrez le nouveau mot de passe"
+                required
+              /> */}
+            </div>
+            <Button className="submit" type="submit">
+              Mettre à jour le mot de passe
+            </Button>
+          </form>
+        </div>
       </div>
     </div>
   );
