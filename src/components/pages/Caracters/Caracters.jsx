@@ -1,78 +1,65 @@
-import React, { useState } from "react";
-import { useTranslation } from "react-i18next";
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchUserProfile, deleteCaracter } from '../../../store/store'; // Adjust the imports based on your slice
+import ConnectedNavbar from '../../templates/connectedNavBar/ConnectedNavbar';
+import Footer from '../../UI/organisms/footer/Footer';
+import { useNavigate } from 'react-router-dom';
+import './caracters.css';
 
-import "./caracters.css";
+const CaractersList = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  
+  // Assuming user profile including caracters is stored in state.caracters.profile
+  const userProfile = useSelector((state) => state.caracters.profile);
+  const caracters = userProfile ? userProfile.Caracters : [];
+  const profileStatus = useSelector((state) => state.caracters.status);
 
-import forgeLogoTxt from "../../../assets/logo/logo_texte.svg";
+  useEffect(() => {
+    if (profileStatus === 'idle') {
+      dispatch(fetchUserProfile()); // Fetches the user profile including caracters
+    }
+  }, [profileStatus, dispatch]);
 
-import AnonymeHome from "../../templates/home/anonymeHome/AnonymeHome";
-import ConnectedHome from "../../templates/home/connectedHome/ConnectedHome";
-import ConnectedNavbar from "../../templates/connectedNavBar/ConnectedNavbar";
-import CardCaracter from "../../UI/organisms/CardCaracter/CardCaracter";
-import CardCreate from "../../UI/molecules/CardCreate/CardCreate";
-import NewCaracterForm from "../../templates/NewCaracterForm/NewCaracterForm";
-import Footer from "../../UI/organisms/footer/Footer";
-
-import imageTest from "../../../assets/home/fonc3.jpg";
-
-const Caracters = () => {
-  const { t } = useTranslation();
-
-  const [isDisplayFormNew, setIsDisplayFormNew] = useState(false);
-
-  const displayForm = () => {
-    setIsDisplayFormNew(!isDisplayFormNew);
+  const handleEditCaracter = (id) => {
+    navigate(`/caracters/edit/${id}`);
   };
 
-  const caracterList = [
-    {
-      srcImg: imageTest,
-      nameCaracter: "Alchi",
-      rpgName: "Oniris",
-    },
-    {
-      srcImg: imageTest,
-      nameCaracter: "Stryf",
-      rpgName: "Oniris",
-    },
-  ];
+  const handleDeleteCaracter = (id) => {
+    if (window.confirm("Êtes-vous sûr de vouloir supprimer ce personnage ?")) {
+      dispatch(deleteCaracter(id));
+    }
+  };
 
   return (
-    <>
-      <div className="background creation">
-        <div className="background-hexa image">
-          <ConnectedNavbar></ConnectedNavbar>
-          {isDisplayFormNew && <NewCaracterForm closeForm={displayForm} />}
-          <div className="main-contaner personnal-caracter">
-            <div className="title-personnal-page">
-              <p>{t("caracter.title")}</p>
-            </div>
-            <div className="card-container caracter creation inline-content">
-              {caracterList.map((caracter, index) => (
-                <div key={index} className="personnal-caracter-card caracter">
-                  <CardCaracter
-                    srcImg={caracter.srcImg}
-                    nameCaracter={caracter.nameCaracter}
-                    rpgName={caracter.rpgName}
-                  />
+    <div className="background-hexa image caracters-list-page">
+      <div className="background-edition">
+        <ConnectedNavbar />
+        <div className="main-container">
+          <h1>Mes Personnages</h1>
+          <div className="caracters-list">
+            {caracters.length > 0 ? (
+              caracters.map((caracter) => (
+                <div key={caracter.id} className="caracter-card">
+                  <h3>{caracter.Name}</h3>
+                  {caracter.imageFile ? (
+                    <img src={caracter.imageFile} alt={caracter.Name} className="caracter-image" />
+                  ) : (
+                    <p>Aucune image</p>
+                  )}
+                  <button onClick={() => handleEditCaracter(caracter.id)}>Éditer</button>
+                  <button onClick={() => handleDeleteCaracter(caracter.id)}>Supprimer</button>
                 </div>
-              ))}
-              <div className="personnal-caracter-card new rpg">
-                <CardCreate
-                  width="100%"
-                  height="100%"
-                  title="Créer un nouveau JDR"
-                  role="button"
-                  onClick={displayForm}
-                ></CardCreate>
-              </div>
-            </div>
+              ))
+            ) : (
+              <p>Vous n'avez aucun personnage pour le moment.</p>
+            )}
           </div>
         </div>
+        <Footer />
       </div>
-      <Footer></Footer>
-    </>
+    </div>
   );
 };
 
-export default Caracters;
+export default CaractersList;

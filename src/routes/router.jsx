@@ -5,6 +5,7 @@ import Login from "../components/pages/Login/Login";
 import Signup from "../components/pages/Signup/Signup";
 import Creation from "../components/pages/Creation/Creation";
 import Caracters from "../components/pages/Caracters/Caracters";
+import CaractersEdition from "../components/pages/CaractersEdition/CaractersEdition";
 import WikiEdition from "../components/pages/WikiEdition/WikiEdition";
 import CGU from "../components/pages/GCU/Cgu";
 import Contact from "../components/pages/Contact/Contact";
@@ -57,7 +58,14 @@ export const Router = () => {
         </RequireAuth>
       ),
     },
-    ,
+    {
+      path: "caracters/edit/:id",
+      element: (
+        <RequireAuth>
+          <CaractersEdition />
+        </RequireAuth>
+      ),
+    },
     {
       path: "discover",
       element: (
