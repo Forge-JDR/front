@@ -22,10 +22,12 @@ import WikiEditor from "../../UI/organisms/wikiEditor/WikiEditor";
 import QuillEditor from "../../UI/molecules/QuillEditor/QuillEditor";
 import Footer from "../../UI/organisms/footer/Footer";
 import "./wikiEdition.css";
+import { Router, useNavigate } from "react-router-dom";
 
 const WikiEdition = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const wiki = useSelector((state) => state.wikis.wikiInfo);
   const wikiStatus = useSelector((state) => state.wikis.status);
 
@@ -79,7 +81,6 @@ const WikiEdition = () => {
     if (wiki && wiki.Name) {
       setWikiName(wiki.Name);
       setWikiContent(wiki.Content || "");
-
       setBestiaire(wiki.bestiaries || []);
       setRaces(wiki.races || []);
       setJobs(wiki.jobs || []); // Load jobs
@@ -87,76 +88,116 @@ const WikiEdition = () => {
     }
   }, [wiki]);
 
+  // Handle changing the wiki's status
+  const handleChangeStatus = (newStatus) => {
+    const dataToUpdate = { Status: newStatus };
+    dispatch(updateWiki({ id, dataToUpdate }))
+      .then(() => {
+        // Optionally, fetch the updated wiki info after the status change
+        dispatch(fetchWiki(id));
+      })
+      .catch((error) => {
+        console.log("Erreur lors de la mise à jour du statut du wiki :", error);
+      });
+  };
+
   // Handle saving the main content (universe)
   const handleSave = (updatedContent) => {
-    if (activeTab === "univers") {
-      const dataToUpdate = {
-        Name: wikiName,
-        Content: JSON.stringify(updatedContent),
-      };
-      dispatch(updateWiki({ id, dataToUpdate }));
+    if (wiki.Status === "published" || wiki.Status === "pendingToPublish") {
+      alert("La modification n'est pas possible pour un wiki publié ou en attente de publication.");
+      navigate(`/wiki/${id}`);
+    } else {
+      if (activeTab === "univers") {
+        const dataToUpdate = {
+          Name: wikiName,
+          Content: JSON.stringify(updatedContent),
+        };
+        dispatch(updateWiki({ id, dataToUpdate }));
+      }
     }
+    
   };
 
   // Handlers for bestiary
   const handleBeastChange = (e) => {
-    const { name, value } = e.target;
-    setNewBeast((prev) => ({ ...prev, [name]: value }));
+    if (wiki.Status === "published" || wiki.Status === "pendingToPublish") {
+      alert("La modification n'est pas possible pour un wiki publié ou en attente de publication.");
+      navigate(`/wiki/${id}`);
+    } else {
+      const { name, value } = e.target;
+      setNewBeast((prev) => ({ ...prev, [name]: value }));
+    }
+    
   };
 
   const handleContentChange = (content) => {
-    setNewBeast((prev) => ({ ...prev, content }));
-  };
-
-  const handleAddOrUpdateBeast = () => {
-    if (newBeast.name && newBeast.content && newBeast.type) {
-      if (newBeast.id) {
-        const dataToUpdate = {
-          Name: newBeast.name,
-          Content: JSON.stringify(newBeast.content),
-          Type: newBeast.type,
-        };
-
-        dispatch(updateBestiary({ WikiId: id, id: newBeast.id, dataToUpdate }))
-          .then((response) => {
-            if (response.payload) {
-              setBestiaire((prev) =>
-                prev.map((beast) => (beast.id === newBeast.id ? response.payload : beast))
-              );
-              setNewBeast({ id: null, name: "", content: { ops: [] }, type: "" });
-              setActiveTab("bestiaire");
-            }
-          })
-          .catch((error) => {
-            console.log("Erreur lors de la mise à jour du bestiaire :", error);
-          });
-      } else {
-        dispatch(
-          addBestiary({
-            WikiId: id,
-            Name: newBeast.name,
-            Content: JSON.stringify(newBeast.content),
-            Type: newBeast.type,
-          })
-        )
-          .then((response) => {
-            if (response.payload) {
-              setBestiaire((prev) => [...prev, response.payload]);
-              setNewBeast({ id: null, name: "", content: { ops: [] }, type: "" });
-              setActiveTab("bestiaire");
-            }
-          })
-          .catch((error) => {
-            console.log("Erreur lors de l'ajout au bestiaire :", error);
-          });
-      }
+    if (wiki.Status === "published" || wiki.Status === "pendingToPublish") {
+      alert("La modification n'est pas possible pour un wiki publié ou en attente de publication.");
+      navigate(`/wiki/${id}`);
     } else {
-      alert("Veuillez remplir tous les champs du bestiaire avant d'ajouter.");
+      setNewBeast((prev) => ({ ...prev, content }));
     }
   };
 
+  const handleAddOrUpdateBeast = () => {
+    if (wiki.Status === "published" || wiki.Status === "pendingToPublish") {
+      alert("La modification n'est pas possible pour un wiki publié ou en attente de publication.");
+      navigate(`/wiki/${id}`);
+    } else {
+      if (newBeast.name && newBeast.content && newBeast.type) {
+        if (newBeast.id) {
+          const dataToUpdate = {
+            Name: newBeast.name,
+            Content: JSON.stringify(newBeast.content),
+            Type: newBeast.type,
+          };
+  
+          dispatch(updateBestiary({ WikiId: id, id: newBeast.id, dataToUpdate }))
+            .then((response) => {
+              if (response.payload) {
+                setBestiaire((prev) =>
+                  prev.map((beast) => (beast.id === newBeast.id ? response.payload : beast))
+                );
+                setNewBeast({ id: null, name: "", content: { ops: [] }, type: "" });
+                setActiveTab("bestiaire");
+              }
+            })
+            .catch((error) => {
+              console.log("Erreur lors de la mise à jour du bestiaire :", error);
+            });
+        } else {
+          dispatch(
+            addBestiary({
+              WikiId: id,
+              Name: newBeast.name,
+              Content: JSON.stringify(newBeast.content),
+              Type: newBeast.type,
+            })
+          )
+            .then((response) => {
+              if (response.payload) {
+                setBestiaire((prev) => [...prev, response.payload]);
+                setNewBeast({ id: null, name: "", content: { ops: [] }, type: "" });
+                setActiveTab("bestiaire");
+              }
+            })
+            .catch((error) => {
+              console.log("Erreur lors de l'ajout au bestiaire :", error);
+            });
+        }
+      } else {
+        alert("Veuillez remplir tous les champs du bestiaire avant d'ajouter.");
+      }
+    }
+    
+  };
+
   const handleDeleteBeast = (beastId) => {
-    dispatch(deleteBestiary({ WikiId: id, id: beastId }))
+    if (wiki.Status === "published" || wiki.Status === "pendingToPublish") {
+      alert("La modification n'est pas possible pour un wiki publié ou en attente de publication.");
+      navigate(`/wiki/${id}`);
+    } else {
+      dispatch(deleteBestiary({ WikiId: id, id: beastId }))
       .then(() => {
         setBestiaire((prev) => prev.filter((beast) => beast.id !== beastId));
         setNewBeast({ id: null, name: "", content: { ops: [] }, type: "" });
@@ -165,74 +206,102 @@ const WikiEdition = () => {
       .catch((error) => {
         console.log("Erreur lors de la suppression du bestiaire :", error);
       });
+    }
   };
 
   const handleEditBeast = (beast) => {
-    setNewBeast({
-      id: beast.id,
-      name: beast.Name || "",
-      content: beast.Content ? JSON.parse(beast.Content) : { ops: [] },
-      type: beast.Type || "",
-    });
+    if (wiki.Status === "published" || wiki.Status === "pendingToPublish") {
+      alert("La modification n'est pas possible pour un wiki publié ou en attente de publication.");
+      navigate(`/wiki/${id}`);
+    } else {
+      setNewBeast({
+        id: beast.id,
+        name: beast.Name || "",
+        content: beast.Content ? JSON.parse(beast.Content) : { ops: [] },
+        type: beast.Type || "",
+      });
+    }
   };
 
   // Handlers for race
   const handleRaceChange = (e) => {
-    const { name, value } = e.target;
-    setNewRace((prev) => ({ ...prev, [name]: value }));
+    if (wiki.Status === "published" || wiki.Status === "pendingToPublish") {
+      alert("La modification n'est pas possible pour un wiki publié ou en attente de publication.");
+      navigate(`/wiki/${id}`);
+    } else {
+      const { name, value } = e.target;
+      setNewRace((prev) => ({ ...prev, [name]: value }));
+    }
+    
   };
 
   const handleRaceContentChange = (content) => {
-    setNewRace((prev) => ({ ...prev, content }));
+    if (wiki.Status === "published" || wiki.Status === "pendingToPublish") {
+      alert("La modification n'est pas possible pour un wiki publié ou en attente de publication.");
+      navigate(`/wiki/${id}`);
+    } else {
+      setNewRace((prev) => ({ ...prev, content }));
+    }
+    
   };
 
   const handleAddOrUpdateRace = () => {
-    if (newRace.name && newRace.content) {
-      if (newRace.id) {
-        const dataToUpdate = {
-          Name: newRace.name,
-          Content: JSON.stringify(newRace.content),
-        };
-
-        dispatch(updateRace({ WikiId: id, id: newRace.id, dataToUpdate }))
-          .then((response) => {
-            if (response.payload) {
-              setRaces((prev) =>
-                prev.map((race) => (race.id === newRace.id ? response.payload : race))
-              );
-              setNewRace({ id: null, name: "", content: { ops: [] } });
-              setActiveTab("races");
-            }
-          })
-          .catch((error) => {
-            console.log("Erreur lors de la mise à jour de la race :", error);
-          });
-      } else {
-        dispatch(
-          addRace({
-            WikiId: id,
+    if (wiki.Status === "published" || wiki.Status === "pendingToPublish") {
+      alert("La modification n'est pas possible pour un wiki publié ou en attente de publication.");
+      navigate(`/wiki/${id}`);
+    } else {
+      if (newRace.name && newRace.content) {
+        if (newRace.id) {
+          const dataToUpdate = {
             Name: newRace.name,
             Content: JSON.stringify(newRace.content),
-          })
-        )
-          .then((response) => {
-            if (response.payload) {
-              setRaces((prev) => [...prev, response.payload]);
-              setNewRace({ id: null, name: "", content: { ops: [] } });
-              setActiveTab("races");
-            }
-          })
-          .catch((error) => {
-            console.log("Erreur lors de l'ajout de la race :", error);
-          });
+          };
+  
+          dispatch(updateRace({ WikiId: id, id: newRace.id, dataToUpdate }))
+            .then((response) => {
+              if (response.payload) {
+                setRaces((prev) =>
+                  prev.map((race) => (race.id === newRace.id ? response.payload : race))
+                );
+                setNewRace({ id: null, name: "", content: { ops: [] } });
+                setActiveTab("races");
+              }
+            })
+            .catch((error) => {
+              console.log("Erreur lors de la mise à jour de la race :", error);
+            });
+        } else {
+          dispatch(
+            addRace({
+              WikiId: id,
+              Name: newRace.name,
+              Content: JSON.stringify(newRace.content),
+            })
+          )
+            .then((response) => {
+              if (response.payload) {
+                setRaces((prev) => [...prev, response.payload]);
+                setNewRace({ id: null, name: "", content: { ops: [] } });
+                setActiveTab("races");
+              }
+            })
+            .catch((error) => {
+              console.log("Erreur lors de l'ajout de la race :", error);
+            });
+        }
+      } else {
+        alert("Veuillez remplir tous les champs de la race avant d'ajouter.");
       }
-    } else {
-      alert("Veuillez remplir tous les champs de la race avant d'ajouter.");
     }
+    
   };
 
   const handleDeleteRace = (raceId) => {
-    dispatch(deleteRace({ WikiId: id, id: raceId }))
+    if (wiki.Status === "published" || wiki.Status === "pendingToPublish") {
+      alert("La modification n'est pas possible pour un wiki publié ou en attente de publication.");
+      navigate(`/wiki/${id}`);
+    } else {
+      dispatch(deleteRace({ WikiId: id, id: raceId }))
       .then(() => {
         setRaces((prev) => prev.filter((race) => race.id !== raceId));
         setNewRace({ id: null, name: "", content: { ops: [] } });
@@ -241,73 +310,103 @@ const WikiEdition = () => {
       .catch((error) => {
         console.log("Erreur lors de la suppression de la race :", error);
       });
+    }
+   
   };
 
   const handleEditRace = (race) => {
-    setNewRace({
-      id: race.id,
-      name: race.Name || "",
-      content: race.Content ? JSON.parse(race.Content) : { ops: [] },
-    });
+    if (wiki.Status === "published" || wiki.Status === "pendingToPublish") {
+      alert("La modification n'est pas possible pour un wiki publié ou en attente de publication.");
+      navigate(`/wiki/${id}`);
+    } else {
+      setNewRace({
+        id: race.id,
+        name: race.Name || "",
+        content: race.Content ? JSON.parse(race.Content) : { ops: [] },
+      });
+    }
+    
   };
 
   // Handlers for jobs (similar to races)
   const handleJobChange = (e) => {
-    const { name, value } = e.target;
+    if (wiki.Status === "published" || wiki.Status === "pendingToPublish") {
+      alert("La modification n'est pas possible pour un wiki publié ou en attente de publication.");
+      navigate(`/wiki/${id}`);
+    } else {
+      const { name, value } = e.target;
     setNewJob((prev) => ({ ...prev, [name]: value }));
+    }
+    
   };
 
   const handleJobContentChange = (content) => {
-    setNewJob((prev) => ({ ...prev, content }));
+    if (wiki.Status === "published" || wiki.Status === "pendingToPublish") {
+      alert("La modification n'est pas possible pour un wiki publié ou en attente de publication.");
+      navigate(`/wiki/${id}`);
+    } else {
+      setNewJob((prev) => ({ ...prev, content }));
+    }
+   
   };
 
   const handleAddOrUpdateJob = () => {
-    if (newJob.name && newJob.content) {
-      if (newJob.id) {
-        const dataToUpdate = {
-          name: newJob.name,
-          Content: JSON.stringify(newJob.content),
-        };
-
-        dispatch(updateJob({ WikiId: id, id: newJob.id, dataToUpdate }))
-          .then((response) => {
-            if (response.payload) {
-              setJobs((prev) =>
-                prev.map((job) => (job.id === newJob.id ? response.payload : job))
-              );
-              setNewJob({ id: null, name: "", content: { ops: [] } });
-              setActiveTab("jobs");
-            }
-          })
-          .catch((error) => {
-            console.log("Erreur lors de la mise à jour du job :", error);
-          });
-      } else {
-        dispatch(
-          addJob({
-            WikiId: id,
+    if (wiki.Status === "published" || wiki.Status === "pendingToPublish") {
+      alert("La modification n'est pas possible pour un wiki publié ou en attente de publication.");
+      navigate(`/wiki/${id}`);
+    } else {
+      if (newJob.name && newJob.content) {
+        if (newJob.id) {
+          const dataToUpdate = {
             name: newJob.name,
             Content: JSON.stringify(newJob.content),
-          })
-        )
-          .then((response) => {
-            if (response.payload) {
-              setJobs((prev) => [...prev, response.payload]);
-              setNewJob({ id: null, name: "", content: { ops: [] } });
-              setActiveTab("jobs");
-            }
-          })
-          .catch((error) => {
-            console.log("Erreur lors de l'ajout du job :", error);
-          });
+          };
+  
+          dispatch(updateJob({ WikiId: id, id: newJob.id, dataToUpdate }))
+            .then((response) => {
+              if (response.payload) {
+                setJobs((prev) =>
+                  prev.map((job) => (job.id === newJob.id ? response.payload : job))
+                );
+                setNewJob({ id: null, name: "", content: { ops: [] } });
+                setActiveTab("jobs");
+              }
+            })
+            .catch((error) => {
+              console.log("Erreur lors de la mise à jour du job :", error);
+            });
+        } else {
+          dispatch(
+            addJob({
+              WikiId: id,
+              name: newJob.name,
+              Content: JSON.stringify(newJob.content),
+            })
+          )
+            .then((response) => {
+              if (response.payload) {
+                setJobs((prev) => [...prev, response.payload]);
+                setNewJob({ id: null, name: "", content: { ops: [] } });
+                setActiveTab("jobs");
+              }
+            })
+            .catch((error) => {
+              console.log("Erreur lors de l'ajout du job :", error);
+            });
+        }
+      } else {
+        alert("Veuillez remplir tous les champs du job avant d'ajouter.");
       }
-    } else {
-      alert("Veuillez remplir tous les champs du job avant d'ajouter.");
     }
+    
   };
 
   const handleDeleteJob = (jobId) => {
-    dispatch(deleteJob({ WikiId: id, id: jobId }))
+    if (wiki.Status === "published" || wiki.Status === "pendingToPublish") {
+      alert("La modification n'est pas possible pour un wiki publié ou en attente de publication.");
+      navigate(`/wiki/${id}`);
+    } else {
+      dispatch(deleteJob({ WikiId: id, id: jobId }))
       .then(() => {
         setJobs((prev) => prev.filter((job) => job.id !== jobId));
         setNewJob({ id: null, name: "", content: { ops: [] } });
@@ -316,73 +415,103 @@ const WikiEdition = () => {
       .catch((error) => {
         console.log("Erreur lors de la suppression du job :", error);
       });
+    }
+   
   };
 
   const handleEditJob = (job) => {
-    setNewJob({
-      id: job.id,
-      name: job.name || "",
-      content: job.Content ? JSON.parse(job.Content) : { ops: [] },
-    });
+    if (wiki.Status === "published" || wiki.Status === "pendingToPublish") {
+      alert("La modification n'est pas possible pour un wiki publié ou en attente de publication.");
+      navigate(`/wiki/${id}`);
+    } else {
+      setNewJob({
+        id: job.id,
+        name: job.name || "",
+        content: job.Content ? JSON.parse(job.Content) : { ops: [] },
+      });
+    }
+    
   };
 
   // Handlers for scenarios
   const handleScenarioChange = (e) => {
-    const { name, value } = e.target;
+    if (wiki.Status === "published" || wiki.Status === "pendingToPublish") {
+      alert("La modification n'est pas possible pour un wiki publié ou en attente de publication.");
+      navigate(`/wiki/${id}`);
+    } else {
+      const { name, value } = e.target;
     setNewScenario((prev) => ({ ...prev, [name]: value }));
+    }
+    
   };
 
   const handleScenarioContentChange = (content) => {
-    setNewScenario((prev) => ({ ...prev, content }));
+    if (wiki.Status === "published" || wiki.Status === "pendingToPublish") {
+      alert("La modification n'est pas possible pour un wiki publié ou en attente de publication.");
+      navigate(`/wiki/${id}`);
+    } else {
+      setNewScenario((prev) => ({ ...prev, content }));
+    }
+    
   };
 
   const handleAddOrUpdateScenario = () => {
-    if (newScenario.name && newScenario.content) {
-      if (newScenario.id) {
-        const dataToUpdate = {
-          name: newScenario.name,
-          content: JSON.stringify(newScenario.content),
-        };
-
-        dispatch(updateScenario({ WikiId: id, id: newScenario.id, dataToUpdate }))
-          .then((response) => {
-            if (response.payload) {
-              setScenarios((prev) =>
-                prev.map((scenario) => (scenario.id === newScenario.id ? response.payload : scenario))
-              );
-              setNewScenario({ id: null, name: "", content: { ops: [] } });
-              setActiveTab("scenarios");
-            }
-          })
-          .catch((error) => {
-            console.log("Erreur lors de la mise à jour du scénario :", error);
-          });
-      } else {
-        dispatch(
-          addScenario({
-            WikiId: id,
+    if (wiki.Status === "published" || wiki.Status === "pendingToPublish") {
+      alert("La modification n'est pas possible pour un wiki publié ou en attente de publication.");
+      navigate(`/wiki/${id}`);
+    } else {
+      if (newScenario.name && newScenario.content) {
+        if (newScenario.id) {
+          const dataToUpdate = {
             name: newScenario.name,
             content: JSON.stringify(newScenario.content),
-          })
-        )
-          .then((response) => {
-            if (response.payload) {
-              setScenarios((prev) => [...prev, response.payload]);
-              setNewScenario({ id: null, name: "", content: { ops: [] } });
-              setActiveTab("scenarios");
-            }
-          })
-          .catch((error) => {
-            console.log("Erreur lors de l'ajout du scénario :", error);
-          });
+          };
+  
+          dispatch(updateScenario({ WikiId: id, id: newScenario.id, dataToUpdate }))
+            .then((response) => {
+              if (response.payload) {
+                setScenarios((prev) =>
+                  prev.map((scenario) => (scenario.id === newScenario.id ? response.payload : scenario))
+                );
+                setNewScenario({ id: null, name: "", content: { ops: [] } });
+                setActiveTab("scenarios");
+              }
+            })
+            .catch((error) => {
+              console.log("Erreur lors de la mise à jour du scénario :", error);
+            });
+        } else {
+          dispatch(
+            addScenario({
+              WikiId: id,
+              name: newScenario.name,
+              content: JSON.stringify(newScenario.content),
+            })
+          )
+            .then((response) => {
+              if (response.payload) {
+                setScenarios((prev) => [...prev, response.payload]);
+                setNewScenario({ id: null, name: "", content: { ops: [] } });
+                setActiveTab("scenarios");
+              }
+            })
+            .catch((error) => {
+              console.log("Erreur lors de l'ajout du scénario :", error);
+            });
+        }
+      } else {
+        alert("Veuillez remplir tous les champs du scénario avant d'ajouter.");
       }
-    } else {
-      alert("Veuillez remplir tous les champs du scénario avant d'ajouter.");
     }
+    
   };
 
   const handleDeleteScenario = (scenarioId) => {
-    dispatch(deleteScenario({ WikiId: id, id: scenarioId }))
+    if (wiki.Status === "published" || wiki.Status === "pendingToPublish") {
+      alert("La modification n'est pas possible pour un wiki publié ou en attente de publication.");
+      navigate(`/wiki/${id}`);
+    } else {
+      dispatch(deleteScenario({ WikiId: id, id: scenarioId }))
       .then(() => {
         setScenarios((prev) => prev.filter((scenario) => scenario.id !== scenarioId));
         setNewScenario({ id: null, name: "", content: { ops: [] } });
@@ -391,22 +520,42 @@ const WikiEdition = () => {
       .catch((error) => {
         console.log("Erreur lors de la suppression du scénario :", error);
       });
+    }
+    
   };
 
   const handleEditScenario = (scenario) => {
-    setNewScenario({
-      id: scenario.id,
-      name: scenario.name || "",
-      content: scenario.content ? JSON.parse(scenario.content) : { ops: [] },
-    });
+    if (wiki.Status === "published" || wiki.Status === "pendingToPublish") {
+      alert("La modification n'est pas possible pour un wiki publié ou en attente de publication.");
+      navigate(`/wiki/${id}`);
+    } else {
+      setNewScenario({
+        id: scenario.id,
+        name: scenario.name || "",
+        content: scenario.content ? JSON.parse(scenario.content) : { ops: [] },
+      });
+    }
+   
   };
 
   const handleNameChange = (e) => {
-    setWikiName(e.target.value);
+    if (wiki.Status === "published" || wiki.Status === "pendingToPublish") {
+      alert("La modification n'est pas possible pour un wiki publié ou en attente de publication.");
+      navigate(`/wiki/${id}`);
+    } else {
+      setWikiName(e.target.value);
+    }
+    
   };
 
   const handleTabChange = (tab) => {
-    setActiveTab(tab);
+    if (wiki.Status === "published" || wiki.Status === "pendingToPublish") {
+      alert("La modification n'est pas possible pour un wiki publié ou en attente de publication.");
+      navigate(`/wiki/${id}`);
+    } else {
+      setActiveTab(tab);
+    }
+   
   };
 
   return (
@@ -421,9 +570,29 @@ const WikiEdition = () => {
                 id="wikiName"
                 value={wikiName}
                 onChange={handleNameChange}
+                disabled={wiki.Status === "published" || wiki.Status === "pendingToPublish"}
+              
               />
             </div>
-
+            {/* Display Wiki Status */}
+            <div className="wiki-status">
+              <p>Status: {wiki.Status}</p>
+              {wiki.Status === "inProgress" && (
+                <button onClick={() => handleChangeStatus("pendingToPublish")}>
+                  Demander la publication
+                </button>
+              )}
+              {wiki.Status === "pendingToPublish" && (
+                <button onClick={() => handleChangeStatus("inProgress")}>
+                  Annuler la demande de publication
+                </button>
+              )}
+              {wiki.Status === "published" && (
+                <button onClick={() => handleChangeStatus("inProgress")}>
+                  Annuler la publication
+                </button>
+              )}
+            </div>
             {/* Tabs Section */}
             <div className="tabs">
               <button
