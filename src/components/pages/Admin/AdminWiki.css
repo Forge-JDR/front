@@ -1,0 +1,49 @@
+.admin-wiki-page {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+  }
+  
+  .filter-section {
+    margin-bottom: 20px;
+  }
+  
+  .filter-section label {
+    margin-right: 10px;
+  }
+  
+  .filter-section select {
+    padding: 5px;
+  }
+  
+  .wikis-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .wiki-item {
+    padding: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #fff;
+  }
+  
+  .wiki-image {
+    max-width: 100px;
+    height: auto;
+    margin-top: 10px;
+  }
+  
+  .action-buttons {
+    margin-top: 10px;
+  }
+  
+  .action-buttons button,
+  .action-buttons select {
+    margin-right: 10px;
+    padding: 5px 10px;
+  }
+  

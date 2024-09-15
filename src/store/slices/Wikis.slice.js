@@ -21,6 +21,16 @@ export const fetchWiki = createAsyncThunk(
   }
 );
 
+export const fetchWikiAdmin = createAsyncThunk(
+    'wiki/getOneAllWikiAdmin',
+    async (id) => {
+        return await api.get(API_URL + "/admin/wikis")
+            .then(response => response.data)
+            .catch(err => console.log("erreur dans la récupération des wiki :", err));
+    }
+);
+
+
 export const addWiki = createAsyncThunk(
   'wiki/addOne',
   async ({ Name, Content }) => {
@@ -211,7 +221,8 @@ const WikiServices = createSlice({
   initialState: {
     wikisList: [],
     wikiInfo: {},
-    status: 'idle'
+    status: 'idle',
+    adminWikis: []
   },
   reducers: {
     resetStatus(state) {
@@ -223,6 +234,9 @@ const WikiServices = createSlice({
       .addCase(fetchWikis.fulfilled, (state, action) => {
         state.wikisList = action.payload;
         state.status = 'idle';
+      })
+      .addCase(fetchWikiAdmin.fulfilled, (state, action) => {
+        state.adminWikis = action.payload || []; // Ensure the payload is set or default to an empty array
       })
       .addCase(fetchWiki.fulfilled, (state, action) => {
         state.wikiInfo = action.payload;

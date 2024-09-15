@@ -9,6 +9,7 @@ import WikiEdition from "../components/pages/WikiEdition/WikiEdition";
 import CGU from "../components/pages/GCU/Cgu";
 import Contact from "../components/pages/Contact/Contact";
 import User from "../components/pages/User/User";
+import AdminWiki from "../components/pages/Admin/AdminWiki";
 
 import Discover from "../components/pages/Discover/Discover";
 import { RequireAuth } from "./requireAuth";
@@ -96,8 +97,15 @@ export const Router = () => {
           <User />
         </RequireAuth>
       ),
-      
+    },
 
+    {
+      path: "admin/wiki",
+      element: (
+        <RequireAuth>
+          <AdminWiki />
+        </RequireAuth>
+      ),
     }
   ]);
 
