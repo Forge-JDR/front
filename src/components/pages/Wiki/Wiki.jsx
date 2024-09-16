@@ -50,35 +50,59 @@ const Wiki = ({ ...props }) => {
     try {
       // Onglets avec le contenu correspondant
       const contentMap = {
-        univers: renderDeltaToHtml(wikiPram.Content),
-        race:
-          wikiPram?.Races?.length === 0
-            ? "Aucun contenu"
-            : wikiPram.Races.map((race) => (
-                <div key={race.id}>
-                  <h4>{race.name}</h4>
-                  <p>{race.content}</p>
-                </div>
-              )),
+        univers: (
+          <div
+            dangerouslySetInnerHTML={{
+              __html: renderDeltaToHtml(wikiPram.Content),
+            }}
+          />
+        ),
+        race: (
+          <div>
+            {wikiPram?.Races?.length === 0
+              ? "Aucun contenu"
+              : wikiPram.Races.map((race) => (
+                  <div key={race.id}>
+                    <h4>{race.Name}</h4>
+                    <div
+                      dangerouslySetInnerHTML={{
+                        __html: renderDeltaToHtml(race.Content),
+                      }}
+                    />
+                  </div>
+                ))}
+          </div>
+        ),
         classe:
           wikiPram?.Jobs?.length === 0
             ? "Aucun contenu"
             : wikiPram.Jobs.map((job) => (
                 <div key={job.id}>
                   <h4>{job.name}</h4>
-                  <p>{job.content}</p>
+                  {/* Conversion du contenu Delta pour les Jobs */}
+                  <div
+                    dangerouslySetInnerHTML={{
+                      __html: renderDeltaToHtml(job.content),
+                    }}
+                  />
                 </div>
               )),
-
         bestiaire:
           wikiPram?.bestiaries?.length === 0
             ? "Aucun contenu"
             : wikiPram.bestiaries.map((bes) => (
                 <div key={bes.id}>
-                  <h4>{bes.name}</h4>
-                  <p>{bes.content}</p>
-                  <p>Type : {bes.type}</p>
-                  <img src={bes.imageUrl} alt={bes.name} width={100} />
+                  <h4>{bes.Name}</h4>
+                  {/* Conversion du contenu Delta pour les bestiaires */}
+                  <div
+                    dangerouslySetInnerHTML={{
+                      __html: renderDeltaToHtml(bes.Content),
+                    }}
+                  />
+                  <p>Type : {bes.Type}</p>
+                  {bes.imageUrl && (
+                    <img src={bes.imageUrl} alt={bes.Name} width={100} />
+                  )}
                 </div>
               )),
       };
@@ -86,11 +110,7 @@ const Wiki = ({ ...props }) => {
       return (
         <div className="wiki-content">
           {/* Affichage dynamique du contenu en fonction de l'onglet actif */}
-          <div
-            dangerouslySetInnerHTML={{
-              __html: contentMap[activeTab] || "Aucun contenu disponible.",
-            }}
-          />
+          <div /> {contentMap[activeTab] || "Aucun contenu disponible."},
         </div>
       );
     } catch (error) {
