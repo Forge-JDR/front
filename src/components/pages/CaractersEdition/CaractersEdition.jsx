@@ -17,6 +17,7 @@ const CaractersEdition = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const caracter = useSelector((state) => state.caracters.caracterInfo);
+  const loading = useSelector((state) => state.caracters.status === 'loading'); // Loading state from Redux
 
   // State for the caracter's name and content
   const [caracterName, setCaracterName] = useState("");
@@ -86,7 +87,7 @@ const CaractersEdition = () => {
       if (isConfirmed) {
         dispatch(deleteCaracter(id))
           .then(() => {
-            navigate("/caracters", { state: { refresh: true } }); // Pass state to indicate refresh is needed
+            navigate("/caracters", { state: { refresh: true } });
           })
           .catch((error) => {
             console.log("Erreur lors de la suppression du caractère :", error);
@@ -110,35 +111,41 @@ const CaractersEdition = () => {
         <div className="background-edition">
           <ConnectedNavbar />
           <div className="main-container caracter-editor">
-            <div className="title-caracter-editor">
-              <input
-                type="text"
-                id="caracterName"
-                placeholder="Nom du caractère"
-                value={caracterName}
-                onChange={handleNameChange}
-              />
-            </div>
+            {loading ? (
+              <div className="loading">Chargement...</div> // Loading indicator
+            ) : (
+              <>
+                <div className="title-caracter-editor">
+                  <input
+                    type="text"
+                    id="caracterName"
+                    placeholder="Nom du caractère"
+                    value={caracterName}
+                    onChange={handleNameChange}
+                  />
+                </div>
 
-            {/* Caracter Content Editor */}
-            <div className="caracter-editor-content">
-              <QuillEditor value={caracterContent} onChange={handleContentChange} />
-            </div>
+                {/* Caracter Content Editor */}
+                <div className="caracter-editor-content">
+                  <QuillEditor value={caracterContent} onChange={handleContentChange} />
+                </div>
 
-            {/* Buttons for Save, Delete, and Cancel */}
-            <div className="caracter-editor-actions">
-              <button className="save-button" onClick={handleSave}>
-                {id ? "Mettre à jour le caractère" : "Ajouter le caractère"}
-              </button>
-              {id && (
-                <button className="delete-button" onClick={handleDelete}>
-                  Supprimer le caractère
-                </button>
-              )}
-              <button className="cancel-button" onClick={() => navigate("/caracters")}>
-                Annuler
-              </button>
-            </div>
+                {/* Buttons for Save, Delete, and Cancel */}
+                <div className="caracter-editor-actions">
+                  <button className="save-button" onClick={handleSave}>
+                    {id ? "Mettre à jour le caractère" : "Ajouter le caractère"}
+                  </button>
+                  {id && (
+                    <button className="delete-button" onClick={handleDelete}>
+                      Supprimer le caractère
+                    </button>
+                  )}
+                  <button className="cancel-button" onClick={() => navigate("/caracters")}>
+                    Annuler
+                  </button>
+                </div>
+              </>
+            )}
           </div>
           <Footer />
         </div>

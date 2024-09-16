@@ -18,26 +18,29 @@ const Creation = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
 
-  // Récupère les informations de l'utilisateur connecté
+  // State to track loading
+  const loading = useSelector((state) => state.auth.status === "loading");
+
+  // Get current user information
   const ConnectedUser = useSelector((state) => state.auth.user);
 
-  // État local pour afficher ou non le formulaire de création de RPG
+  // Local state to display or hide the new RPG creation form
   const [isDisplayFormNew, setIsDisplayFormNew] = useState(false);
   const displayForm = () => {
     setIsDisplayFormNew(!isDisplayFormNew);
   };
 
-  // Dispatch pour récupérer l'utilisateur au chargement
+  // Fetch current user data on component mount
   useEffect(() => {
     dispatch(fetchCurrentUser());
   }, [dispatch]);
 
-  // Fonction pour mettre à jour la liste des JDR après suppression
+  // Function to update the RPG list after deletion
   const updateList = () => {
-    dispatch(fetchCurrentUser()); // Récupère à nouveau les données de l'utilisateur
+    dispatch(fetchCurrentUser());
   };
 
-  // Assure-toi que les wikis sont bien définis pour l'utilisateur connecté
+  // Ensure wikis are defined for the connected user
   const userWikis = ConnectedUser?.Wikis || [];
 
   return (
@@ -51,18 +54,18 @@ const Creation = () => {
             <p>{t("creation.title")}</p>
           </div>
           <div className="card-container rpg creation inline-content">
-            {/* Si l'utilisateur n'est pas encore récupéré, affiche un message de chargement */}
-            {!ConnectedUser ? (
+            {/* Display loading message if data is being fetched */}
+            {loading ? (
               <p>Chargement des JDR...</p>
             ) : (
               <>
-                {/* Affiche les wikis de l'utilisateur connecté */}
+                {/* Display user wikis */}
                 {userWikis.length > 0 ? (
                   userWikis.map((rpg, index) => (
                     <div key={index} className="personnal-rpg-card">
                       <CardRpg
                         id={rpg.id}
-                        srcImg={defaultWikiImage} // Utilise l'image par défaut (peut être modifiée)
+                        srcImg={defaultWikiImage} // Use default image (can be changed)
                         nameRpg={rpg.Name}
                         updateList={updateList}
                       />
@@ -74,8 +77,8 @@ const Creation = () => {
               </>
             )}
 
-            {/* Afficher une carte pour créer un nouveau RPG */}
-            {userWikis.length < 3 && (
+            {/* Show a card to create a new RPG if less than 3 */}
+            {userWikis.length < 3 && !loading && (
               <div className="personnal-rpg-space new-rpg">
                 <CardCreate
                   width="100%"
