@@ -88,7 +88,7 @@ const Login = ({ ...props }) => {
   };
 
   return (
-    <div className="main-container login">
+    <div className="main-container-login">
       <div className="form-register-container">
         <p className="form-title">{t("login.title")}</p>
         <Form id="login-form" className="form-register">

@@ -14,7 +14,7 @@ html{
   padding: 0;
 }
 
-.main-container.signup {
+.main-container-signup {
   background: linear-gradient(70deg, var(--main-blue-color), var(--main-purple-color));
   height: 100vh;
   display: flex;

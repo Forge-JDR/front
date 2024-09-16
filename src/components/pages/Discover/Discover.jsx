@@ -68,7 +68,7 @@ const Discover = ({ ...props }) => {
       <div className="background-hexa image discover"></div>
       <div className="background discover">
         <ConnectedNavbar />
-        <div className="list-published-rpg main-container">
+        <div className="list-published-rpg-main-container">
           <div className="filter-bar">
             <input
               type="text"

@@ -8,7 +8,7 @@ body{
     margin: 0;
 }
 
-.main-container.login{
+.main-container-login{
   background: linear-gradient(70deg, var(--main-blue-color), var(--main-purple-color));
   height: 100vh;
   display: flex;
