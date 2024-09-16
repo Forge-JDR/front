@@ -8,6 +8,8 @@ import "./connectedHome.css";
 
 import forgeLogoTxt from "../../../../assets/logo/logo_texte.svg";
 import defaultWikiImage from "../../../../assets/wiki_default.png";
+import defaultCaraImage from "../../../../assets/home/fonc2.jpg";
+import defaultPubliImage from "../../../../assets/home/fonc4.jpg";
 
 import Footer from "../../../UI/organisms/footer/Footer";
 import ConnectedNavbar from "../../connectedNavBar/ConnectedNavbar";
@@ -16,6 +18,7 @@ import NewCaracterForm from "../../NewCaracterForm/NewCaracterForm";
 import CardRpgDiscoverHome from "../../../UI/organisms/CardRpgDiscoverHome/CardRpgDiscoverHome";
 import CardRpgHome from "../../../UI/organisms/CardRpgHome/CardRpgHome";
 import NewRpgForm from "../../../templates/NewRpgForm/NewRpgForm";
+import CardCaraHome from "../../../UI/organisms/CardCaraHome/CardCaraHome";
 
 const ConnectedHome = () => {
   const { t } = useTranslation();
@@ -25,6 +28,7 @@ const ConnectedHome = () => {
   const wikis = useSelector((state) => state.wikis.wikisList);
   const wikiStatus = useSelector((state) => state.wikis.status);
   const ConnectedUser = useSelector((state) => state.auth.user);
+  const caracters = ConnectedUser?.caracters;
 
   const [isDisplayFormNew, setIsDisplayFormNew] = useState(false);
   const [isDisplayFormNewRpg, setIsDisplayFormNewRpg] = useState(false);
@@ -67,7 +71,7 @@ const ConnectedHome = () => {
             <CardRpgDiscoverHome
               className="list-rpg-published home"
               id={el.id}
-              srcImg={el.imageFile ? el.imageFile.path : defaultWikiImage}
+              srcImg={el.imageFile ? el.imageFile.path : defaultPubliImage}
               nameRpg={el.Name}
               owner={el.user?.username}
             />
@@ -116,6 +120,45 @@ const ConnectedHome = () => {
     );
   };
 
+  const RecentCara = () => {
+    if (!ConnectedUser) {
+      return <p>Chargement des personnages...</p>;
+    }
+
+    // Filter the 3 most recent RPGs
+    const recentUserCaracters = ConnectedUser.Caracters.slice(0, 5);
+
+    return (
+      <>
+        {recentUserCaracters.map((cara) => (
+          <div
+            className="my-caracter-card caracter"
+            key={cara.id}
+            onClick={() => {
+              navigate(`/caracters/edit/${cara.id}`);
+            }}
+          >
+            <CardCaraHome
+              className="home user-jdr"
+              id={cara.id}
+              srcImg={cara.imageFile ? cara.imageFile.path : defaultCaraImage}
+              nameCaracter={cara.Name}
+            />
+          </div>
+        ))}
+        {/* Show creation card if user has less than 3 RPGs */}
+        {recentUserCaracters.length < 5 && (
+          <CardCreate
+            width="20%"
+            height="100%"
+            title={t("connectedHome.newRPG")}
+            onClick={displayFormRpg}
+          />
+        )}
+      </>
+    );
+  };
+
   return (
     <>
       <div className="connected-home background">
@@ -134,12 +177,7 @@ const ConnectedHome = () => {
               <div className="my-caracters">
                 <div className="box-content inline-content">
                   {/* User's characters */}
-                  <CardCreate
-                    width="20%"
-                    height="100%"
-                    title={t("connectedHome.newCharactere")}
-                    onClick={displayForm}
-                  />
+                  {RecentCara()}
                 </div>
               </div>
               <div className="my-games">

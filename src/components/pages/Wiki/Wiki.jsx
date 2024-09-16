@@ -159,6 +159,7 @@ const Wiki = ({ ...props }) => {
 
         <div className="wiki-title">
           <h1>{wiki.Name}</h1>
+          <div className="owner-rpg">Par {wiki.user.pseudo}</div>
         </div>
 
         <div className="wiki-container">

@@ -851,7 +851,7 @@ const WikiEdition = () => {
           <div className="race-list">
             <h4>Liste des Races</h4>
             <ul>
-              {races.map((race) => (
+              {races?.map((race) => (
                 <li key={race.id}>
                   <h5>{race.Name || "Nom indisponible"}</h5>
                   <button
