@@ -742,10 +742,16 @@ const WikiEdition = () => {
                 {scenarios.map((scenario) => (
                   <li key={scenario.id}>
                     <h5>{scenario.name || "Nom indisponible"}</h5>
-                    <button onClick={() => handleEditScenario(scenario)}>
+                    <button
+                      className="edit-list-item"
+                      onClick={() => handleEditScenario(scenario)}
+                    >
                       Modifier
                     </button>
-                    <button onClick={() => handleDeleteScenario(scenario.id)}>
+                    <button
+                      className="delete-list-item"
+                      onClick={() => handleDeleteScenario(scenario.id)}
+                    >
                       Supprimer
                     </button>
                   </li>
@@ -799,10 +805,16 @@ const WikiEdition = () => {
                 {bestiaire.map((beast) => (
                   <li key={beast.id}>
                     <h5>{beast.Name || "Nom indisponible"}</h5>
-                    <button onClick={() => handleEditBeast(beast)}>
+                    <button
+                      className="edit-list-item"
+                      onClick={() => handleEditBeast(beast)}
+                    >
                       Modifier
                     </button>
-                    <button onClick={() => handleDeleteBeast(beast.id)}>
+                    <button
+                      className="delete-list-item"
+                      onClick={() => handleDeleteBeast(beast.id)}
+                    >
                       Supprimer
                     </button>
                   </li>
@@ -845,10 +857,16 @@ const WikiEdition = () => {
                 {races.map((race) => (
                   <li key={race.id}>
                     <h5>{race.Name || "Nom indisponible"}</h5>
-                    <button onClick={() => handleEditRace(race)}>
+                    <button
+                      className="edit-list-item"
+                      onClick={() => handleEditRace(race)}
+                    >
                       Modifier
                     </button>
-                    <button onClick={() => handleDeleteRace(race.id)}>
+                    <button
+                      className="delete-list-item"
+                      onClick={() => handleDeleteRace(race.id)}
+                    >
                       Supprimer
                     </button>
                   </li>
@@ -891,8 +909,16 @@ const WikiEdition = () => {
                 {jobs.map((job) => (
                   <li key={job.id}>
                     <h5>{job.name || "Nom indisponible"}</h5>
-                    <button onClick={() => handleEditJob(job)}>Modifier</button>
-                    <button onClick={() => handleDeleteJob(job.id)}>
+                    <button
+                      className="edit-list-item"
+                      onClick={() => handleEditJob(job)}
+                    >
+                      Modifier
+                    </button>
+                    <button
+                      className="delete-list-item"
+                      onClick={() => handleDeleteJob(job.id)}
+                    >
                       Supprimer
                     </button>
                   </li>

@@ -112,7 +112,7 @@ const NavBar = ({ links }) => {
               <ul className="sub-menu">
                 {token ? (
                   <>
-                    {user?.roles[0] === "ROLE_ADMIN" && (
+                    {user?.roles?.includes("ROLE_ADMIN") && (
                       <li>
                         <Link to="/admin/wiki">Panel admin</Link>
                       </li>

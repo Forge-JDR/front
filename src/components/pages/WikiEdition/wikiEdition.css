@@ -215,3 +215,22 @@ display: flex;
     background-color: var(--main-blue-color);
     color: white;
 }
+
+.delete-list-item,
+.edit-list-item {
+    width: 100px;
+    margin: 5px;
+    padding: 5px;
+    border-radius: 5px;
+    cursor: pointer;
+    border: none;
+}
+
+.delete-list-item{
+background: linear-gradient(70deg, #a21d1d, #3d0303);
+    color: white;
+}
+
+.edit-list-item {
+    background: linear-gradient(70deg, #d2d2d2, #bbbbbb);
+}
