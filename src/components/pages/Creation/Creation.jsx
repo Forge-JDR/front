@@ -62,7 +62,7 @@ const Creation = () => {
                     <div key={index} className="personnal-rpg-card">
                       <CardRpg
                         id={rpg.id}
-                        srcImg={defaultWikiImage} // Utilise l'image par défaut (peut être modifiée)
+                        srcImg={rpg.imageFile?.fichierImage || defaultWikiImage} // Utilise l'image par défaut (peut être modifiée)
                         nameRpg={rpg.Name}
                         updateList={updateList}
                       />
