@@ -124,7 +124,7 @@ const Signup = () => {
   };
 
   return (
-    <div className="main-container signup">
+    <div className="main-container-signup">
       <div className="form-register-container">
         <p className="form-title">{t("signup.title")}</p>
         <Form id="signup-form" className="form-register">
