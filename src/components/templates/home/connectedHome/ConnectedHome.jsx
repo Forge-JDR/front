@@ -69,7 +69,7 @@ const ConnectedHome = () => {
               id={el.id}
               srcImg={el.imageFile ? el.imageFile.path : defaultWikiImage}
               nameRpg={el.Name}
-              owner={el.user?.pseudo}
+              owner={el.user?.username}
             />
           </div>
         )
