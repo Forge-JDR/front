@@ -241,12 +241,12 @@ const WikiServices = createSlice({
       })
       .addCase(fetchWiki.fulfilled, (state, action) => {
         state.wikiInfo = action.payload;
-        state.wikiInfo.races = action.payload.Races || [];
+        state.wikiInfo.races = action.payload.Races  || [];
         state.wikiInfo.bestiaries = action.payload.bestiaries || [];
         state.wikiInfo.jobs = action.payload.Jobs || [];
         state.wikiInfo.scenarios = action.payload.Scenarios || [];
         state.status = action.meta.requestStatus;
-      })
+      })    
       .addCase(addWiki.fulfilled, (state, action) => {
         state.wikiInfo = action.payload;
         state.status = action.meta.requestStatus;
