@@ -154,6 +154,22 @@ export const addJob = createAsyncThunk(
     }
   );
   
+  export const uploadWikiImage = createAsyncThunk(
+    'wiki/uploadImage',
+    async ({ id, formData }) => {
+      try {
+        const response = await api.post(`${API_URL}/wikis/${id}/pictures`, formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        });
+        return response.data;
+      } catch (err) {
+        console.log("Erreur lors de l'upload de l'image :", err);
+        throw err;
+      }
+    }
+  );
   
   export const updateJob = createAsyncThunk(
     'wiki/updateJob',
@@ -326,6 +342,10 @@ const WikiServices = createSlice({
       })
       .addCase(deleteScenario.fulfilled, (state, action) => {
         state.wikiInfo.scenarios = state.wikiInfo.scenarios.filter(scenario => scenario.id !== action.payload);
+        state.status = 'idle';
+      })
+      .addCase(uploadWikiImage.fulfilled, (state, action) => {
+        state.wikiInfo.image = action.payload.image; // Assuming the response contains the updated image
         state.status = 'idle';
       });
   }

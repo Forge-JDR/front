@@ -5,6 +5,7 @@ import {
   updateWiki,
   fetchWiki,
   addBestiary,
+  uploadWikiImage,
   updateBestiary,
   deleteBestiary,
   addRace,
@@ -35,6 +36,7 @@ const WikiEdition = () => {
   // State for the wiki's name and content
   const [wikiName, setWikiName] = useState("");
   const [wikiContent, setWikiContent] = useState("");
+  const [selectedImage, setSelectedImage] = useState(null);
 
   // State for managing bestiaries
   const [bestiaire, setBestiaire] = useState([]);
@@ -71,6 +73,28 @@ const WikiEdition = () => {
 
   // State for handling the active tab
   const [activeTab, setActiveTab] = useState("univers");
+
+  // Handle image file change
+  const handleImageChange = (e) => {
+    setSelectedImage(e.target.files[0]);
+  };
+
+  // Handle image upload
+  const handleImageUpload = () => {
+    if (selectedImage) {
+      const formData = new FormData();
+      formData.append('file', selectedImage);
+
+      dispatch(uploadWikiImage({ id, formData }))
+        .then(() => {
+          // Optionally fetch the updated wiki to display the new image
+          dispatch(fetchWiki(id));
+        })
+        .catch((error) => {
+          console.log("Erreur lors de l'upload de l'image :", error);
+        });
+    }
+  };
 
   useEffect(() => {
     if (wikiStatus === "idle") {
@@ -631,6 +655,26 @@ const WikiEdition = () => {
                 }
               />
             </div>
+            {/* Image Display Section */}
+            {wiki.imageFile && (
+              <div className="wiki-image">
+                <img
+                  src={wiki.imageFile.fichierImage}
+                  alt={wiki.imageFile.title || "Wiki Image"}
+                  style={{ maxWidth: "300px", maxHeight: "300px" }}
+                />
+              </div>
+            )}
+            {/* Image Upload Section */}
+            <div className="image-upload">
+              <input type="file" accept="image/*" onChange={handleImageChange} />
+              <button onClick={handleImageUpload}>Upload Image</button>
+            </div>
+            {/* Display Wiki Status */}
+            <div className="wiki-status">
+              {/* Your existing status change buttons here */}
+            </div>
+          
             {/* Display Wiki Status */}
             <div className="wiki-status">
               {wiki.Status === "inProgress" && (
