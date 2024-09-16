@@ -23,7 +23,6 @@ const CardCaracter = ({ srcImg, nameCaracter, rpgName, ...rest }) => {
           <Button
             className="button delete"
             onClick={() => {
-              console.log("Supprimer");
             }}
           >
             Supprimer
@@ -31,7 +30,6 @@ const CardCaracter = ({ srcImg, nameCaracter, rpgName, ...rest }) => {
           <Button
             className="button update"
             onClick={() => {
-              console.log("Modifier");
             }}
           >
             Modifier

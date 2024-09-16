@@ -14,20 +14,20 @@ const User = () => {
   const navigate = useNavigate(); // Initialize useNavigate
 
   // Local state for user details
-  const [username, setUsername] = useState(user?.username || "");
+  const [pseudo, setpseudo] = useState(user?.pseudo || "");
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
 
   // Handlers for form inputs
-  const handleUsernameChange = (e) => setUsername(e.target.value);
+  const handlepseudoChange = (e) => setpseudo(e.target.value);
   const handleCurrentPasswordChange = (e) => setCurrentPassword(e.target.value);
   const handleNewPasswordChange = (e) => setNewPassword(e.target.value);
 
-  // Handler for updating username
-  const handleUpdateUsername = (e) => {
+  // Handler for updating pseudo
+  const handleUpdatepseudo = (e) => {
     e.preventDefault();
-    if (username) {
-      dispatch(updateAccount({ username }))
+    if (pseudo) {
+      dispatch(updateAccount({ pseudo }))
         .then(() => {
           alert("Nom d'utilisateur mis à jour avec succès");
           navigate("/"); // Redirect to the homepage
@@ -66,24 +66,24 @@ const User = () => {
       <div className="user-account-page">
         <h2>Gestion de compte</h2>
 
-        {/* Update Username Section */}
+        {/* Update pseudo Section */}
         <div className="user-form-section">
-          <h3>Modifier le nom d'utilisateur</h3>
-          <form onSubmit={handleUpdateUsername}>
+          <h3>Modifier le pseudo</h3>
+          <form onSubmit={handleUpdatepseudo}>
             <FieldForm
-              id="username"
-              name="username"
-              label="Nouveau nom d'utilisateur: "
-              value={username}
-              onChange={handleUsernameChange}
+              id="pseudo"
+              name="pseudo"
+              label="Nouveau pseudo : "
+              value={pseudo}
+              onChange={handlepseudoChange}
             />
             <div className="form-group">
-              {/* <label htmlFor="username">Nouveau nom d'utilisateur:</label>
+              {/* <label htmlFor="pseudo">Nouveau nom d'utilisateur:</label>
               <input
                 type="text"
-                id="username"
-                value={username}
-                onChange={handleUsernameChange}
+                id="pseudo"
+                value={pseudo}
+                onChange={handlepseudoChange}
                 placeholder="Entrez le nouveau nom d'utilisateur"
                 required
               /> */}

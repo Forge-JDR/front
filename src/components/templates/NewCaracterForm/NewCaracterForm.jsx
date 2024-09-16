@@ -24,7 +24,6 @@ const NewCaracterForm = ({ closeForm, updateList, ...rest }) => {
     try {
       // Dispatch the action to create the new character
       await dispatch(addCaracter({ name: caracterName, content:  JSON.stringify(caracterContent)})).unwrap();  // Ensure correct payload keys
-      console.log("New character created");
       closeForm();  // Close the form on successful submission
       updateList();  // Call function to refresh the character list if needed
     } catch (error) {

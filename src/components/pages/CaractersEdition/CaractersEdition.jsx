@@ -49,7 +49,7 @@ const CaractersEdition = () => {
 
   // Log caracterContent whenever it changes
   useEffect(() => {
-    console.log("Updated caracterContent:", caracterContent);
+    
   }, [caracterContent]);
 
   // Handle saving or updating the caracter
