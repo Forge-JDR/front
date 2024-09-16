@@ -2,6 +2,7 @@
 .background-edition {
     position: relative;
     min-height: 70vh;
+    padding: 20px;
 }
 
 .background-hexa.image.edition-rpg {
@@ -15,12 +16,27 @@
 }
 
 /* Title section */
+.title-status-bar {
+display: flex;
+    align-items: center;
+    /* Aligne verticalement les éléments sur la même ligne */
+    justify-content: space-between;
+    /* Assure que les deux éléments sont bien placés à gauche et à droite */
+}
+
 .title-rpg-editor {
     position: relative;
+    flex: 1;
 }
 
 .title-rpg-editor input {
     font-size: 30px;
+}
+
+.wiki-status {
+    flex: 1;
+    text-align: right;
+    /* Aligne le contenu à droite */
 }
 
 /* Main container */
@@ -32,7 +48,7 @@
 /* Tabs */
 .tabs {
     display: flex;
-    margin-bottom: 20px;
+    margin-top: 20px;
 }
 
 .tabs button {
@@ -114,7 +130,8 @@
 
 /* Quill editor */
 .ql-editor {
-    min-height: 150px;
+    /* min-height: 150px; */
+    height: 100%;
     max-height: 150px;
     overflow-y: auto;
     background-color: white;
@@ -139,9 +156,18 @@
 .race-section input,
 .bestiary-section button,
 .race-section button {
-    width: 100%;
+    width: 20%;
     padding: 10px;
     margin-top: 5px;
+
+}
+
+.bestiary-section ,
+.race-section ,
+.bestiary-section ,
+.race-section  {
+    width: 90%;
+    margin: auto;
 }
 
 /* List containers */
@@ -188,4 +214,23 @@
     border: none;
     background-color: var(--main-blue-color);
     color: white;
+}
+
+.delete-list-item,
+.edit-list-item {
+    width: 100px;
+    margin: 5px;
+    padding: 5px;
+    border-radius: 5px;
+    cursor: pointer;
+    border: none;
+}
+
+.delete-list-item{
+background: linear-gradient(70deg, #a21d1d, #3d0303);
+    color: white;
+}
+
+.edit-list-item {
+    background: linear-gradient(70deg, #d2d2d2, #bbbbbb);
 }
