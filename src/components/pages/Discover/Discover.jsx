@@ -30,7 +30,6 @@ const Discover = ({ ...props }) => {
   }, [wikiStatus, dispatch]);
 
   useEffect(() => {
-    console.log(wiki);
   });
 
   // Filtrer les wikis en fonction du terme de recherche
@@ -55,7 +54,7 @@ const Discover = ({ ...props }) => {
               id={wiki.id}
               srcImg={wiki.imageFile ? wiki.imageFile.path : defaultWikiImage}
               nameRpg={wiki.Name}
-              owner={wiki.user?.pseudo}
+              owner={wiki.user?.username}
             />
           </div>
         )
