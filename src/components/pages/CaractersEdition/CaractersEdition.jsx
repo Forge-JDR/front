@@ -32,7 +32,7 @@ const CaractersEdition = () => {
   useEffect(() => {
     if (caracter && caracter.Name) {
       setCaracterName(caracter.Name);
-  
+
       // Parse the content if it is a JSON string; otherwise, use it as-is
       let parsedContent;
       try {
@@ -41,16 +41,10 @@ const CaractersEdition = () => {
         console.error("Error parsing content:", error);
         parsedContent = { ops: [] };
       }
-  
+
       setCaracterContent(parsedContent);
     }
   }, [caracter]);
-  
-
-  // Log caracterContent whenever it changes
-  useEffect(() => {
-    
-  }, [caracterContent]);
 
   // Handle saving or updating the caracter
   const handleSave = () => {
@@ -87,13 +81,17 @@ const CaractersEdition = () => {
   // Handle deleting the caracter
   const handleDelete = () => {
     if (id) {
-      dispatch(deleteCaracter(id))
-        .then(() => {
-          navigate("/caracters");
-        })
-        .catch((error) => {
-          console.log("Erreur lors de la suppression du caractère :", error);
-        });
+      // Show confirmation dialog
+      const isConfirmed = window.confirm("Êtes-vous sûr de vouloir supprimer ce personnage ? Cette action est irréversible.");
+      if (isConfirmed) {
+        dispatch(deleteCaracter(id))
+          .then(() => {
+            navigate("/caracters", { state: { refresh: true } }); // Pass state to indicate refresh is needed
+          })
+          .catch((error) => {
+            console.log("Erreur lors de la suppression du caractère :", error);
+          });
+      }
     }
   };
 

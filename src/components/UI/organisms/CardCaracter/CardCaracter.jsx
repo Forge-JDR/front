@@ -1,11 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { deleteWiki } from "../../../../store/slices/Wikis.slice";
-import { fetchUserProfile, deleteCaracter } from "../../../../store/store"; // Adjust based on your store slice
-
+import { deleteCaracter } from "../../../../store/store"; // Adjust based on your store slice
 import "./cardCaracter.css";
-
 import Button from "../../atoms/button/button";
 
 const CardCaracter = ({
@@ -27,28 +24,34 @@ const CardCaracter = ({
   };
 
   const handleDelete = async () => {
-    setIsLoading(true); // Commence le chargement
+    setIsLoading(true);
     try {
-      await dispatch(deleteCaracter(id)).unwrap(); // Assure que l'action est terminée avant de continuer
-      setIsDisplayFormDelete(false); // Ferme la modale après suppression
-      updateList(); // Mets à jour la liste des JDR après suppression
+      console.log("Attempting to delete character with ID:", id);
+      await dispatch(deleteCaracter(id)).unwrap(); // Ensures the action is finished before continuing
+      console.log("Character deleted successfully");
+
+      // Refresh the character list after deletion
+      if (typeof updateList === "function") {
+        updateList();
+      } else {
+        console.error("updateList is not a function");
+      }
+
+      setIsDisplayFormDelete(false);
     } catch (err) {
-      console.log("Erreur lors de la suppression du wiki", err);
+      console.log("Error deleting character:", err);
     } finally {
-      setIsLoading(false); // Arrête le chargement
+      setIsLoading(false);
     }
   };
 
   const confirmSuppressionModal = () => {
     return (
       <div className="background-form" onClick={displayDeleteModal}>
-        <div
-          className="form confirm-delete"
-          onClick={(e) => e.stopPropagation()}
-        >
+        <div className="form confirm-delete" onClick={(e) => e.stopPropagation()}>
           <div className="alert-info-confirm-delete">
-            <p>Etes-vous de vouloir supprimer votre personnage?</p>
-            <p>Cette action est irreversible</p>
+            <p>Êtes-vous sûr de vouloir supprimer votre personnage?</p>
+            <p>Cette action est irréversible</p>
           </div>
           <div className="btn bottom-modal">
             <Button className="cancel" onClick={displayDeleteModal}>
@@ -68,7 +71,7 @@ const CardCaracter = ({
       {isDisplayFormDelete && confirmSuppressionModal()}
       <div className="card caracter personal-space">
         <div className="img">
-          <img src={srcImg} alt="" />
+          <img src={srcImg} alt={nameCaracter} />
         </div>
         <div className="info caracter">
           <div className="name-caracter title">
