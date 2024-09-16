@@ -43,6 +43,7 @@
 .wiki-sidebar ul {
     list-style-type: none;
     padding: 0;
+    position: fixed;
 }
 
 .wiki-sidebar ul li {
@@ -69,4 +70,33 @@
 
 .wiki-content h4 {
     margin-top: 0;
+}
+
+.rpg-items-list{
+    background-color: #ffffff20;
+    box-shadow: 5px 5px 5px #00000030;
+    backdrop-filter: blur(5px);
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.rpg-items-list h4{
+    margin-bottom: 10px;
+    font-size: 1.4rem;
+    font-family: 'MedievalSharp', cursive;
+}
+
+.separator-item{
+    height: 30px;
+    margin-bottom: 30px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.30);
+}
+
+.rpg-items-list  .rpg-items-content:last-child .separator-item{
+    display: none;
+} 
+
+.beast-type{
+    margin-bottom: 10px;
+    font-size: 1.2rem;
 }

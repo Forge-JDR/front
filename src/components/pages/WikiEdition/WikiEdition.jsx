@@ -614,321 +614,315 @@ const WikiEdition = () => {
 
   return (
     <>
-      <div className="background-hexa image edition-rpg">
-        <div className="background-edition">
-          <ConnectedNavbar />
-          <div className="main-contaner rpg-editor">
-            <div className="title-status-bar">
-              <div className="title-rpg-editor">
-                <input
-                  type="text"
-                  id="wikiName"
-                  value={wikiName}
-                  onChange={handleNameChange}
-                  disabled={
-                    wiki.Status === "published" ||
-                    wiki.Status === "pendingToPublish"
-                  }
-                />
-              </div>
-              {/* Display Wiki Status */}
-              <div className="wiki-status">
-                {wiki.Status === "inProgress" && (
-                  <Button
-                    className="edit"
-                    onClick={() => handleChangeStatus("pendingToPublish")}
-                  >
-                    Demander la publication
-                  </Button>
-                )}
-                {wiki.Status === "pendingToPublish" && (
-                  <Button
-                    className="edit"
-                    onClick={() => handleChangeStatus("inProgress")}
-                  >
-                    Annuler la demande de publication
-                  </Button>
-                )}
-                {wiki.Status === "published" && (
-                  <Button
-                    className="edit"
-                    onClick={() => handleChangeStatus("inProgress")}
-                  >
-                    Annuler la publication
-                  </Button>
-                )}
-              </div>
+      <div className="background-hexa image edition-rpg"></div>
+      <div className="background-edition">
+        <ConnectedNavbar />
+        <div className="main-contaner rpg-editor">
+          <div className="title-status-bar">
+            <div className="title-rpg-editor">
+              <input
+                type="text"
+                id="wikiName"
+                value={wikiName}
+                onChange={handleNameChange}
+                disabled={
+                  wiki.Status === "published" ||
+                  wiki.Status === "pendingToPublish"
+                }
+              />
             </div>
-            <p>Status: {wiki.Status}</p>
-
-            {/* Tabs Section */}
-            <div className="tabs">
-              <button
-                className={activeTab === "univers" ? "active-tab" : ""}
-                onClick={() => handleTabChange("univers")}
-              >
-                Univers
-              </button>
-              <button
-                className={activeTab === "bestiaire" ? "active-tab" : ""}
-                onClick={() => handleTabChange("bestiaire")}
-              >
-                Bestiaire
-              </button>
-              <button
-                className={activeTab === "races" ? "active-tab" : ""}
-                onClick={() => handleTabChange("races")}
-              >
-                Races
-              </button>
-              <button
-                className={activeTab === "jobs" ? "active-tab" : ""}
-                onClick={() => handleTabChange("jobs")}
-              >
-                Jobs
-              </button>
-              <button
-                className={activeTab === "scenarios" ? "active-tab" : ""}
-                onClick={() => handleTabChange("scenarios")}
-              >
-                Scénarios
-              </button>
+            {/* Display Wiki Status */}
+            <div className="wiki-status">
+              {wiki.Status === "inProgress" && (
+                <Button
+                  className="edit"
+                  onClick={() => handleChangeStatus("pendingToPublish")}
+                >
+                  Demander la publication
+                </Button>
+              )}
+              {wiki.Status === "pendingToPublish" && (
+                <Button
+                  className="edit"
+                  onClick={() => handleChangeStatus("inProgress")}
+                >
+                  Annuler la demande de publication
+                </Button>
+              )}
+              {wiki.Status === "published" && (
+                <Button
+                  className="edit"
+                  onClick={() => handleChangeStatus("inProgress")}
+                >
+                  Annuler la publication
+                </Button>
+              )}
             </div>
           </div>
+          <p>Status: {wiki.Status}</p>
 
-          {/* Universe Tab Content */}
-          {activeTab === "univers" && (
-            <div className="rpg-editor">
-              <WikiEditor defaultContent={wikiContent} onSave={handleSave} />
-            </div>
-          )}
-
-          {/* Scenarios Tab Content */}
-          {activeTab === "scenarios" && (
-            <div className="bestiary-section">
-              <h3>
-                {newScenario.id
-                  ? "Modifier le scénario"
-                  : "Ajouter un nouveau scénario"}
-              </h3>
-              <input
-                type="text"
-                name="name"
-                placeholder="Titre du scénario"
-                value={newScenario.name}
-                onChange={handleScenarioChange}
-                className="input-field"
-              />
-              <div className="ql-editor-container">
-                <QuillEditor
-                  value={newScenario.content}
-                  onChange={handleScenarioContentChange}
-                />
-              </div>
-              <button
-                className="save-button"
-                onClick={handleAddOrUpdateScenario}
-              >
-                {newScenario.id ? "Modifier" : "Ajouter"} le Scénario
-              </button>
-            </div>
-          )}
-
-          {/* Scenarios List */}
-          {activeTab === "scenarios" && (
-            <div className="bestiary-list">
-              <h4>Liste des Scénarios</h4>
-              <ul>
-                {scenarios.map((scenario) => (
-                  <li key={scenario.id}>
-                    <h5>{scenario.name || "Nom indisponible"}</h5>
-                    <button
-                      className="edit-list-item"
-                      onClick={() => handleEditScenario(scenario)}
-                    >
-                      Modifier
-                    </button>
-                    <button
-                      className="delete-list-item"
-                      onClick={() => handleDeleteScenario(scenario.id)}
-                    >
-                      Supprimer
-                    </button>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          )}
-
-          {/* Bestiary Tab Content */}
-          {activeTab === "bestiaire" && (
-            <div className="bestiary-section">
-              <h3>
-                {newBeast.id
-                  ? "Modifier le monstre"
-                  : "Ajouter un nouvel objet au bestiaire"}
-              </h3>
-              <input
-                type="text"
-                name="name"
-                placeholder="Nom du monstre"
-                value={newBeast.name}
-                onChange={handleBeastChange}
-                className="input-field"
-              />
-              <input
-                type="text"
-                name="type"
-                placeholder="Type de monstre"
-                value={newBeast.type}
-                onChange={handleBeastChange}
-                className="input-field"
-              />
-              <div className="ql-editor-container">
-                <QuillEditor
-                  value={newBeast.content}
-                  onChange={handleContentChange}
-                />
-              </div>
-
-              <button className="save-button" onClick={handleAddOrUpdateBeast}>
-                {newBeast.id ? "Modifier" : "Ajouter"} au Bestiaire
-              </button>
-            </div>
-          )}
-
-          {/* Bestiary List */}
-          {activeTab === "bestiaire" && (
-            <div className="bestiary-list">
-              <h4>Liste des Bestiaires</h4>
-              <ul>
-                {bestiaire.map((beast) => (
-                  <li key={beast.id}>
-                    <h5>{beast.Name || "Nom indisponible"}</h5>
-                    <button
-                      className="edit-list-item"
-                      onClick={() => handleEditBeast(beast)}
-                    >
-                      Modifier
-                    </button>
-                    <button
-                      className="delete-list-item"
-                      onClick={() => handleDeleteBeast(beast.id)}
-                    >
-                      Supprimer
-                    </button>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          )}
-
-          {/* Races Tab Content */}
-          {activeTab === "races" && (
-            <div className="race-section">
-              <h3>
-                {newRace.id ? "Modifier la race" : "Ajouter une nouvelle race"}
-              </h3>
-              <input
-                type="text"
-                name="name"
-                placeholder="Nom de la race"
-                value={newRace.name}
-                onChange={handleRaceChange}
-                className="input-field"
-              />
-              <div className="ql-editor-container">
-                <QuillEditor
-                  value={newRace.content}
-                  onChange={handleRaceContentChange}
-                />
-              </div>
-              <button className="save-button" onClick={handleAddOrUpdateRace}>
-                {newRace.id ? "Modifier" : "Ajouter"} la Race
-              </button>
-            </div>
-          )}
-
-          {/* Races List */}
-          {activeTab === "races" && (
-            <div className="race-list">
-              <h4>Liste des Races</h4>
-              <ul>
-                {races.map((race) => (
-                  <li key={race.id}>
-                    <h5>{race.Name || "Nom indisponible"}</h5>
-                    <button
-                      className="edit-list-item"
-                      onClick={() => handleEditRace(race)}
-                    >
-                      Modifier
-                    </button>
-                    <button
-                      className="delete-list-item"
-                      onClick={() => handleDeleteRace(race.id)}
-                    >
-                      Supprimer
-                    </button>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          )}
-
-          {/* Jobs Tab Content */}
-          {activeTab === "jobs" && (
-            <div className="bestiary-section">
-              <h3>
-                {newJob.id ? "Modifier le job" : "Ajouter un nouveau job"}
-              </h3>
-              <input
-                type="text"
-                name="name"
-                placeholder="Nom du job"
-                value={newJob.name}
-                onChange={handleJobChange}
-                className="input-field"
-              />
-              <div className="ql-editor-container">
-                <QuillEditor
-                  value={newJob.content}
-                  onChange={handleJobContentChange}
-                />
-              </div>
-              <button className="save-button" onClick={handleAddOrUpdateJob}>
-                {newJob.id ? "Modifier" : "Ajouter"} le Job
-              </button>
-            </div>
-          )}
-
-          {/* Jobs List */}
-          {activeTab === "jobs" && (
-            <div className="bestiary-list">
-              <h4>Liste des Jobs</h4>
-              <ul>
-                {jobs.map((job) => (
-                  <li key={job.id}>
-                    <h5>{job.name || "Nom indisponible"}</h5>
-                    <button
-                      className="edit-list-item"
-                      onClick={() => handleEditJob(job)}
-                    >
-                      Modifier
-                    </button>
-                    <button
-                      className="delete-list-item"
-                      onClick={() => handleDeleteJob(job.id)}
-                    >
-                      Supprimer
-                    </button>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          )}
+          {/* Tabs Section */}
+          <div className="tabs">
+            <button
+              className={activeTab === "univers" ? "active-tab" : ""}
+              onClick={() => handleTabChange("univers")}
+            >
+              Univers
+            </button>
+            <button
+              className={activeTab === "bestiaire" ? "active-tab" : ""}
+              onClick={() => handleTabChange("bestiaire")}
+            >
+              Bestiaire
+            </button>
+            <button
+              className={activeTab === "races" ? "active-tab" : ""}
+              onClick={() => handleTabChange("races")}
+            >
+              Races
+            </button>
+            <button
+              className={activeTab === "jobs" ? "active-tab" : ""}
+              onClick={() => handleTabChange("jobs")}
+            >
+              Jobs
+            </button>
+            <button
+              className={activeTab === "scenarios" ? "active-tab" : ""}
+              onClick={() => handleTabChange("scenarios")}
+            >
+              Scénarios
+            </button>
+          </div>
         </div>
-        <Footer />
+
+        {/* Universe Tab Content */}
+        {activeTab === "univers" && (
+          <div className="rpg-editor">
+            <WikiEditor defaultContent={wikiContent} onSave={handleSave} />
+          </div>
+        )}
+
+        {/* Scenarios Tab Content */}
+        {activeTab === "scenarios" && (
+          <div className="bestiary-section">
+            <h3>
+              {newScenario.id
+                ? "Modifier le scénario"
+                : "Ajouter un nouveau scénario"}
+            </h3>
+            <input
+              type="text"
+              name="name"
+              placeholder="Titre du scénario"
+              value={newScenario.name}
+              onChange={handleScenarioChange}
+              className="input-field"
+            />
+            <div className="ql-editor-container">
+              <QuillEditor
+                value={newScenario.content}
+                onChange={handleScenarioContentChange}
+              />
+            </div>
+            <button className="save-button" onClick={handleAddOrUpdateScenario}>
+              {newScenario.id ? "Modifier" : "Ajouter"} le Scénario
+            </button>
+          </div>
+        )}
+
+        {/* Scenarios List */}
+        {activeTab === "scenarios" && (
+          <div className="bestiary-list">
+            <h4>Liste des Scénarios</h4>
+            <ul>
+              {scenarios.map((scenario) => (
+                <li key={scenario.id}>
+                  <h5>{scenario.name || "Nom indisponible"}</h5>
+                  <button
+                    className="edit-list-item"
+                    onClick={() => handleEditScenario(scenario)}
+                  >
+                    Modifier
+                  </button>
+                  <button
+                    className="delete-list-item"
+                    onClick={() => handleDeleteScenario(scenario.id)}
+                  >
+                    Supprimer
+                  </button>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+
+        {/* Bestiary Tab Content */}
+        {activeTab === "bestiaire" && (
+          <div className="bestiary-section">
+            <h3>
+              {newBeast.id
+                ? "Modifier le monstre"
+                : "Ajouter un nouvel objet au bestiaire"}
+            </h3>
+            <input
+              type="text"
+              name="name"
+              placeholder="Nom du monstre"
+              value={newBeast.name}
+              onChange={handleBeastChange}
+              className="input-field"
+            />
+            <input
+              type="text"
+              name="type"
+              placeholder="Type de monstre"
+              value={newBeast.type}
+              onChange={handleBeastChange}
+              className="input-field"
+            />
+            <div className="ql-editor-container">
+              <QuillEditor
+                value={newBeast.content}
+                onChange={handleContentChange}
+              />
+            </div>
+
+            <button className="save-button" onClick={handleAddOrUpdateBeast}>
+              {newBeast.id ? "Modifier" : "Ajouter"} au Bestiaire
+            </button>
+          </div>
+        )}
+
+        {/* Bestiary List */}
+        {activeTab === "bestiaire" && (
+          <div className="bestiary-list">
+            <h4>Liste des Bestiaires</h4>
+            <ul>
+              {bestiaire.map((beast) => (
+                <li key={beast.id}>
+                  <h5>{beast.Name || "Nom indisponible"}</h5>
+                  <button
+                    className="edit-list-item"
+                    onClick={() => handleEditBeast(beast)}
+                  >
+                    Modifier
+                  </button>
+                  <button
+                    className="delete-list-item"
+                    onClick={() => handleDeleteBeast(beast.id)}
+                  >
+                    Supprimer
+                  </button>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+
+        {/* Races Tab Content */}
+        {activeTab === "races" && (
+          <div className="race-section">
+            <h3>
+              {newRace.id ? "Modifier la race" : "Ajouter une nouvelle race"}
+            </h3>
+            <input
+              type="text"
+              name="name"
+              placeholder="Nom de la race"
+              value={newRace.name}
+              onChange={handleRaceChange}
+              className="input-field"
+            />
+            <div className="ql-editor-container">
+              <QuillEditor
+                value={newRace.content}
+                onChange={handleRaceContentChange}
+              />
+            </div>
+            <button className="save-button" onClick={handleAddOrUpdateRace}>
+              {newRace.id ? "Modifier" : "Ajouter"} la Race
+            </button>
+          </div>
+        )}
+
+        {/* Races List */}
+        {activeTab === "races" && (
+          <div className="race-list">
+            <h4>Liste des Races</h4>
+            <ul>
+              {races.map((race) => (
+                <li key={race.id}>
+                  <h5>{race.Name || "Nom indisponible"}</h5>
+                  <button
+                    className="edit-list-item"
+                    onClick={() => handleEditRace(race)}
+                  >
+                    Modifier
+                  </button>
+                  <button
+                    className="delete-list-item"
+                    onClick={() => handleDeleteRace(race.id)}
+                  >
+                    Supprimer
+                  </button>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+
+        {/* Jobs Tab Content */}
+        {activeTab === "jobs" && (
+          <div className="bestiary-section">
+            <h3>{newJob.id ? "Modifier le job" : "Ajouter un nouveau job"}</h3>
+            <input
+              type="text"
+              name="name"
+              placeholder="Nom du job"
+              value={newJob.name}
+              onChange={handleJobChange}
+              className="input-field"
+            />
+            <div className="ql-editor-container">
+              <QuillEditor
+                value={newJob.content}
+                onChange={handleJobContentChange}
+              />
+            </div>
+            <button className="save-button" onClick={handleAddOrUpdateJob}>
+              {newJob.id ? "Modifier" : "Ajouter"} le Job
+            </button>
+          </div>
+        )}
+
+        {/* Jobs List */}
+        {activeTab === "jobs" && (
+          <div className="bestiary-list">
+            <h4>Liste des Jobs</h4>
+            <ul>
+              {jobs.map((job) => (
+                <li key={job.id}>
+                  <h5>{job.name || "Nom indisponible"}</h5>
+                  <button
+                    className="edit-list-item"
+                    onClick={() => handleEditJob(job)}
+                  >
+                    Modifier
+                  </button>
+                  <button
+                    className="delete-list-item"
+                    onClick={() => handleDeleteJob(job.id)}
+                  >
+                    Supprimer
+                  </button>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
       </div>
+      <Footer />
     </>
   );
 };
