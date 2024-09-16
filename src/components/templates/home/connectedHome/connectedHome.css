@@ -162,6 +162,14 @@ flex: 1 1 calc(20% - 40px);
     font-size: 1.2em;
 }
 
+.my-caracter-card.caracter{
+    height: 100%;
+    min-width: 150px;
+    width: 20%;
+    margin-right: 10px;
+}
+
+
 .button.view-more {
     background: linear-gradient(to right, rgba(255, 255, 255, 0), rgb(40, 40, 40));
     height: 80%;

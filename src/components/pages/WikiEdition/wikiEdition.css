@@ -48,7 +48,7 @@ display: flex;
 /* Tabs */
 .tabs {
     display: flex;
-    margin-top: 20px;
+    margin-top: 50px;
 }
 
 .tabs button {
@@ -234,3 +234,53 @@ background: linear-gradient(70deg, #a21d1d, #3d0303);
 .edit-list-item {
     background: linear-gradient(70deg, #d2d2d2, #bbbbbb);
 }
+
+.image-rpg-upload {
+    width: 150px;
+        /* Taille de l'icône ou de l'image */
+        height: 100px;
+        align-items:center ;
+        justify-content: center;
+    display: inline-block;
+    cursor: pointer;
+    position: relative;
+}
+
+.image-rpg-upload img {
+    width: 100%;
+    /* Taille de l'icône ou de l'image */
+    height: 100%;
+    margin: auto;
+    object-fit: cover;
+    border-radius: 5px;
+    /* Arrondir les coins si nécessaire */
+    transition: transform 0.3s ease;
+}
+
+.image-rpg-upload:hover img {
+    transform: scale(1.1);
+    /* L'image s'agrandit légèrement au survol */
+}
+
+.image-rpg-upload {
+    display: inline-block;
+    cursor: pointer;
+    position: relative;
+}
+
+.image-rpg-upload button{
+    margin : 2px;
+    border-radius: 5px;
+    padding: 8px;
+    padding-left: 15px;
+    padding-right: 15px;
+    border: 0px;
+    background-color: var(--main-blue-color);
+    color : #FFFFFF
+}
+
+
+.image-rpg-upload:hover img {
+    transform: scale(1.1);
+}
+

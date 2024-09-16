@@ -25,6 +25,7 @@ import Footer from "../../UI/organisms/footer/Footer";
 import "./wikiEdition.css";
 import { Router, useNavigate } from "react-router-dom";
 import Button from "../../UI/atoms/button/button";
+import addImage from "../../../assets/add-image-icon.png";
 
 const WikiEdition = () => {
   const { id } = useParams();
@@ -85,7 +86,7 @@ const WikiEdition = () => {
   const handleImageUpload = () => {
     if (selectedImage) {
       const formData = new FormData();
-      formData.append('file', selectedImage);
+      formData.append("file", selectedImage);
 
       dispatch(uploadWikiImage({ id, formData }))
         .then(() => {
@@ -678,25 +679,27 @@ const WikiEdition = () => {
               />
             </div>
             {/* Image Display Section */}
-            {wiki.imageFile && (
-              <div className="wiki-image">
-                <img
-                  src={wiki.imageFile.fichierImage}
-                  alt={wiki.imageFile.title || "Wiki Image"}
-                  style={{ maxWidth: "300px", maxHeight: "300px" }}
-                />
-              </div>
-            )}
-            {/* Image Upload Section */}
-            <div className="image-upload">
-              <input type="file" accept="image/*" onChange={handleImageChange} />
+
+            <div className="image-rpg-upload">
+              <img
+                src={wiki.imageFile ? wiki.imageFile.fichierImage : addImage}
+                alt={"Ajouter image"}
+                onClick={() => document.getElementById("file-upload").click()}
+              />
+              <input
+                type="file"
+                id="file-upload"
+                accept="image/*"
+                onChange={handleImageChange}
+                style={{ display: "none" }}
+              />
               <button onClick={handleImageUpload}>Upload Image</button>
             </div>
             {/* Display Wiki Status */}
             <div className="wiki-status">
               {/* Your existing status change buttons here */}
             </div>
-          
+
             {/* Display Wiki Status */}
             <div className="wiki-status">
               {wiki.Status === "inProgress" && (
@@ -917,7 +920,7 @@ const WikiEdition = () => {
           <div className="race-list">
             <h4>Liste des Races</h4>
             <ul>
-              {races.map((race) => (
+              {races?.map((race) => (
                 <li key={race.id}>
                   <h5>{race.Name || "Nom indisponible"}</h5>
                   <button
