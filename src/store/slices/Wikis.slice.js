@@ -142,8 +142,8 @@ export const deleteRace = createAsyncThunk(
 // Job actions
 export const addJob = createAsyncThunk(
     'wiki/addJob',
-    async ({ WikiId, Name, Content }) => {
-      const bdy = { name: Name, content: Content };
+    async ({ WikiId, name, Content }) => {
+      const bdy = { name, content: Content };
       try {
         const response = await api.post(`${API_URL}/wikis/${WikiId}/jobs`, bdy);
         return response.data;
@@ -153,6 +153,7 @@ export const addJob = createAsyncThunk(
       }
     }
   );
+  
   
   export const updateJob = createAsyncThunk(
     'wiki/updateJob',
