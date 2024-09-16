@@ -81,6 +81,10 @@ img.icone_user {
     right: 0;
 }
 
+.sub-menu p{
+    margin: 5px
+}
+
 .sub-menu li {
     margin: 0;
     padding: 4px;
