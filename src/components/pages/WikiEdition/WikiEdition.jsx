@@ -33,11 +33,13 @@ const WikiEdition = () => {
   const navigate = useNavigate();
   const wiki = useSelector((state) => state.wikis.wikiInfo);
   const wikiStatus = useSelector((state) => state.wikis.status);
+  const [loading, setLoading] = useState(true); // New loading state
 
   // State for the wiki's name and content
   const [wikiName, setWikiName] = useState("");
   const [wikiContent, setWikiContent] = useState("");
   const [selectedImage, setSelectedImage] = useState(null);
+  
 
   // State for managing bestiaries
   const [bestiaire, setBestiaire] = useState([]);
@@ -96,6 +98,24 @@ const WikiEdition = () => {
         });
     }
   };
+
+  // Function to reset all local states
+  const resetLocalStates = () => {
+    setWikiName("");
+    setWikiContent("");
+    setBestiaire([]);
+    setRaces([]);
+    setJobs([]);
+    setScenarios([]);
+    setSelectedImage(null);
+  };
+
+  useEffect(() => {
+    resetLocalStates(); // Reset states before fetching new data
+    setLoading(true); // Set loading to true when starting the fetch
+    dispatch(fetchWiki(id)).then(() => setLoading(false)); // Fetch the new wiki data and update loading status
+  }, [dispatch, id]);
+
 
   useEffect(() => {
     if (wikiStatus === "idle") {
@@ -636,7 +656,9 @@ const WikiEdition = () => {
       setActiveTab(tab);
     }
   };
-
+  if (loading) {
+    return <div className="loading-indicator">Chargement en cours...</div>;
+  }
   return (
     <>
       <div className="background-hexa image edition-rpg"></div>
