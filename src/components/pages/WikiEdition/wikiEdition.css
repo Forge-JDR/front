@@ -268,7 +268,7 @@ background: linear-gradient(70deg, #a21d1d, #3d0303);
     position: relative;
 }
 
-.image-rpg-upload button{
+div:has(.image-rpg-upload)> button{
     margin : 2px;
     border-radius: 5px;
     padding: 8px;
@@ -276,7 +276,12 @@ background: linear-gradient(70deg, #a21d1d, #3d0303);
     padding-right: 15px;
     border: 0px;
     background-color: var(--main-blue-color);
-    color : #FFFFFF
+    color : #FFFFFF;
+    cursor: pointer;
+}
+
+.statut-info-publish{
+    display: none;
 }
 
 
@@ -284,3 +289,7 @@ background: linear-gradient(70deg, #a21d1d, #3d0303);
     transform: scale(1.1);
 }
 
+.message-waiting-publish{
+font-size: 0.9rem;
+color: #c73703;
+}

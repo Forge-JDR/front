@@ -87,7 +87,7 @@ const Wiki = ({ ...props }) => {
                     <h4>{job.name}</h4>
                     <div
                       dangerouslySetInnerHTML={{
-                        __html: renderDeltaToHtml(job.content),
+                        __html: renderDeltaToHtml(job.Content),
                       }}
                     />
                     <div className="separator-item"></div>
