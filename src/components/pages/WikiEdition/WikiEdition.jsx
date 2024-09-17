@@ -39,7 +39,6 @@ const WikiEdition = () => {
   const [wikiName, setWikiName] = useState("");
   const [wikiContent, setWikiContent] = useState("");
   const [selectedImage, setSelectedImage] = useState(null);
-  
 
   // State for managing bestiaries
   const [bestiaire, setBestiaire] = useState([]);
@@ -115,7 +114,6 @@ const WikiEdition = () => {
     setLoading(true); // Set loading to true when starting the fetch
     dispatch(fetchWiki(id)).then(() => setLoading(false)); // Fetch the new wiki data and update loading status
   }, [dispatch, id]);
-
 
   useEffect(() => {
     if (wikiStatus === "idle") {
@@ -681,11 +679,21 @@ const WikiEdition = () => {
             {/* Image Display Section */}
 
             <div className="image-rpg-upload">
-              <img
-                src={wiki.imageFile ? wiki.imageFile.fichierImage : addImage}
-                alt={"Ajouter image"}
-                onClick={() => document.getElementById("file-upload").click()}
-              />
+              {wiki.imageFile ? (
+                <img
+                  src={wiki.imageFile?.fichierImage}
+                  alt={"Ajouter image"}
+                  onClick={() => document.getElementById("file-upload").click()}
+                />
+              ) : (
+                <img
+                  src={addImage}
+                  alt={"Ajouter image"}
+                  onClick={() => document.getElementById("file-upload").click()}
+                  style={{ width: "45%", height: "75%" }}
+                />
+              )}
+
               <input
                 type="file"
                 id="file-upload"
@@ -693,8 +701,8 @@ const WikiEdition = () => {
                 onChange={handleImageChange}
                 style={{ display: "none" }}
               />
-              <button onClick={handleImageUpload}>Upload Image</button>
             </div>
+            <button onClick={handleImageUpload}>Upload Image</button>
             {/* Display Wiki Status */}
             <div className="wiki-status">
               {/* Your existing status change buttons here */}
@@ -726,9 +734,14 @@ const WikiEdition = () => {
                   Annuler la publication
                 </Button>
               )}
+              <p className="statut-info-publish">Status: {wiki.Status}</p>
+              {wiki.Status === "pendingToPublish" && (
+                <p className="message-waiting-publish">
+                  Votre demande sera prochainement étudié par nos admins
+                </p>
+              )}
             </div>
           </div>
-          <p>Status: {wiki.Status}</p>
 
           {/* Tabs Section */}
           <div className="tabs">
@@ -788,7 +801,7 @@ const WikiEdition = () => {
               onChange={handleScenarioChange}
               className="input-field"
             />
-            <div className="ql-editor-container">
+            <div className="editor-container">
               <QuillEditor
                 value={newScenario.content}
                 onChange={handleScenarioContentChange}
@@ -850,7 +863,7 @@ const WikiEdition = () => {
               onChange={handleBeastChange}
               className="input-field"
             />
-            <div className="ql-editor-container">
+            <div className="editor-container">
               <QuillEditor
                 value={newBeast.content}
                 onChange={handleContentChange}
@@ -903,7 +916,7 @@ const WikiEdition = () => {
               onChange={handleRaceChange}
               className="input-field"
             />
-            <div className="ql-editor-container">
+            <div className="editor-container">
               <QuillEditor
                 value={newRace.content}
                 onChange={handleRaceContentChange}
@@ -953,7 +966,7 @@ const WikiEdition = () => {
               onChange={handleJobChange}
               className="input-field"
             />
-            <div className="ql-editor-container">
+            <div className="editor-container">
               <QuillEditor
                 value={newJob.content}
                 onChange={handleJobContentChange}
