@@ -8,9 +8,7 @@ import eyeIcon from "../../../assets/icone/eye-icon.png";
 import Button from "../../UI/atoms/button/button";
 import FieldForm from "../../UI/molecules/FieldForm/FieldForm";
 import Form from "../../UI/organisms/Form";
-import { setMessage } from "../../../store/slices/message.slice";
-import { register } from "../../../store/store";
-import { login } from "../../../store/store";
+import { register, login } from "../../../store/store";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
@@ -33,7 +31,7 @@ const Signup = () => {
   const [passwordError, setPasswordError] = useState("");
   const [confirmedPasswordError, setConfirmedPasswordError] = useState("");
 
-  // Nouveaux états pour gérer la visibilité des mots de passe
+  // States for password visibility
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmedPassword, setShowConfirmedPassword] = useState(false);
 
@@ -43,7 +41,7 @@ const Signup = () => {
 
     if (!validateFields()) {
       setIsLoading(false);
-      return; // Ne pas envoyer la requête si la validation échoue
+      return; // Do not send the request if validation fails
     }
 
     try {
@@ -55,8 +53,7 @@ const Signup = () => {
         })
       ).unwrap();
 
-      let loginResult;
-      loginResult = await dispatch(
+      let loginResult = await dispatch(
         login({
           username: Email,
           password: Password,
@@ -91,8 +88,13 @@ const Signup = () => {
       setPseudoError("");
     }
 
+    // Email validation
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!Email) {
       setEmailError("Ce champ est obligatoire");
+      valid = false;
+    } else if (!emailPattern.test(Email)) {
+      setEmailError("Veuillez entrer une adresse e-mail valide");
       valid = false;
     } else {
       setEmailError("");
@@ -102,9 +104,7 @@ const Signup = () => {
       setPasswordError("Ce champ est obligatoire");
       valid = false;
     } else if (Password.length < 8 || Password.length > 16) {
-      setPasswordError(
-        "Le mot de passe doit contenir entre 8 et 16 caractères"
-      );
+      setPasswordError("Le mot de passe doit contenir entre 8 et 16 caractères");
       valid = false;
     } else {
       setPasswordError("");
@@ -146,13 +146,14 @@ const Signup = () => {
             onChange={(e) => setEmail(e.target.value)}
             errorMessage={emailError}
           />
-          {/* Champ de mot de passe avec icône pour afficher/masquer */}
+
+          {/* Password Field with Icon to Show/Hide */}
           <div className="password-field">
             <FieldForm
               label={t("signup.password") + " *"}
               name="password"
               required={true}
-              type={showPassword ? "text" : "password"} // Bascule entre text et password
+              type={showPassword ? "text" : "password"}
               value={Password}
               onChange={(e) => setPassword(e.target.value)}
               errorMessage={passwordError}
@@ -165,7 +166,7 @@ const Signup = () => {
             </span>
           </div>
 
-          {/* Champ de confirmation du mot de passe avec icône pour afficher/masquer */}
+          {/* Confirm Password Field with Icon to Show/Hide */}
           <div className="password-field">
             <FieldForm
               label={t("signup.confirmPassword") + " *"}
