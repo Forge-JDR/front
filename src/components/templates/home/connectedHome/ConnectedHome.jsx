@@ -58,7 +58,9 @@ const ConnectedHome = () => {
       return <p>Chargement des JDR...</p>;
     }
 
-    return wikis.map(
+    const recentUserWikis = wikis.slice(0, 5);
+
+    return recentUserWikis.map(
       (el) =>
         el.Status === "published" && (
           <div
