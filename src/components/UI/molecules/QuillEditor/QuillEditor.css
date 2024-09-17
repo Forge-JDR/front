@@ -1,19 +1,37 @@
 /* Quill editor container */
 .ql-editor-container {
   position: relative;
-  z-index: 1; /* Assurez-vous que l'éditeur n'est pas devant les autres champs */
-  margin-bottom: 20px; /* Espace entre l'éditeur et les autres éléments */
+  margin-bottom: 20px;
+  z-index: 1;
+}
+
+/* Quill toolbar */
+.ql-toolbar {
+  z-index: 100; /* Place la barre d'outils au-dessus de tout autre élément */
+  position: relative;
+  overflow: visible !important; /* Assurez-vous que la barre d'outils peut s'étendre */
 }
 
 /* Quill editor */
 .ql-editor {
-  min-height: 150px; /* Ajustez la hauteur minimale de l'éditeur */
-  max-height: 300px; /* Limitez la hauteur maximale */
-  overflow-y: auto; /* Ajouter un défilement vertical si le contenu dépasse */
+  min-height: 150px;
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+/* Assurez-vous que les options du picker ne soient pas coupées */
+.ql-picker-options {
+  z-index: 200; /* Élévation des options du picker au-dessus des autres éléments */
+  overflow: visible !important;
+}
+
+/* Conteneurs parents de l'éditeur */
+.ql-editor-container, .ql-toolbar, .ql-picker {
+  overflow: visible !important;
 }
 
 /* Boutons ou autres champs d'entrée */
 .input-field, .save-button {
   position: relative;
-  z-index: 2; /* Place les autres champs devant l'éditeur si nécessaire */
+  z-index: 2;
 }

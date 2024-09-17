@@ -62,20 +62,29 @@ const WikiEditor = ({ children, defaultContent, onSave }) => {
 
   const saveContent = async () => {
     const contentToSave = editorInstance.current.getContents();
-    setIsSaving(true); // Start saving
-
-    if (onSave) {
-      await onSave(contentToSave); // Call the save function
+    setIsSaving(true); // Début de la sauvegarde
+    
+    try {
+      if (onSave) {
+        await onSave(contentToSave); // Appel de la fonction de sauvegarde
+      }
+  
+      // Si la sauvegarde réussit, affiche le message de succès
+      setSaveSuccess(true);
+  
+      // Masquer le message de succès après 3 secondes
+      setTimeout(() => {
+        setSaveSuccess(false);
+      }, 3000);
+    } catch (error) {
+      console.error("Erreur lors de la sauvegarde :", error);
+      // Vous pouvez afficher un message d'erreur ici si nécessaire
+    } finally {
+      setIsSaving(false); // Fin de la sauvegarde
     }
-
-    setIsSaving(false); // End saving
-    setSaveSuccess(true); // Show success message
-
-    // Hide the success message after 3 seconds
-    setTimeout(() => {
-      setSaveSuccess(false);
-    }, 3000);
   };
+  
+  
 
   return (
     <div>

@@ -78,11 +78,22 @@ const WikiEdition = () => {
 
   // Handle image file change
   const handleImageChange = (e) => {
+    if (wiki.Status === "published" || wiki.Status === "pendingToPublish") {
+      alert(
+        "La modification n'est pas possible pour un wiki publié ou en attente de publication."
+      );
+    } else {
     setSelectedImage(e.target.files[0]);
+    }
   };
 
   // Handle image upload
   const handleImageUpload = () => {
+    if (wiki.Status === "published" || wiki.Status === "pendingToPublish") {
+      alert(
+        "La modification n'est pas possible pour un wiki publié ou en attente de publication."
+      );
+    } else {
     if (selectedImage) {
       const formData = new FormData();
       formData.append("file", selectedImage);
@@ -96,6 +107,7 @@ const WikiEdition = () => {
           console.log("Erreur lors de l'upload de l'image :", error);
         });
     }
+  }
   };
 
   // Function to reset all local states
@@ -132,36 +144,52 @@ const WikiEdition = () => {
     }
   }, [wiki]);
 
-  // Handle changing the wiki's status
-  const handleChangeStatus = (newStatus) => {
-    const dataToUpdate = { Status: newStatus };
-    dispatch(updateWiki({ id, dataToUpdate }))
-      .then(() => {
-        // Optionally, fetch the updated wiki info after the status change
-        dispatch(fetchWiki(id));
-      })
-      .catch((error) => {
-        console.log("Erreur lors de la mise à jour du statut du wiki :", error);
-      });
-  };
+// Handle changing the wiki's status
+const handleChangeStatus = (newStatus) => {
+  // Check if the user is trying to publish the wiki while it's in progress
+  if (wiki.Status === "inProgress" && newStatus === "pendingToPublish") {
+    const confirmPublish = window.confirm(
+      "Êtes-vous sûr de vouloir demander la publication de ce wiki ? Votre demande sera prochainement étudié par nos admins."
+    );
+    if (!confirmPublish) {
+      // If the user cancels, exit the function
+      return;
+    }
+  }
 
-  // Handle saving the main content (universe)
-  const handleSave = (updatedContent) => {
-    if (wiki.Status === "published" || wiki.Status === "pendingToPublish") {
-      alert(
-        "La modification n'est pas possible pour un wiki publié ou en attente de publication."
-      );
-      navigate(`/wiki/${id}`);
-    } else {
-      if (activeTab === "univers") {
-        const dataToUpdate = {
-          Name: wikiName,
-          Content: JSON.stringify(updatedContent),
-        };
-        dispatch(updateWiki({ id, dataToUpdate }));
+  const dataToUpdate = { Status: newStatus };
+  dispatch(updateWiki({ id, dataToUpdate }))
+    .then(() => {
+      // Optionally, fetch the updated wiki info after the status change
+      dispatch(fetchWiki(id));
+    })
+    .catch((error) => {
+      console.log("Erreur lors de la mise à jour du statut du wiki :", error);
+    });
+};
+
+
+const handleSave = async (updatedContent) => {
+  if (wiki.Status === "published" || wiki.Status === "pendingToPublish") {
+    alert(
+      "La modification n'est pas possible pour un wiki publié ou en attente de publication."
+    );
+  } else {
+    if (activeTab === "univers") {
+      const dataToUpdate = {
+        Name: wikiName,
+        Content: JSON.stringify(updatedContent),
+      };
+      try {
+        await dispatch(updateWiki({ id, dataToUpdate })); // Attendre la fin de la mise à jour
+      } catch (error) {
+        console.error("Erreur lors de la mise à jour :", error);
+        throw error; // Rejeter l'erreur pour la propager à WikiEditor
       }
     }
-  };
+  }
+};
+
 
   // Handlers for bestiary
   const handleBeastChange = (e) => {
@@ -169,7 +197,6 @@ const WikiEdition = () => {
       alert(
         "La modification n'est pas possible pour un wiki publié ou en attente de publication."
       );
-      navigate(`/wiki/${id}`);
     } else {
       const { name, value } = e.target;
       setNewBeast((prev) => ({ ...prev, [name]: value }));
@@ -181,7 +208,6 @@ const WikiEdition = () => {
       alert(
         "La modification n'est pas possible pour un wiki publié ou en attente de publication."
       );
-      navigate(`/wiki/${id}`);
     } else {
       setNewBeast((prev) => ({ ...prev, content }));
     }
@@ -192,7 +218,6 @@ const WikiEdition = () => {
       alert(
         "La modification n'est pas possible pour un wiki publié ou en attente de publication."
       );
-      navigate(`/wiki/${id}`);
     } else {
       if (newBeast.name && newBeast.content && newBeast.type) {
         if (newBeast.id) {
@@ -263,7 +288,6 @@ const WikiEdition = () => {
       alert(
         "La modification n'est pas possible pour un wiki publié ou en attente de publication."
       );
-      navigate(`/wiki/${id}`);
     } else {
       dispatch(deleteBestiary({ WikiId: id, id: beastId }))
         .then(() => {
@@ -282,7 +306,6 @@ const WikiEdition = () => {
       alert(
         "La modification n'est pas possible pour un wiki publié ou en attente de publication."
       );
-      navigate(`/wiki/${id}`);
     } else {
       setNewBeast({
         id: beast.id,
@@ -299,7 +322,6 @@ const WikiEdition = () => {
       alert(
         "La modification n'est pas possible pour un wiki publié ou en attente de publication."
       );
-      navigate(`/wiki/${id}`);
     } else {
       const { name, value } = e.target;
       setNewRace((prev) => ({ ...prev, [name]: value }));
@@ -311,7 +333,6 @@ const WikiEdition = () => {
       alert(
         "La modification n'est pas possible pour un wiki publié ou en attente de publication."
       );
-      navigate(`/wiki/${id}`);
     } else {
       setNewRace((prev) => ({ ...prev, content }));
     }
@@ -322,7 +343,6 @@ const WikiEdition = () => {
       alert(
         "La modification n'est pas possible pour un wiki publié ou en attente de publication."
       );
-      navigate(`/wiki/${id}`);
     } else {
       if (newRace.name && newRace.content) {
         if (newRace.id) {
@@ -376,7 +396,6 @@ const WikiEdition = () => {
       alert(
         "La modification n'est pas possible pour un wiki publié ou en attente de publication."
       );
-      navigate(`/wiki/${id}`);
     } else {
       dispatch(deleteRace({ WikiId: id, id: raceId }))
         .then(() => {
@@ -395,7 +414,6 @@ const WikiEdition = () => {
       alert(
         "La modification n'est pas possible pour un wiki publié ou en attente de publication."
       );
-      navigate(`/wiki/${id}`);
     } else {
       setNewRace({
         id: race.id,
@@ -411,7 +429,6 @@ const WikiEdition = () => {
       alert(
         "La modification n'est pas possible pour un wiki publié ou en attente de publication."
       );
-      navigate(`/wiki/${id}`);
     } else {
       const { name, value } = e.target;
       setNewJob((prev) => ({ ...prev, [name]: value }));
@@ -423,7 +440,6 @@ const WikiEdition = () => {
       alert(
         "La modification n'est pas possible pour un wiki publié ou en attente de publication."
       );
-      navigate(`/wiki/${id}`);
     } else {
       setNewJob((prev) => ({ ...prev, content }));
     }
@@ -434,7 +450,6 @@ const WikiEdition = () => {
       alert(
         "La modification n'est pas possible pour un wiki publié ou en attente de publication."
       );
-      navigate(`/wiki/${id}`);
     } else {
       if (newJob.name && newJob.content) {
         if (newJob.id) {
@@ -488,7 +503,6 @@ const WikiEdition = () => {
       alert(
         "La modification n'est pas possible pour un wiki publié ou en attente de publication."
       );
-      navigate(`/wiki/${id}`);
     } else {
       dispatch(deleteJob({ WikiId: id, id: jobId }))
         .then(() => {
@@ -507,7 +521,6 @@ const WikiEdition = () => {
       alert(
         "La modification n'est pas possible pour un wiki publié ou en attente de publication."
       );
-      navigate(`/wiki/${id}`);
     } else {
       setNewJob({
         id: job.id,
@@ -523,7 +536,6 @@ const WikiEdition = () => {
       alert(
         "La modification n'est pas possible pour un wiki publié ou en attente de publication."
       );
-      navigate(`/wiki/${id}`);
     } else {
       const { name, value } = e.target;
       setNewScenario((prev) => ({ ...prev, [name]: value }));
@@ -535,7 +547,6 @@ const WikiEdition = () => {
       alert(
         "La modification n'est pas possible pour un wiki publié ou en attente de publication."
       );
-      navigate(`/wiki/${id}`);
     } else {
       setNewScenario((prev) => ({ ...prev, content }));
     }
@@ -546,7 +557,6 @@ const WikiEdition = () => {
       alert(
         "La modification n'est pas possible pour un wiki publié ou en attente de publication."
       );
-      navigate(`/wiki/${id}`);
     } else {
       if (newScenario.name && newScenario.content) {
         if (newScenario.id) {
@@ -602,7 +612,6 @@ const WikiEdition = () => {
       alert(
         "La modification n'est pas possible pour un wiki publié ou en attente de publication."
       );
-      navigate(`/wiki/${id}`);
     } else {
       dispatch(deleteScenario({ WikiId: id, id: scenarioId }))
         .then(() => {
@@ -623,7 +632,6 @@ const WikiEdition = () => {
       alert(
         "La modification n'est pas possible pour un wiki publié ou en attente de publication."
       );
-      navigate(`/wiki/${id}`);
     } else {
       setNewScenario({
         id: scenario.id,
@@ -638,7 +646,6 @@ const WikiEdition = () => {
       alert(
         "La modification n'est pas possible pour un wiki publié ou en attente de publication."
       );
-      navigate(`/wiki/${id}`);
     } else {
       setWikiName(e.target.value);
     }
@@ -649,7 +656,6 @@ const WikiEdition = () => {
       alert(
         "La modification n'est pas possible pour un wiki publié ou en attente de publication."
       );
-      navigate(`/wiki/${id}`);
     } else {
       setActiveTab(tab);
     }

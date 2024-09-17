@@ -1,20 +1,17 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { store, fetchWikis } from "../../../store/store";
-import { Link } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-
 import "./discover.css";
 
 import forgeLogoTxt from "../../../assets/logo/logo_texte.svg";
 import defaultWikiImage from "../../../assets/wiki_default.png";
 import Footer from "../../UI/organisms/footer/Footer";
-
 import ConnectedNavbar from "../../templates/connectedNavBar/ConnectedNavbar";
 import CardRpgDiscover from "../../UI/organisms/CardRpgDiscover/CardRpgDiscover";
 
-const Discover = ({ ...props }) => {
+const Discover = () => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
   const wiki = useSelector((state) => state.wikis.wikisList);
@@ -24,13 +21,11 @@ const Discover = ({ ...props }) => {
   const [searchTerm, setSearchTerm] = useState(""); // État pour la recherche
 
   useEffect(() => {
-    if (wikiStatus === "idle") {
+    // Vérifiez si la liste des wikis est vide ou si le statut est "idle" avant de récupérer les wikis
+    if (wikiStatus === "idle" || wiki.length === 0) {
       dispatch(fetchWikis());
     }
-  }, [wikiStatus, dispatch]);
-
-  useEffect(() => {
-  });
+  }, [wikiStatus, dispatch, wiki.length]);
 
   // Filtrer les wikis en fonction du terme de recherche
   const filteredWikis = wiki?.filter((wiki) =>
@@ -38,7 +33,7 @@ const Discover = ({ ...props }) => {
   );
 
   const WikisElements = (wikiList) => {
-    if (!wikiList) return <p>On load</p>;
+    if (!wikiList) return <p>Chargement en cours...</p>;
 
     return wikiList.map((wiki) => {
       return (
@@ -78,10 +73,12 @@ const Discover = ({ ...props }) => {
             />
           </div>
           <div className="grid-rpg-published">
-            <div onLoad={() => store.dispatch(fetchWikis())}>
-              <div className="card-container-published-rpg">
-                {WikisElements(filteredWikis)}
-              </div>
+            <div className="card-container-published-rpg">
+              {wikiStatus === "loading" ? (
+                <p>Chargement en cours...</p>
+              ) : (
+                WikisElements(filteredWikis)
+              )}
             </div>
           </div>
         </div>
