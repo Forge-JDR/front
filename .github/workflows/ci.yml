@@ -1,0 +1,22 @@
+name: Vérifications front
+on:
+  push:
+    branches: [main, reprise]
+  pull_request:
+jobs:
+  test-and-build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: npm
+      - run: npm ci
+      - run: node --test --test-isolation=none tests/reprise/auth.test.mjs
+      - run: npm test -- --watchAll=false --runInBand
+        env:
+          CI: 'true'
+      - run: npm run build
+        env:
+          REACT_APP_URL_BACK: http://localhost:8741

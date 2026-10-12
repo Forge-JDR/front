@@ -1,15 +1,16 @@
 import React from "react";
+import { useSelector } from "react-redux";
 
 import "./home.css";
 
 import AnonymeHome from "../../templates/home/anonymeHome/AnonymeHome";
-import ConnectedHome from "../../templates/home/connectedHome/ConnectedHome";
+import Workshop from "../Workshop/Workshop";
 
 const Home = () => {
-  const token = localStorage.getItem("token");
+  const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
 
-  if (token) {
-    return <ConnectedHome></ConnectedHome>;
+  if (isLoggedIn) {
+    return <Workshop />;
   } else {
     return <AnonymeHome></AnonymeHome>;
   }

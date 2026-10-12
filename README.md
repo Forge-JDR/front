@@ -1,95 +1,40 @@
-# Getting Started with Create React App
+# Forge JDR — application web
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Le MVP de la branche `reprise` permet de gérer ses JDR personnalisés, modèles de fiche, parties, personnages et journal de campagne depuis l'atelier accessible après connexion.
 
-## Make sure you have node, unless :
+## Lancer en développement
 
-### installs nvm (Node Version Manager)
-`curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash`
+Prérequis : Node.js 22 ou 24 et npm. Démarrer d'abord l'API avec le README du dépôt [back](https://github.com/Forge-JDR/back/tree/reprise).
 
-### download and install Node.js
-`nvm install 20`
+```sh
+npm ci
+# Créer .env.local depuis .env.example si ce fichier n'existe pas encore.
+test -e .env.local || cp .env.example .env.local
+npm start
+```
 
-## Available Scripts
+Ouvrir `http://localhost:3000`, créer un compte, puis créer un JDR avec ses champs de personnage. Créer ensuite une partie, y ajouter plusieurs personnages et renseigner la progression et les séances.
 
-In the project directory, you can run:
+`REACT_APP_URL_BACK` doit contenir l'origine du serveur, par exemple `http://localhost:8741`, **sans `/api` final**. Les paramètres EmailJS sont facultatifs pour le parcours MVP ; ils concernent l'ancien formulaire de contact.
 
-### `npm start`
+## Vérifier
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+```sh
+node --test tests/reprise/auth.test.mjs
+npm test -- --watchAll=false --runInBand
+npm run build
+```
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+La CI utilise Node 24 et ajoute `--test-isolation=none` aux tests de session pour afficher chaque cas. Les tests de l'atelier vérifient les types des valeurs et les erreurs de chargement/sauvegarde.
 
-### `npm test`
+## Image de production
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+```sh
+docker build -f docker/react/Dockerfile --build-arg REACT_APP_URL_BACK=https://api.example.com -t forge-jdr-front:reprise .
+```
 
-### `npm run build`
+Le paramètre API est intégré **au build** : modifier l'environnement d'un conteneur déjà construit ne le change pas. Le conteneur Nginx écoute sur le port 3000 et gère les routes de l'application. `docker compose up --build` expose cette image localement sur `http://localhost:3000` avec l'API locale par défaut.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Les builds cloud avec interception TLS acceptent un secret BuildKit `proxy_ca`, sans désactiver la validation TLS.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-### Docker
-
-You can also launch the app with Docker using the following command:
-
-`docker-compose up`
-Build image : 
-docker build -t rg.fr-par.scw.cloud/registryforgejdr/frontforgejdr:0.1 -f ./docker/react/Dockerfile --build-arg REACT_APP_URL_BACK="https://backforgejdryr5nsvrg-container-back-forge-jdr.functions.fnc.fr-par.scw.cloud/api" .
-
-Run front : 
-docker run -d -p 3000:3000 -e REACT_APP_URL_BACK="https://backforgejdryr5nsvrg-container-back-forge-jdr.functions.fnc.fr-par.scw.cloud/api" rg.fr-par.scw.cloud/registryforgejdr/frontforgejdr:0.1
-
-Déployer le front sur Scaleway : 
-scw container container create name=container-front-forge-jdr registry-image=rg.fr-par.scw.cloud/registryforgejdr/frontforgejdr:0.2 min-scale=1 max-scale=1 memory-limit=128 cpu-limit=70 timeout=300s namespace-id=940522cc-2a4a-4ead-86a0-a37225e447c3 max-concurrency=1 protocol=unknown_protocol sandbox=v1 privacy=public port=3000 environment-variables.REACT_APP_URL_BACK="https://backforgejdryr5nsvrg-container-back-forge-jdr.functions.fnc.fr-par.scw.cloud/api"
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
-
-
-
+Voir [le plan de reprise](docs/REPRISE.md). Le MVP conserve les fonctions historiques ; invitations, collaboration et jeu en temps réel sont différés.

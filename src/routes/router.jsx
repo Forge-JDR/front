@@ -1,6 +1,7 @@
 import React from "react";
 
 import Home from "../components/pages/Home/Home";
+import Workshop from "../components/pages/Workshop/Workshop";
 import Login from "../components/pages/Login/Login";
 import Signup from "../components/pages/Signup/Signup";
 import Creation from "../components/pages/Creation/Creation";
@@ -25,6 +26,10 @@ export const Router = () => {
     {
       path: "/",
       element: <Home />,
+    },
+    {
+      path: "atelier",
+      element: <RequireAuth><Workshop /></RequireAuth>,
     },
     {
       path: "login",

@@ -1,0 +1,42 @@
+.workshop { min-height: 100vh; background: #f4f1eb; color: #242d32; font-family: system-ui, sans-serif; }
+.workshop * { box-sizing: border-box; }
+.workshop-header { display: flex; justify-content: space-between; gap: 24px; padding: 24px 5%; border-bottom: 1px solid #d9d7cf; background: #fff; }
+.workshop a { color: #244b49; }
+.workshop-brand { font-weight: 800; letter-spacing: .14em; text-decoration: none; }
+.workshop nav { display: flex; gap: 20px; flex-wrap: wrap; }
+.workshop main { max-width: 1200px; margin: auto; padding: 48px 24px; }
+.workshop-intro { margin-bottom: 36px; }
+.workshop h1 { font-size: clamp(2rem, 4vw, 3.2rem); margin: 12px 0; letter-spacing: -.04em; }
+.workshop h2 { margin: 0 0 20px; font-size: 1.5rem; }
+.workshop h3 { margin-top: 26px; }
+.workshop p { line-height: 1.6; }
+.workshop .eyebrow { color: #6a5041; font-size: .8rem; font-weight: 700; letter-spacing: .15em; }
+.workshop-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 24px; }
+.workshop-panel { padding: 28px; background: #fff; border: 1px solid #dedbd3; border-radius: 14px; }
+.workshop-campaign { margin-top: 28px; }
+.workshop-list { list-style: none; padding: 0; }
+.workshop-list li { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 14px 0; border-bottom: 1px solid #eeeae3; }
+.workshop-list li strong, .workshop-list li span { display: block; overflow-wrap: anywhere; }
+.workshop .muted { color: #67716d; font-size: .9rem; }
+.workshop form { display: grid; gap: 16px; margin-top: 20px; }
+.workshop label { display: grid; gap: 7px; font-weight: 600; font-size: .95rem; }
+.workshop input:not([type=checkbox]), .workshop select, .workshop textarea { width: 100%; padding: 11px; border: 1px solid #afb9b2; border-radius: 6px; background: #fff; color: #242d32; font: inherit; }
+.workshop input[type=checkbox] { width: 20px; height: 20px; }
+.workshop textarea { min-height: 100px; resize: vertical; }
+.workshop button { padding: 11px 16px; background: #244b49; color: #fff; border: 1px solid #244b49; border-radius: 6px; font: inherit; cursor: pointer; }
+.workshop button.secondary { color: #244b49; background: #fff; }
+.workshop button:disabled { opacity: .6; cursor: wait; }
+.workshop :focus-visible { outline: 3px solid #b66d36; outline-offset: 3px; }
+.workshop summary { cursor: pointer; color: #244b49; font-weight: 650; padding: 14px 0; }
+.workshop fieldset { padding: 16px; border: 1px solid #dedbd3; border-radius: 8px; min-width: 0; }
+.workshop-field { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 18px; }
+.workshop-field button { grid-column: span 2; justify-self: start; }
+.workshop-actions { display: flex; gap: 12px; flex-wrap: wrap; }
+.workshop-error, .workshop-success { padding: 14px; border-radius: 6px; }
+.workshop-error { background: #ffede8; color: #812e1d; }
+.workshop-success { background: #e6f1e9; color: #234e35; }
+.workshop-session { padding: 18px; margin: 12px 0; border-left: 3px solid #b66d36; background: #faf8f4; }
+.workshop-session h4 { margin: 8px 0; }
+.workshop-session p { white-space: pre-wrap; overflow-wrap: anywhere; }
+.workshop footer { padding: 24px; text-align: center; color: #67716d; }
+@media (max-width: 760px) { .workshop-grid { grid-template-columns: 1fr; } .workshop-panel { padding: 20px; } .workshop-header { flex-direction: column; } }

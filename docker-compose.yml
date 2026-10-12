@@ -1,17 +1,9 @@
-version: '3'
 services:
-     # React nginx project container
-     app:
-         build: 
-           context: .
-           dockerfile: docker/react/Dockerfile
-         container_name: react
-         ports:
-           - "3000:3000"
-
-         restart: always
-         networks:
-             - prod-environment
-
-networks:
-  prod-environment:
+  app:
+    build:
+      context: .
+      dockerfile: docker/react/Dockerfile
+      args:
+        REACT_APP_URL_BACK: ${REACT_APP_URL_BACK:-http://localhost:8741}
+    ports:
+      - "127.0.0.1:3000:3000"
