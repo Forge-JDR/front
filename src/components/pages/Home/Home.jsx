@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 
 import "./home.css";
 
-import AnonymeHome from "../../templates/home/anonymeHome/AnonymeHome";
+import Landing from "../Landing/Landing";
 import Workshop from "../Workshop/Workshop";
 
 const Home = () => {
@@ -12,7 +12,7 @@ const Home = () => {
   if (isLoggedIn) {
     return <Workshop />;
   } else {
-    return <AnonymeHome></AnonymeHome>;
+    return <Landing />;
   }
 };
 

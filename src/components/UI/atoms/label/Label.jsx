@@ -1,8 +1,9 @@
 import React from "react";
 import "./label.css";
-
-const Label = ({ children, ...rest }) => {
-  return <label {...rest}>{children}</label>;
-};
-
-export default Label;
+export default function Label({ children, className = "", ...props }) {
+  return (
+    <label className={`legacy-label ${className}`} {...props}>
+      {children}
+    </label>
+  );
+}

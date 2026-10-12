@@ -1,48 +1,93 @@
-.user-account-page {
-    max-width: 500px;
-    width: 50%;
-    margin: 0 auto;
-    padding: 20px;
-    border: 1px solid #ccc;
-    background-color: #f9f9f9;
-    border-radius: 10px;
+.account-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 250px;
+  gap: 26px;
+  align-items: start;
+}
+.account-forms {
+  display: grid;
+  gap: 24px;
+}
+.account-section {
+  padding: 28px;
+}
+.account-section header {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+  margin-bottom: 27px;
+}
+.account-icon {
+  display: grid;
+  place-items: center;
+  width: 45px;
+  height: 45px;
+  border-radius: 11px;
+  background: var(--surface-soft);
+  color: #748969;
+  flex-shrink: 0;
+}
+.account-section h2 {
+  margin: 0 0 5px;
+  font-size: 17px;
+}
+.account-section header p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 11px;
+}
+.account-section fieldset {
+  border: 0;
+  margin: 0;
+  padding: 0;
+  min-width: 0;
+  display: grid;
+  gap: 20px;
+}
+.account-aside {
+  padding: 30px 22px;
+  text-align: center;
+}
+.account-avatar {
+  width: 64px;
+  height: 64px;
+  font-size: 24px;
+  margin-bottom: 18px;
+}
+.account-aside h3 {
+  font-size: 15px;
+}
+.account-aside > p {
+  font-size: 10px;
+  color: var(--muted);
+}
+.account-aside > div {
+  margin-top: 28px;
+  padding-top: 23px;
+  border-top: 1px solid var(--line);
+  text-align: left;
+}
+.account-aside > div svg {
+  color: #7f9270;
+  margin-bottom: 15px;
+}
+.account-aside h4 {
+  font-size: 12px;
+}
+.account-aside div p {
+  font-size: 10px;
+  color: var(--muted);
+}
+@media (max-width: 1000px) {
+  .account-layout {
+    grid-template-columns: 1fr;
   }
-  
-  .user-form-section {
-    margin-bottom: 20px;
+  .account-aside {
+    display: none;
   }
-  
-  .form-group {
-    margin-bottom: 15px;
+}
+@media (max-width: 760px) {
+  .account-section {
+    padding: 22px;
   }
-  
-  /* .form-group label {
-    display: block;
-    margin-bottom: 5px;
-  }
-  
-  .form-group input {
-    width: 100%;
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-  } */
-  
-  .backgroud-user-account{
-    width: 100%;
-      height: auto;
-      min-height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      background: linear-gradient(70deg, var(--main-blue-color), var(--main-purple-color));
-  }
-
-  h3{
-    margin-bottom: 20px;
-  }
-
-    h2{
-      margin-bottom: 10px;
-    }
-  
+}

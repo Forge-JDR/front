@@ -1,82 +1,67 @@
 import React, { useState } from "react";
-import { useTranslation } from "react-i18next";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-
-import Button from "../../UI/atoms/button/button";
-// import SubmitButton from "../../UI/molecules/submitButton/submitButton";
-import FieldForm from "../../UI/molecules/FieldForm/FieldForm";
-// import CancelButton from "../../UI/molecules/cancelButton/cancelButton";
-
 import { addWiki } from "../../../store/store";
-
-import iconeUplaod from "../../../assets/upload_icone.svg";
-
-import "./newRpgForm.css";
-
-const NewRpgForm = ({ closeForm, ...rest }) => {
-  const [rpgName, setRpgName] = useState("");
-  const [style, setStyle] = useState("");
-  const { t } = useTranslation();
+import { Button, Field, Modal, Notice } from "../../design-system";
+export default function NewRpgForm({ closeForm }) {
+  const [name, setName] = useState("");
+  const [description, setDescription] = useState("");
+  const [busy, setBusy] = useState(false);
+  const [error, setError] = useState("");
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
-  const addNewRpg = () => {
-    dispatch(
-      addWiki({
-        Name: rpgName,
-        Content: style,
-      })
-    )
-      .then((response) => {
-        if (response.meta.requestStatus === "fulfilled") {
-          const newWikiId = response.payload.id;
-          navigate(`/wiki/edit/${newWikiId}`);
-        }
-      })
-      .catch((error) => {
-        console.error("Failed to add wiki: ", error);
-      });
+  const submit = async (event) => {
+    event.preventDefault();
+    setBusy(true);
+    setError("");
+    try {
+      const data = await dispatch(
+        addWiki({
+          Name: name,
+          Content: JSON.stringify({ ops: [{ insert: description + "\n" }] }),
+        }),
+      ).unwrap();
+      closeForm();
+      navigate(`/wiki/edit/${data.id}`);
+    } catch {
+      setError("Le wiki n’a pas pu être créé. Votre saisie a été conservée.");
+    } finally {
+      setBusy(false);
+    }
   };
-
   return (
-    <div className="background-form" onClick={closeForm}>
-      <div className="form newRpg" onClick={(e) => e.stopPropagation()}>
-        <div className="title-form new-rpg">
-          <p>{t("newRpgForm.new")}</p>
-        </div>
-        <div className="main-container info-new-rpg">
-          <div className="info-container right">
-            <FieldForm
-              id="rpgName"
-              name="rpgName"
-              label={t("newRpgForm.rpgName")}
-              required={true}
-              value={rpgName}
-              onChange={(e) => setRpgName(e.target.value)}
-            />
-            <FieldForm
-              id="style"
-              name="style"
-              label={t("newRpgForm.style")}
-              required={true}
-              value={style}
-              onChange={(e) => setStyle(e.target.value)}
-            />
+    <Modal
+      title="Créer un wiki"
+      description="Un espace de rédaction libre pour votre univers."
+      onClose={closeForm}
+      busy={busy}
+    >
+      <Notice>{error}</Notice>
+      <form onSubmit={submit}>
+        <fieldset className="plain-fieldset" disabled={busy}>
+          <Field
+            label="Nom du wiki"
+            required
+            maxLength={255}
+            value={name}
+            onChange={(event) => setName(event.target.value)}
+          />
+          <Field
+            label="Présentation de l’univers"
+            as="textarea"
+            value={description}
+            onChange={(event) => setDescription(event.target.value)}
+          />
+          <div className="form-actions">
+            <Button variant="secondary" onClick={closeForm}>
+              Annuler
+            </Button>
+            <Button type="submit" busy={busy}>
+              Créer le wiki
+            </Button>
           </div>
-        </div>
-
-        <div className="btn bottom">
-          <Button className="cancel" onClick={closeForm}>
-            {t("newRpgForm.cancel")}
-          </Button>
-          <Button className="confirm" onClick={addNewRpg}>
-            {t("newRpgForm.create")}
-          </Button>
-        </div>
-      </div>
-    </div>
+        </fieldset>
+      </form>
+    </Modal>
   );
-};
-
-export default NewRpgForm;
+}

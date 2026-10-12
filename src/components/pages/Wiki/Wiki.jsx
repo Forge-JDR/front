@@ -23,10 +23,8 @@ const Wiki = ({ ...props }) => {
   const [activeTab, setActiveTab] = useState("univers");
 
   useEffect(() => {
-    if (wikiStatus === "idle") {
-      dispatch(fetchWiki(id));
-    }
-  }, [wikiStatus, dispatch]);
+    dispatch(fetchWiki(id));
+  }, [dispatch, id]);
 
   const handleTabChange = (tab) => {
     setActiveTab(tab);

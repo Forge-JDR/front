@@ -38,3 +38,15 @@ Le paramètre API est intégré **au build** : modifier l'environnement d'un con
 Les builds cloud avec interception TLS acceptent un secret BuildKit `proxy_ca`, sans désactiver la validation TLS.
 
 Voir [le plan de reprise](docs/REPRISE.md). Le MVP conserve les fonctions historiques ; invitations, collaboration et jeu en temps réel sont différés.
+
+## Refonte UI/UX
+
+La branche `refonte-uiux`, issue de `reprise`, apporte le nouveau système de composants, l’interface responsive et les parcours d’atelier refondus. Voir [les choix et vérifications](docs/REFONTE_UIUX.md).
+
+```sh
+npm run lint:ui
+npx playwright install chromium
+npm run test:browser
+```
+
+Les tests navigateur utilisent une API simulée et démarrent le front sur le port 3100 ; aucun compte de production ni service de messagerie n’est sollicité.

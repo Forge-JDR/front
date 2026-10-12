@@ -1,0 +1,137 @@
+.auth-layout {
+  max-width: 1050px;
+  margin: 10px auto 40px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  min-height: 600px;
+  gap: 80px;
+  align-items: center;
+}
+.auth-story {
+  padding: 38px 0;
+}
+.auth-story h1 {
+  font-family: "DM Serif Display", Georgia, serif;
+  font-size: clamp(48px, 4vw, 65px);
+  font-weight: 400;
+  line-height: 1.08;
+  letter-spacing: -0.035em;
+  margin: 20px 0;
+}
+.auth-story h1 em {
+  color: var(--copper);
+  font-style: normal;
+}
+.auth-story p {
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.9;
+}
+.auth-illustration {
+  position: relative;
+  margin: 32px 0;
+  border-radius: 16px;
+  overflow: hidden;
+  max-width: 360px;
+}
+.auth-illustration .landscape {
+  height: 160px;
+}
+.auth-story-card {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  padding: 20px;
+  background: #edf0e5;
+  color: #5e7257;
+  font-size: 11px;
+  line-height: 1.8;
+}
+.auth-story > small {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  color: #5f6d5b;
+  font-size: 9px;
+}
+.auth-form-panel {
+  padding: 38px;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  box-shadow: var(--shadow);
+}
+.auth-form-panel h2 {
+  font-size: 25px;
+  line-height: 1.4;
+}
+.auth-form-panel > p {
+  font-size: 12px;
+  color: var(--muted);
+  margin-bottom: 28px;
+}
+.auth-form-panel fieldset {
+  display: grid;
+  gap: 20px;
+  border: 0;
+  margin: 0;
+  padding: 0;
+  min-width: 0;
+}
+.password-control {
+  position: relative;
+}
+.password-control input {
+  padding-right: 46px;
+}
+.password-eye {
+  position: absolute;
+  right: 5px;
+  top: 27px;
+  padding: 10px;
+}
+.auth-submit {
+  width: 100%;
+  margin-top: 4px;
+}
+.auth-switch {
+  border-top: 1px solid var(--line);
+  margin-top: 26px;
+  padding-top: 23px;
+  text-align: center;
+  font-size: 11px;
+  color: var(--muted);
+}
+.auth-switch a,
+.auth-terms a {
+  color: var(--forest);
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.auth-terms {
+  font-size: 10px;
+  color: var(--muted);
+  margin: 0;
+}
+@media (max-width: 1000px) {
+  .auth-layout {
+    gap: 40px;
+  }
+  .auth-form-panel {
+    padding: 28px;
+  }
+}
+@media (max-width: 760px) {
+  .auth-layout {
+    display: block;
+    min-height: auto;
+    max-width: 470px;
+  }
+  .auth-story {
+    display: none;
+  }
+  .auth-form-panel {
+    padding: 26px;
+  }
+}

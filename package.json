@@ -4,13 +4,17 @@
   "private": true,
   "dependencies": {
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
+    "@fontsource-variable/manrope": "^5.3.0",
+    "@fontsource/dm-serif-display": "^5.3.0",
     "@reduxjs/toolkit": "^2.2.7",
+    "@testing-library/dom": "^10.4.2",
     "@testing-library/jest-dom": "^5.17.0",
-    "@testing-library/react": "^13.4.0",
+    "@testing-library/react": "^16.3.3",
     "@testing-library/user-event": "^13.5.0",
     "axios": "^1.7.7",
     "emailjs-com": "^3.2.0",
     "i18next": "^23.11.5",
+    "lucide-react": "^1.55.0",
     "quill": "^2.0.2",
     "quill-delta-to-html": "^0.12.1",
     "react": "^18.3.1",
@@ -26,7 +30,9 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "test:browser": "playwright test",
+    "lint:ui": "NODE_ENV=development eslint --ext .js,.jsx src/components/design-system src/components/layout src/components/pages/Auth src/components/pages/Landing src/components/pages/Contact src/components/pages/GCU src/components/pages/Discover/Discover.jsx src/components/pages/User src/components/pages/Workshop src/components/pages/NotFound.jsx src/routes/requireAuth.js src/routes/router.jsx --max-warnings=0"
   },
   "eslintConfig": {
     "extends": [
@@ -45,5 +51,9 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "^4.13.0",
+    "@playwright/test": "^1.64.0"
   }
 }

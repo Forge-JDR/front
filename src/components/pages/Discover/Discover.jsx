@@ -1,91 +1,92 @@
-import React, { useState, useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { store, fetchWikis } from "../../../store/store";
-import { Link, useNavigate } from "react-router-dom";
-import { useTranslation } from "react-i18next";
-import "./discover.css";
-
-import forgeLogoTxt from "../../../assets/logo/logo_texte.svg";
-import defaultWikiImage from "../../../assets/wiki_default.png";
-import Footer from "../../UI/organisms/footer/Footer";
-import ConnectedNavbar from "../../templates/connectedNavBar/ConnectedNavbar";
-import CardRpgDiscover from "../../UI/organisms/CardRpgDiscover/CardRpgDiscover";
-
-const Discover = () => {
-  const dispatch = useDispatch();
-  const { t } = useTranslation();
-  const wiki = useSelector((state) => state.wikis.wikisList);
-  const wikiStatus = useSelector((state) => state.wikis.status);
-  const navigate = useNavigate();
-
-  const [searchTerm, setSearchTerm] = useState(""); // État pour la recherche
-
+import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import { BookOpen } from "lucide-react";
+import api from "../../../config/api";
+import {
+  EmptyState,
+  Field,
+  Landscape,
+  Notice,
+  PageHeader,
+} from "../../design-system";
+export default function Discover() {
+  const [wikis, setWikis] = useState([]);
+  const [search, setSearch] = useState("");
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
   useEffect(() => {
-    // Vérifiez si la liste des wikis est vide ou si le statut est "idle" avant de récupérer les wikis
-    if (wikiStatus === "idle" || wiki.length === 0) {
-      dispatch(fetchWikis());
-    }
-  }, [wikiStatus, dispatch, wiki.length]);
-
-  // Filtrer les wikis en fonction du terme de recherche
-  const filteredWikis = wiki?.filter((wiki) =>
-    wiki.Name.toLowerCase().includes(searchTerm.toLowerCase())
+    let active = true;
+    api
+      .get("/api/wikis")
+      .then(({ data }) => {
+        if (active) setWikis(data);
+      })
+      .catch(() => {
+        if (active) setError("Les univers publiés n’ont pas pu être chargés.");
+      })
+      .finally(() => {
+        if (active) setLoading(false);
+      });
+    return () => {
+      active = false;
+    };
+  }, []);
+  const filtered = wikis.filter((wiki) =>
+    wiki.Name.toLocaleLowerCase().includes(search.toLocaleLowerCase()),
   );
-
-  const WikisElements = (wikiList) => {
-    if (!wikiList) return <p>Chargement en cours...</p>;
-
-    return wikiList.map((wiki) => {
-      return (
-        wiki.Status === "published" && (
-          <div
-            className="published-rpg-card"
-            key={wiki.id}
-            onClick={() => {
-              navigate(`/wiki/${wiki.id}`);
-            }}
-          >
-            <CardRpgDiscover
-              id={wiki.id}
-              srcImg={wiki.imageFile ? wiki.imageFile.path : defaultWikiImage}
-              nameRpg={wiki.Name}
-              owner={wiki.user?.username}
-            />
-          </div>
-        )
-      );
-    });
-  };
-
   return (
-    <>
-      <div className="background-hexa image discover"></div>
-      <div className="background discover">
-        <ConnectedNavbar />
-        <div className="list-published-rpg-main-container">
-          <div className="filter-bar">
-            <input
-              type="text"
-              placeholder="Rechercher un RPG"
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              className="search-bar"
-            />
-          </div>
-          <div className="grid-rpg-published">
-            <div className="card-container-published-rpg">
-              {wikiStatus === "loading" ? (
-                <p>Chargement en cours...</p>
-              ) : (
-                WikisElements(filteredWikis)
-              )}
-            </div>
-          </div>
-        </div>
+    <div>
+      <PageHeader
+        eyebrow="LA BIBLIOTHÈQUE"
+        title="Découvrir les univers"
+        description="Les créations partagées par les auteurs de la forge."
+      />
+      <Notice>{error}</Notice>
+      <div className="discover-search">
+        <Field
+          label="Rechercher un univers"
+          placeholder="Le nom d’un monde à explorer…"
+          value={search}
+          onChange={(event) => setSearch(event.target.value)}
+        />
       </div>
-      <Footer />
-    </>
+      {loading ? (
+        <p role="status">Chargement des univers…</p>
+      ) : filtered.length === 0 ? (
+        <div className="ui-card">
+          <EmptyState
+            icon={BookOpen}
+            title={
+              search
+                ? "Aucun univers ne correspond à votre recherche."
+                : "Les premiers mondes sont encore à l’écriture."
+            }
+          >
+            Les univers apparaîtront ici après leur publication.
+          </EmptyState>
+        </div>
+      ) : (
+        <div className="world-grid">
+          {filtered.map((wiki) => (
+            <Link
+              to={`/wiki/${wiki.id}`}
+              className="ui-card world-card"
+              key={wiki.id}
+            >
+              <Landscape seed={wiki.id} />
+              <div className="world-card-body">
+                <span className="card-kicker">UNIVERS PUBLIÉ</span>
+                <h3>{wiki.Name}</h3>
+                <p>
+                  Un monde créé par{" "}
+                  {wiki.user?.pseudo || "un auteur de la forge"}.
+                </p>
+                <span className="text-link">Explorer l’univers →</span>
+              </div>
+            </Link>
+          ))}
+        </div>
+      )}
+    </div>
   );
-};
-
-export default Discover;
+}

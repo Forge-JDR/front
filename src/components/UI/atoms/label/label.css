@@ -1,29 +1,9 @@
-/* label {
-    position: absolute; 
-    top: 0;
-    left: 0;
-    padding: 10px 0;
-    font-size: 16px;
-    color: #d42525;
-    pointer-events: none;
-    transition: .5s;
-} */
-
- label {
-    position: absolute;
-    top: 0;
-    left: 0;
-    padding: 10px 0;
-    font-size: 16px;
-    color: #bebebe;
-    pointer-events: none;
-    transition: .5s;
-}
-
- input:focus~label,
- input:valid~label {
-    top: -20px;
-    left: 0;
-    color: #03e9f4;
-    font-size: 12px;
+.legacy-label {
+  display: block;
+  position: static;
+  color: var(--ink);
+  padding: 0;
+  font-size: 12px;
+  font-weight: 700;
+  pointer-events: auto;
 }

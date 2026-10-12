@@ -1,27 +1,13 @@
 import React from "react";
-
-import "./cardCreate.css";
-import plusIcon from "../../../../assets/plus-icon.png";
-
-const CardCreate = ({ width, height, title, onClick, ...rest }) => {
+import { Plus } from "lucide-react";
+export default function CardCreate({ title, onClick }) {
   return (
-    <>
-      <div
-        className="new card"
-        style={{ width: width, height: height }}
-        onClick={onClick}
-      >
-        <div className="content-card">
-          <div className="title">
-            <p>{title}</p>
-          </div>
-          <div className="plus">
-            <img src={plusIcon} alt="add" />
-          </div>
-        </div>
-      </div>
-    </>
+    <button type="button" className="legacy-create-card" onClick={onClick}>
+      <span>
+        <Plus size={24} />
+      </span>
+      <strong>{title}</strong>
+      <small>Une nouvelle idée à explorer.</small>
+    </button>
   );
-};
-
-export default CardCreate;
+}

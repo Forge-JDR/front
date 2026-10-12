@@ -1,4 +1,6 @@
 import React from "react";
+import Layout from "../components/layout/Layout";
+import NotFound from "../components/pages/NotFound";
 
 import Home from "../components/pages/Home/Home";
 import Workshop from "../components/pages/Workshop/Workshop";
@@ -25,101 +27,114 @@ export const Router = () => {
   const router = createBrowserRouter([
     {
       path: "/",
-      element: <Home />,
-    },
-    {
-      path: "atelier",
-      element: <RequireAuth><Workshop /></RequireAuth>,
-    },
-    {
-      path: "login",
-      element: <Login />,
-    },
-    {
-      path: "signup",
-      element: <Signup />,
-    },
-    {
-      path: "disconnect",
-      element: (
-        <RequireAuth>
-          <Disconnect />
-        </RequireAuth>
-      ),
-    },
-    {
-      path: "creation",
-      element: (
-        <RequireAuth>
-          <Creation />
-        </RequireAuth>
-      ),
-    },
-    {
-      path: "caracters",
-      element: (
-        <RequireAuth>
-          <Caracters />
-        </RequireAuth>
-      ),
-    },
-    {
-      path: "caracters/edit/:id",
-      element: (
-        <RequireAuth>
-          <CaractersEdition />
-        </RequireAuth>
-      ),
-    },
-    {
-      path: "discover",
-      element: (
-        <RequireAuth>
-          <Discover />
-        </RequireAuth>
-      ),
-    },
-    {
-      path: "wiki/:id",
-      element: (
-        <ErrorBoundary>
-          <Wiki />
-        </ErrorBoundary>
-      ),
-    },
-    {
-      path: "wiki/edit/:id",
-      element: (
-        <ErrorBoundary>
-          <WikiEdition />
-        </ErrorBoundary>
-      ),
-    },
-    {
-      path: "contact",
-      element: <Contact />,
-    },
-    {
-      path: "cgu",
-      element: <CGU />,
-    },
-    {
-      path: "user",
-      element: (
-        <RequireAuth>
-          <User />
-        </RequireAuth>
-      ),
-    },
+      element: <Layout />,
+      children: [
+        {
+          index: true,
+          element: <Home />,
+        },
+        {
+          path: "atelier",
+          element: (
+            <RequireAuth>
+              <Workshop />
+            </RequireAuth>
+          ),
+        },
+        {
+          path: "login",
+          element: <Login />,
+        },
+        {
+          path: "signup",
+          element: <Signup />,
+        },
+        {
+          path: "disconnect",
+          element: (
+            <RequireAuth>
+              <Disconnect />
+            </RequireAuth>
+          ),
+        },
+        {
+          path: "creation",
+          element: (
+            <RequireAuth>
+              <Creation />
+            </RequireAuth>
+          ),
+        },
+        {
+          path: "caracters",
+          element: (
+            <RequireAuth>
+              <Caracters />
+            </RequireAuth>
+          ),
+        },
+        {
+          path: "caracters/edit/:id",
+          element: (
+            <RequireAuth>
+              <CaractersEdition />
+            </RequireAuth>
+          ),
+        },
+        {
+          path: "discover",
+          element: (
+            <RequireAuth>
+              <Discover />
+            </RequireAuth>
+          ),
+        },
+        {
+          path: "wiki/:id",
+          element: (
+            <ErrorBoundary>
+              <Wiki />
+            </ErrorBoundary>
+          ),
+        },
+        {
+          path: "wiki/edit/:id",
+          element: (
+            <RequireAuth>
+              <ErrorBoundary>
+                <WikiEdition />
+              </ErrorBoundary>
+            </RequireAuth>
+          ),
+        },
+        {
+          path: "contact",
+          element: <Contact />,
+        },
+        {
+          path: "cgu",
+          element: <CGU />,
+        },
+        {
+          path: "user",
+          element: (
+            <RequireAuth>
+              <User />
+            </RequireAuth>
+          ),
+        },
 
-    {
-      path: "admin/wiki",
-      element: (
-        <RequireAuth>
-          <AdminWiki />
-        </RequireAuth>
-      ),
-    }
+        {
+          path: "admin/wiki",
+          element: (
+            <RequireAuth>
+              <AdminWiki />
+            </RequireAuth>
+          ),
+        },
+        { path: "*", element: <NotFound /> },
+      ],
+    },
   ]);
 
   return <RouterProvider router={router} />;

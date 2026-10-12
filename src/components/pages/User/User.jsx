@@ -1,143 +1,179 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { logout, updateAccount } from "../../../store/slices/auth.slice"; // Import the necessary actions
-import "./User.css"; // Include some CSS for basic styling if needed
-import { useNavigate } from "react-router-dom"; // Import useNavigate
+import { Check, LockKeyhole, ShieldCheck, UserRound } from "lucide-react";
+import { updateAccount } from "../../../store/slices/auth.slice";
+import { Button, Field, Notice, PageHeader } from "../../design-system";
+import { PasswordField } from "../Auth/Auth";
+import "./User.css";
 
-import FieldForm from "../../UI/molecules/FieldForm/FieldForm";
-import Button from "../../UI/atoms/button/button";
-import ConnectedNavbar from "../../templates/connectedNavBar/ConnectedNavbar";
-
-const User = () => {
-  const dispatch = useDispatch();
+export default function User() {
   const user = useSelector((state) => state.auth.user);
-  const navigate = useNavigate(); // Initialize useNavigate
-
-  // Local state for user details
-  const [pseudo, setpseudo] = useState(user?.pseudo || "");
-  const [currentPassword, setCurrentPassword] = useState("");
-  const [newPassword, setNewPassword] = useState("");
-
-  // Handlers for form inputs
-  const handlepseudoChange = (e) => setpseudo(e.target.value);
-  const handleCurrentPasswordChange = (e) => setCurrentPassword(e.target.value);
-  const handleNewPasswordChange = (e) => setNewPassword(e.target.value);
-
-  // Handler for updating pseudo
-  const handleUpdatepseudo = (e) => {
-    e.preventDefault();
-    if (pseudo) {
-      dispatch(updateAccount({ pseudo })).unwrap()
-        .then(() => {
-          alert("Nom d'utilisateur mis à jour avec succès");
-          navigate("/"); // Redirect to the homepage
-        })
-        .catch((error) => alert(String(error)));
+  const dispatch = useDispatch();
+  const [pseudo, setPseudo] = useState(null);
+  const [passwords, setPasswords] = useState({
+    current: "",
+    next: "",
+    confirm: "",
+  });
+  const [busy, setBusy] = useState("");
+  const [error, setError] = useState("");
+  const [message, setMessage] = useState("");
+  const save = async (section, body) => {
+    setBusy(section);
+    setError("");
+    setMessage("");
+    try {
+      await dispatch(updateAccount(body)).unwrap();
+      setMessage(
+        section === "profile"
+          ? "Votre profil a été mis à jour."
+          : "Votre mot de passe a été mis à jour.",
+      );
+      if (section === "password")
+        setPasswords({ current: "", next: "", confirm: "" });
+    } catch (err) {
+      setError(String(err || "La modification n’a pas pu être enregistrée."));
+    } finally {
+      setBusy("");
     }
   };
-
-  // Handler for updating password
-  const handleUpdatePassword = (e) => {
-    e.preventDefault();
-    if (currentPassword && newPassword) {
-      var password = newPassword;
-      dispatch(updateAccount({ password, currentPassword })).unwrap()
-        .then(() => {
-          alert("Mot de passe mis à jour avec succès");
-          setCurrentPassword("");
-          setNewPassword("");
-
-          navigate("/"); // Redirect to the homepage
-        })
-        .catch((error) => alert(String(error)));
-    }
-  };
-
   return (
-    <div className="backgroud-user-account">
-      <ConnectedNavbar />
-      <div className="user-account-page">
-        <h2>Gestion de compte</h2>
-
-        {/* Update pseudo Section */}
-        <div className="user-form-section">
-          <h3>Modifier le pseudo</h3>
-          <form onSubmit={handleUpdatepseudo}>
-            <FieldForm
-              id="pseudo"
-              name="pseudo"
-              label="Nouveau pseudo : "
-              value={pseudo}
-              onChange={handlepseudoChange}
-            />
-            <div className="form-group">
-              {/* <label htmlFor="pseudo">Nouveau nom d'utilisateur:</label>
-              <input
-                type="text"
-                id="pseudo"
-                value={pseudo}
-                onChange={handlepseudoChange}
-                placeholder="Entrez le nouveau nom d'utilisateur"
-                required
-              /> */}
-            </div>
-            <Button className="submit" type="submit">
-              Mettre à jour le nom d'utilisateur
-            </Button>
-          </form>
+    <div className="account-page">
+      <PageHeader
+        eyebrow="VOTRE ESPACE"
+        title="Mon compte"
+        description="Les quelques détails qui font de cet atelier le vôtre."
+      />
+      <Notice>{error}</Notice>
+      <Notice variant="success">{message}</Notice>
+      <div className="account-layout">
+        <div className="account-forms">
+          <section className="ui-card account-section">
+            <header>
+              <span className="account-icon">
+                <UserRound size={21} />
+              </span>
+              <div>
+                <h2>Votre profil</h2>
+                <p>Le nom qui vous accompagne dans vos aventures.</p>
+              </div>
+            </header>
+            <form
+              onSubmit={(event) => {
+                event.preventDefault();
+                save("profile", {
+                  pseudo: (pseudo ?? user?.pseudo ?? "").trim(),
+                });
+              }}
+            >
+              <fieldset disabled={Boolean(busy)}>
+                <Field
+                  label="Pseudo"
+                  autoComplete="nickname"
+                  required
+                  maxLength={100}
+                  value={pseudo ?? user?.pseudo ?? ""}
+                  onChange={(event) => setPseudo(event.target.value)}
+                  placeholder="Votre nom d’aventurier"
+                />
+                <Field
+                  label="Adresse e-mail"
+                  value={user?.username || ""}
+                  readOnly
+                  hint="L’adresse utilisée pour vous connecter à votre atelier."
+                />
+                <div className="form-actions">
+                  <Button type="submit" busy={busy === "profile"} icon={Check}>
+                    Enregistrer mon profil
+                  </Button>
+                </div>
+              </fieldset>
+            </form>
+          </section>
+          <section className="ui-card account-section">
+            <header>
+              <span className="account-icon">
+                <LockKeyhole size={21} />
+              </span>
+              <div>
+                <h2>Sécurité du compte</h2>
+                <p>Choisissez un mot de passe que vous seul connaissez.</p>
+              </div>
+            </header>
+            <form
+              onSubmit={(event) => {
+                event.preventDefault();
+                if (passwords.next !== passwords.confirm) {
+                  setError("Les nouveaux mots de passe ne correspondent pas.");
+                  return;
+                }
+                save("password", {
+                  password: passwords.next,
+                  currentPassword: passwords.current,
+                });
+              }}
+            >
+              <fieldset disabled={Boolean(busy)}>
+                <PasswordField
+                  label="Mot de passe actuel"
+                  required
+                  autoComplete="current-password"
+                  value={passwords.current}
+                  onChange={(event) =>
+                    setPasswords({ ...passwords, current: event.target.value })
+                  }
+                />
+                <div className="form-grid">
+                  <PasswordField
+                    label="Nouveau mot de passe"
+                    autoComplete="new-password"
+                    minLength={8}
+                    maxLength={4096}
+                    required
+                    hint="Au moins 8 caractères."
+                    value={passwords.next}
+                    onChange={(event) =>
+                      setPasswords({ ...passwords, next: event.target.value })
+                    }
+                  />
+                  <PasswordField
+                    label="Confirmer le nouveau mot de passe"
+                    required
+                    autoComplete="new-password"
+                    value={passwords.confirm}
+                    onChange={(event) =>
+                      setPasswords({
+                        ...passwords,
+                        confirm: event.target.value,
+                      })
+                    }
+                  />
+                </div>
+                <div className="form-actions">
+                  <Button type="submit" busy={busy === "password"} icon={Check}>
+                    Mettre à jour le mot de passe
+                  </Button>
+                </div>
+              </fieldset>
+            </form>
+          </section>
         </div>
-
-        {/* Update Password Section */}
-        <div className="user-form-section">
-          <h3>Modifier le mot de passe</h3>
-          <form onSubmit={handleUpdatePassword}>
-            <div className="form-group">
-              <FieldForm
-                id="currentPassword"
-                type="password"
-                name="currentPassword"
-                label="Entrez le mot de passe actuel"
-                value={currentPassword}
-                onChange={handleCurrentPasswordChange}
-              />
-              {/* <label htmlFor="currentPassword">Mot de passe actuel:</label>
-              <input
-                type="password"
-                id="currentPassword"
-                value={currentPassword}
-                onChange={handleCurrentPasswordChange}
-                placeholder="Entrez le mot de passe actuel"
-                required
-              /> */}
-            </div>
-            <div className="form-group">
-              <FieldForm
-                type="password"
-                id="newPassword"
-                name="newPassword"
-                label="Entrez le nouveau mot de passe "
-                value={newPassword}
-                onChange={handleNewPasswordChange}
-              />
-              {/* <label htmlFor="newPassword">Nouveau mot de passe:</label>
-              <input
-                type="password"
-                id="newPassword"
-                value={newPassword}
-                onChange={handleNewPasswordChange}
-                placeholder="Entrez le nouveau mot de passe"
-                required
-              /> */}
-            </div>
-            <Button className="submit" type="submit">
-              Mettre à jour le mot de passe
-            </Button>
-          </form>
-        </div>
+        <aside className="ui-card account-aside">
+          <span className="avatar account-avatar">
+            {(user?.pseudo || "A").slice(0, 1).toUpperCase()}
+          </span>
+          <h3>{user?.pseudo || "Votre atelier personnel"}</h3>
+          <p>Maître de vos aventures</p>
+          <div>
+            <ShieldCheck size={20} />
+            <h4>Un espace qui vous appartient.</h4>
+            <p>
+              Vos JDR, vos parties et vos personnages sont accessibles depuis
+              votre compte personnel.
+            </p>
+          </div>
+        </aside>
       </div>
     </div>
   );
-};
-
-export default User;
-
+}

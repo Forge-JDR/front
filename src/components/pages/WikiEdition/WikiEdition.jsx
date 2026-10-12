@@ -128,10 +128,8 @@ const WikiEdition = () => {
   }, [dispatch, id]);
 
   useEffect(() => {
-    if (wikiStatus === "idle") {
-      dispatch(fetchWiki(id));
-    }
-  }, [wikiStatus, dispatch, id]);
+    dispatch(fetchWiki(id));
+  }, [dispatch, id]);
 
   useEffect(() => {
     if (wiki && wiki.Name) {
