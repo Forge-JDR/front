@@ -27,17 +27,12 @@ const User = () => {
   const handleUpdatepseudo = (e) => {
     e.preventDefault();
     if (pseudo) {
-      dispatch(updateAccount({ pseudo }))
+      dispatch(updateAccount({ pseudo })).unwrap()
         .then(() => {
           alert("Nom d'utilisateur mis à jour avec succès");
           navigate("/"); // Redirect to the homepage
         })
-        .catch((error) =>
-          console.log(
-            "Erreur lors de la mise à jour du nom d'utilisateur :",
-            error
-          )
-        );
+        .catch((error) => alert(String(error)));
     }
   };
 
@@ -46,7 +41,7 @@ const User = () => {
     e.preventDefault();
     if (currentPassword && newPassword) {
       var password = newPassword;
-      dispatch(updateAccount({ password }))
+      dispatch(updateAccount({ password, currentPassword })).unwrap()
         .then(() => {
           alert("Mot de passe mis à jour avec succès");
           setCurrentPassword("");
@@ -54,9 +49,7 @@ const User = () => {
 
           navigate("/"); // Redirect to the homepage
         })
-        .catch((error) =>
-          console.log("Erreur lors de la mise à jour du mot de passe :", error)
-        );
+        .catch((error) => alert(String(error)));
     }
   };
 
@@ -147,3 +140,4 @@ const User = () => {
 };
 
 export default User;
+

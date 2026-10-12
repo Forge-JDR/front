@@ -1,57 +1,65 @@
 import axiosInstance from "./api";
-import { reloadToken, deleteToken } from '../store/slices/auth.slice'; 
-
+import { reloadToken, deleteToken } from '../store/slices/auth.slice';
 
 const setup = (store) => {
-    axiosInstance.interceptors.request.use(
-        (config) => {
-            const token = window.localStorage.getItem("token");
-            if (token) {
-                config.headers["Authorization"] = 'Bearer ' + token;
+    let refreshPromise = null;
+    const requestId = axiosInstance.interceptors.request.use((config) => {
+        const token = localStorage.getItem("token");
+        config.headers = config.headers || {};
+        if (token) config.headers.Authorization = 'Bearer ' + token;
+        else delete config.headers.Authorization;
+        return config;
+    });
+
+    const responseId = axiosInstance.interceptors.response.use(
+        (response) => response,
+        async (error) => {
+            const config = error.config;
+            const isAuthRequest = /\/(?:register|api\/(?:login_check|token\/refresh))(?:\?|$)/.test(config?.url || "");
+            if (!config || error.response?.status !== 401 || isAuthRequest) {
+                return Promise.reject(error);
             }
-            return config;
-        },
-        (error) => {
-            return Promise.reject(error);
+            if (config._retry) {
+                store.dispatch(deleteToken());
+                return Promise.reject(error);
+            }
+            const refreshToken = localStorage.getItem("refresh_token");
+            if (!refreshToken) {
+                store.dispatch(deleteToken());
+                return Promise.reject(error);
+            }
+            config._retry = true;
+            const currentToken = localStorage.getItem("token");
+            // A delayed 401 may arrive after another request already refreshed.
+            if (currentToken && config.headers?.Authorization !== 'Bearer ' + currentToken) {
+                return axiosInstance(config);
+            }
+            if (!refreshPromise) {
+                refreshPromise = axiosInstance.post('/api/token/refresh', {
+                    refresh_token: refreshToken,
+                }).then(({ data }) => {
+                    if (!data.token || !data.refresh_token) {
+                        throw new Error("Réponse de renouvellement invalide.");
+                    }
+                    if (localStorage.getItem("refresh_token") !== refreshToken) {
+                        throw new Error("La session a changé pendant le renouvellement.");
+                    }
+                    store.dispatch(reloadToken(data));
+                }).catch((refreshError) => {
+                    if (localStorage.getItem("refresh_token") === refreshToken) {
+                        store.dispatch(deleteToken());
+                    }
+                    throw refreshError;
+                }).finally(() => { refreshPromise = null; });
+            }
+            await refreshPromise;
+            return axiosInstance(config);
         }
     );
-
-    const { dispatch } = store;
-    axiosInstance.interceptors.response.use(
-        (res) => {
-            return res;
-        },
-        async (err) => {
-            const originalConfig = err.config;
-            const refreshToken = window.localStorage.getItem("refresh_token");
-            if (originalConfig.url !== "api/token/refresh" && err.response && refreshToken) {
-
-                // Access Token was expired
-                if (err.response.status === 401 && !originalConfig._retry) {
-                    originalConfig._retry = true;
-
-
-                    await axiosInstance.post('api/token/refresh', {
-                        "refresh_token": refreshToken
-                    }).then((response) => {
-
-                            dispatch(reloadToken({
-                                token: response.data.data.token,
-                                refreshToken: response.data.data.refresh_token
-                            }));
-
-                        }
-                    ).catch((error) => {
-                        dispatch(deleteToken());
-                    });
-
-                    return axiosInstance(originalConfig);
-                }
-            }
-
-            return Promise.reject(err);
-        }
-    );
+    return () => {
+        axiosInstance.interceptors.request.eject(requestId);
+        axiosInstance.interceptors.response.eject(responseId);
+    };
 };
 
 export default setup;

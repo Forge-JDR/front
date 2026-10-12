@@ -32,7 +32,7 @@ export const login = createAsyncThunk(
     async ({ username, password }, thunkAPI) => {
         try {
             const data = await AuthService.login(username, password);
-            return { token: data.token, refreshToken: data.refresh_token };
+            return { token: data.token, refresh_token: data.refresh_token };
         } catch (error) {
             const message =
                 (error.response &&
@@ -113,6 +113,7 @@ const authSlice = createSlice({
             state.isLoggedIn = false;
             state.token = null;
             state.refreshToken = null;
+            state.user = null;
         }
     },
     extraReducers: (builder) => {
@@ -120,7 +121,7 @@ const authSlice = createSlice({
             .addCase(login.fulfilled, (state, action) => {
                 state.isLoggedIn = true;
                 state.token = action.payload.token;
-                state.refreshToken = action.payload.refreshToken;
+                state.refreshToken = action.payload.refresh_token;
             })
             .addCase(login.rejected, (state) => {
                 state.isLoggedIn = false;
@@ -138,6 +139,7 @@ const authSlice = createSlice({
                 state.isLoggedIn = false;
                 state.token = null;
                 state.refreshToken = null;
+                state.user = null;
             })
             .addCase(updateAccount.fulfilled, (state, action) => {
                 state.user = action.payload; // Mise à jour des données de l'utilisateur
@@ -148,3 +150,4 @@ const authSlice = createSlice({
 // Export des actions et du reducer
 export const { reloadToken, deleteToken } = authSlice.actions;
 export default authSlice.reducer;
+
