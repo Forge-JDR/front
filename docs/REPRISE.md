@@ -35,6 +35,8 @@ Chaque fiche garde le modèle et sa version à la création. Les modifications u
 
 Ces vérifications n'établissent pas encore un test complet dans un navigateur réel ni une migration sur des données de production. Les anciens tests distants ne sont pas exécutés.
 
+Le lint du nouveau parcours est vérifié sans avertissements. Les pages historiques émettent encore des avertissements et le front conserve des dépendances anciennes (Create React App et lock de 2024) : leur audit et modernisation restent nécessaires avant livraison publique. Le build CI ne transforme pas ces avertissements historiques en erreurs ; les tests et le lint du nouveau code sont bloquants.
+
 ## Reste avant mise en ligne
 
 1. Vérifier le parcours dans un navigateur réel, notamment mobile, et fixer les derniers détails d'usage.

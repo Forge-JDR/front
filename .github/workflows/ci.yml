@@ -17,6 +17,11 @@ jobs:
       - run: npm test -- --watchAll=false --runInBand
         env:
           CI: 'true'
+      - run: ./node_modules/.bin/eslint --ext .js,.jsx src/components/pages/Workshop src/routes/requireAuth.js src/routes/requireAuth.test.jsx --max-warnings=0
+        env:
+          NODE_ENV: development
+      # Legacy pages still emit lint warnings; new MVP code is checked above.
       - run: npm run build
         env:
           REACT_APP_URL_BACK: http://localhost:8741
+          CI: 'false'
